@@ -229,12 +229,15 @@
     bottom: 3px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.1) 15%,
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.3) 70%,
-      rgba(255, 255, 255, 0.1) 85%,
+      rgba(255, 255, 255, 0.05) 10%,
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(255, 255, 255, 0.4) 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.4) 60%,
+      rgba(255, 255, 255, 0.2) 75%,
+      rgba(255, 255, 255, 0.05) 90%,
       transparent 100%);
+    filter: blur(0.3px);
     animation: borderGlow 8s ease-in-out infinite;
   }
   
@@ -242,12 +245,15 @@
     bottom: 1px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 20%,
-      rgba(255, 255, 255, 0.15) 40%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0.15) 60%,
-      rgba(255, 255, 255, 0.05) 80%,
+      rgba(255, 255, 255, 0.03) 15%,
+      rgba(255, 255, 255, 0.1) 35%,
+      rgba(255, 255, 255, 0.25) 45%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.25) 55%,
+      rgba(255, 255, 255, 0.1) 65%,
+      rgba(255, 255, 255, 0.03) 85%,
       transparent 100%);
+    filter: blur(0.2px);
     animation: borderGlow 8s ease-in-out infinite 2s;
   }
   
@@ -264,15 +270,19 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 3px;
+    width: 80px;
+    height: 2px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.6) 20%,
-      rgba(255, 255, 255, 0.8) 50%,
-      rgba(255, 255, 255, 0.6) 80%,
+      rgba(255, 255, 255, 0.4) 15%,
+      rgba(255, 255, 255, 0.7) 30%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(255, 255, 255, 0.7) 70%,
+      rgba(255, 255, 255, 0.4) 85%,
       transparent 100%);
-    border-radius: 2px;
+    border-radius: 1px;
+    filter: blur(0.2px);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
     animation: ornamentPulse 6s ease-in-out infinite;
   }
   
@@ -303,6 +313,9 @@
   /* Main Header Styles */
   .site-header {
     position: relative;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
     height: 70px;
     background-color: var(--color-background);
     box-shadow: 
