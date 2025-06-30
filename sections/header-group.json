@@ -13,10 +13,14 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "logo_image": "shopify://shop_images/audentia-gothic-transparent-white.png",
+        "logo_size": 200,
+        "menu": ""
+      }
     }
   },
   "order": [
     "header"
-  ],
+  ]
 }
