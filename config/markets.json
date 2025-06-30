@@ -8,18 +8,5 @@
  * ------------------------------------------------------------
  */
 {
-  "layout": "password",
-  "sections": {
-    "main": {
-      "type": "password",
-      "settings": {
-        "preloader_image": "shopify://shop_images/audentia-gothic-transparent-black.png",
-        "preloader_size": 100,
-        "enable_preloader": true
-      }
-    }
-  },
-  "order": [
-    "main"
-  ]
+  "markets": {}
 }
