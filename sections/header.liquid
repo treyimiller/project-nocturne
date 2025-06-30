@@ -2,7 +2,11 @@
   <!-- Background Texture -->
   <div class="header-texture">
     <div class="header-noise"></div>
+    <div class="header-gradient"></div>
   </div>
+  
+  <!-- Header Shadow -->
+  <div class="header-shadow"></div>
   
   <!-- Header Content -->
   <div class="header-content">
@@ -166,12 +170,42 @@
     opacity: 0.6;
   }
   
+  /* Header Shadow */
+  .header-shadow {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(180deg, 
+      rgba(0, 0, 0, 0.3) 0%, 
+      rgba(0, 0, 0, 0.1) 50%, 
+      transparent 100%);
+    z-index: 1;
+  }
+  
+  .header-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+      rgba(255, 255, 255, 0.02) 0%, 
+      rgba(255, 255, 255, 0.01) 50%, 
+      transparent 100%);
+    z-index: 2;
+  }
+  
   /* Main Header Styles */
   .site-header {
     position: relative;
-    height: 100px;
+    height: 70px;
     background-color: var(--color-background);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
     z-index: 100;
   }
   
@@ -180,11 +214,11 @@
     height: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 2;
+    z-index: 3;
   }
   
   /* Logo Styles */
@@ -193,42 +227,45 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 3;
+    z-index: 4;
   }
   
   .logo-link,
   .logo-text {
     display: block;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
   
   .logo-link:hover,
   .logo-text:hover {
     transform: scale(1.02);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
   }
   
   .logo-image {
-    max-width: 200px;
+    max-width: 160px;
     height: auto;
     display: block;
-    filter: brightness(1.1);
+    filter: brightness(1.1) contrast(1.05);
   }
   
   .logo-text {
     font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 500;
     color: var(--color-foreground);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   
   /* Header Icons */
   .header-icons {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     margin-left: auto;
   }
   
@@ -237,50 +274,53 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     background: none;
     border: none;
     color: var(--color-foreground);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    border-radius: 4px;
+    border-radius: 6px;
   }
   
   .header-icon:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
   
   .header-icon svg {
-    opacity: 0.7;
+    opacity: 0.6;
     transition: all 0.3s ease;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
   
   .header-icon:hover svg {
-    opacity: 1;
-    transform: scale(1.1);
+    opacity: 0.9;
+    transform: scale(1.05);
   }
   
   /* Cart Count Badge */
   .cart-count {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -4px;
+    right: -4px;
     background-color: var(--color-foreground);
     color: var(--color-background);
     font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 500;
-    min-width: 20px;
-    height: 20px;
+    min-width: 18px;
+    height: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
-    z-index: 4;
+    z-index: 5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
   
   /* Search Overlay */
@@ -296,7 +336,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 120px;
+    padding-top: 100px;
   }
   
   .search-container {
@@ -386,34 +426,7 @@
   /* Responsive Design */
   @media (max-width: 768px) {
     .site-header {
-      height: 80px;
-    }
-    
-    .header-content {
-      padding: 0 1rem;
-    }
-    
-    .header-icons {
-      gap: 1rem;
-    }
-    
-    .header-icon {
-      width: 36px;
-      height: 36px;
-    }
-    
-    .logo-image {
-      max-width: 150px;
-    }
-    
-    .logo-text {
-      font-size: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .site-header {
-      height: 70px;
+      height: 60px;
     }
     
     .header-content {
@@ -429,9 +442,36 @@
       height: 32px;
     }
     
+    .logo-image {
+      max-width: 120px;
+    }
+    
+    .logo-text {
+      font-size: 1.4rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .site-header {
+      height: 55px;
+    }
+    
+    .header-content {
+      padding: 0 1rem;
+    }
+    
+    .header-icons {
+      gap: 0.5rem;
+    }
+    
+    .header-icon {
+      width: 30px;
+      height: 30px;
+    }
+    
     .header-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
     }
     
     .search-container {
@@ -439,15 +479,15 @@
     }
     
     .search-overlay {
-      padding-top: 100px;
+      padding-top: 80px;
     }
     
     .logo-image {
-      max-width: 120px;
+      max-width: 100px;
     }
     
     .logo-text {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
     }
   }
 {% endstylesheet %}
