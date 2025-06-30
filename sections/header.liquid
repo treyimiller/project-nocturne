@@ -28,7 +28,7 @@
     <!-- Header Icons -->
     <div class="header-icons">
       <!-- Search Icon -->
-      <button class="header-icon search-icon" aria-label="Search" type="button">
+      <button class="header-icon search-icon" aria-label="Search" type="button" id="search-toggle">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/>
           <path d="M21 21l-4.35-4.35"/>
@@ -59,6 +59,85 @@
     </div>
   </div>
 </header>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay" style="display: none;">
+  <div class="search-container">
+    <div class="search-box">
+      <form action="{{ routes.search_url }}" method="get" class="search-form">
+        <input 
+          type="search" 
+          name="q" 
+          placeholder="Search products..." 
+          class="search-input"
+          autocomplete="off"
+          id="search-input"
+        >
+        <button type="submit" class="search-submit" aria-label="Submit search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </form>
+      <button class="search-close" id="search-close" aria-label="Close search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchToggle = document.getElementById('search-toggle');
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchClose = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input');
+    
+    // Open search
+    if (searchToggle) {
+      searchToggle.addEventListener('click', function() {
+        searchOverlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() {
+          if (searchInput) {
+            searchInput.focus();
+          }
+        }, 100);
+      });
+    }
+    
+    // Close search function
+    function closeSearch() {
+      searchOverlay.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close search on close button
+    if (searchClose) {
+      searchClose.addEventListener('click', closeSearch);
+    }
+    
+    // Close search on overlay click
+    if (searchOverlay) {
+      searchOverlay.addEventListener('click', function(e) {
+        if (e.target === searchOverlay) {
+          closeSearch();
+        }
+      });
+    }
+    
+    // Close search on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && searchOverlay.style.display === 'block') {
+        closeSearch();
+      }
+    });
+  });
+</script>
 
 {% stylesheet %}
   /* Header Background Texture */
@@ -126,7 +205,7 @@
   
   .logo-link:hover,
   .logo-text:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
   
   .logo-image {
@@ -158,38 +237,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
     color: var(--color-foreground);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    border-radius: 4px;
   }
   
   .header-icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
   
   .header-icon svg {
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    opacity: 0.7;
+    transition: all 0.3s ease;
   }
   
   .header-icon:hover svg {
     opacity: 1;
-  }
-  
-  /* Search Button Specific */
-  .search-icon {
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
   }
   
   /* Cart Count Badge */
@@ -210,6 +281,96 @@
     justify-content: center;
     line-height: 1;
     z-index: 4;
+  }
+  
+  /* Search Overlay */
+  .search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 120px;
+  }
+  
+  .search-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 2rem;
+  }
+  
+  .search-box {
+    position: relative;
+    background-color: var(--color-background-ui);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+  
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .search-submit {
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+  }
+  
+  .search-submit:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .search-close {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+  }
+  
+  .search-close:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
   }
   
   /* Animations */
@@ -237,8 +398,8 @@
     }
     
     .header-icon {
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
     }
     
     .logo-image {
@@ -264,13 +425,21 @@
     }
     
     .header-icon {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
     }
     
     .header-icon svg {
       width: 20px;
       height: 20px;
+    }
+    
+    .search-container {
+      margin: 0 1rem;
+    }
+    
+    .search-overlay {
+      padding-top: 100px;
     }
     
     .logo-image {
