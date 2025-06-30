@@ -216,6 +216,14 @@
     width: 100%;
     height: 6px;
     z-index: 3;
+    opacity: 0;
+    animation: fadeInBorder 1s ease-out 0.5s forwards;
+  }
+  
+  @keyframes fadeInBorder {
+    to {
+      opacity: 1;
+    }
   }
   
   .border-line {
@@ -350,8 +358,8 @@
   
   .logo-link:hover,
   .logo-text:hover {
-    transform: scale(1.02);
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    transform: scale(1.01);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
   }
   
   .logo-image {
@@ -538,22 +546,20 @@
   @keyframes borderGlow {
     0%, 100% {
       opacity: 1;
-      transform: scaleY(1);
     }
     50% {
-      opacity: 0.7;
-      transform: scaleY(1.2);
+      opacity: 0.8;
     }
   }
   
   @keyframes ornamentPulse {
     0%, 100% {
       opacity: 1;
-      transform: translate(-50%, -50%) scaleX(1);
+      transform: translate(-50%, -50%);
     }
     50% {
-      opacity: 0.8;
-      transform: translate(-50%, -50%) scaleX(1.1);
+      opacity: 0.7;
+      transform: translate(-50%, -50%);
     }
   }
   
@@ -563,8 +569,8 @@
       transform: translateY(-50%) scaleX(-1);
     }
     50% {
-      opacity: 0.8;
-      transform: translateY(-50%) scaleX(-1.1);
+      opacity: 0.7;
+      transform: translateY(-50%) scaleX(-1);
     }
   }
   
