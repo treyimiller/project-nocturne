@@ -8,5 +8,11 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "background_color": "#0E0E10",
+    "background_muted": "#1A1A1C",
+    "background_ui": "#1C1C1F",
+    "foreground_color": "#E1E1E6",
+    "accent_red": "#D72638"
+  }
 }
