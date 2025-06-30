@@ -270,19 +270,16 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 2px;
+    width: 60px;
+    height: 1px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.4) 15%,
-      rgba(255, 255, 255, 0.7) 30%,
-      rgba(255, 255, 255, 0.9) 50%,
-      rgba(255, 255, 255, 0.7) 70%,
-      rgba(255, 255, 255, 0.4) 85%,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 40%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0.2) 80%,
       transparent 100%);
-    border-radius: 1px;
-    filter: blur(0.2px);
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
     animation: ornamentPulse 6s ease-in-out infinite;
   }
   
@@ -291,21 +288,20 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 30px;
-    height: 2px;
+    width: 20px;
+    height: 1px;
     background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.4) 0%,
       rgba(255, 255, 255, 0.1) 100%);
-    border-radius: 1px;
   }
   
   .ornament-left {
-    left: calc(50% - 50px);
+    left: calc(50% - 40px);
     animation: ornamentPulse 6s ease-in-out infinite 1s;
   }
   
   .ornament-right {
-    right: calc(50% - 50px);
+    right: calc(50% - 40px);
     transform: translateY(-50%) scaleX(-1);
     animation: ornamentPulseRight 6s ease-in-out infinite 1s;
   }
@@ -388,15 +384,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     background: none;
     border: none;
     color: var(--color-foreground);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    border-radius: 6px;
+    border-radius: 4px;
   }
   
   .header-icon:hover {
@@ -406,14 +402,16 @@
   }
   
   .header-icon svg {
-    opacity: 0.6;
+    width: 18px;
+    height: 18px;
+    opacity: 0.9;
     transition: all 0.3s ease;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   }
   
   .header-icon:hover svg {
-    opacity: 0.9;
-    transform: scale(1.05);
+    opacity: 1;
+    transform: scale(1.1);
   }
   
   /* Cart Count Badge */
