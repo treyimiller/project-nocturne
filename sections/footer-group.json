@@ -14,8 +14,13 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "privacy_policy_url": "shopify://policies/privacy-policy",
+        "terms_conditions_url": "shopify://policies/privacy-policy",
+        "returns_policy_url": "shopify://policies/privacy-policy",
+        "contact_url": "shopify://policies/privacy-policy",
         "menu": "",
-        "show_payment_icons": true
+        "show_payment_icons": true,
+        "additional_text": "\"Audentia omnia vincit\""
       }
     }
   },
