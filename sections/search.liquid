@@ -55,9 +55,11 @@
           <div class="search-results-header">
             <h2 class="results-title">Search Results</h2>
             <p class="results-count">
-              {{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count | default: search.results_count }} 
-              {% if search.results_count == 1 %}result{% else %}results{% endif %} 
-              for "{{ search.terms }}"
+              {% if search.results_count == 1 %}
+                1 result found for "{{ search.terms }}"
+              {% else %}
+                {{ search.results_count }} results found for "{{ search.terms }}"
+              {% endif %}
             </p>
           </div>
 
@@ -220,8 +222,9 @@
   
   /* Search Form */
   .search-form {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+    width: 100%;
   }
   
   .search-input-container {
@@ -323,8 +326,11 @@
   .search-results-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2.5rem;
+    gap: 3rem;
     margin-bottom: 3rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .search-result-item {
@@ -336,7 +342,8 @@
       0 8px 32px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(215, 38, 56, 0.02);
     transition: all 0.3s ease;
-    min-height: 400px;
+    min-height: 450px;
+    width: 100%;
   }
   
   .search-result-item:hover {
@@ -642,7 +649,8 @@
     
     .search-results-grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 2.5rem;
+      max-width: 1000px;
     }
     
     .search-header {
@@ -663,7 +671,8 @@
     
     .search-results-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 2rem;
+      max-width: 700px;
     }
     
     .result-content {
@@ -671,7 +680,7 @@
     }
     
     .search-result-item {
-      min-height: 350px;
+      min-height: 380px;
     }
   }
   
@@ -686,7 +695,11 @@
     }
     
     .search-input-container {
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+    
+    .search-results-grid {
+      max-width: 400px;
     }
     
     .search-input {
