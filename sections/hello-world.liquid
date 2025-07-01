@@ -187,34 +187,36 @@
     </div>
     
     <div class="email-form">
-      <form action="{{ routes.account_url }}" method="post" class="newsletter-form">
-        <input type="hidden" name="form_type" value="customer">
-        <input type="hidden" name="utf8" value="✓">
-        
-        <div class="form-group">
-          <input 
-            type="email" 
-            name="customer[email]" 
-            placeholder="Enter your email address"
-            class="email-input"
-            required
-          >
-          <button type="submit" class="email-submit">
-            Subscribe
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </div>
-        
-        <p class="email-disclaimer">
-          {% if section.settings.email_disclaimer %}
-            {{ section.settings.email_disclaimer }}
-          {% else %}
-            Be the first to know about new releases and exclusive offers.
-          {% endif %}
-        </p>
-      </form>
+      <div class="email-form-box">
+        <form action="{{ routes.account_url }}" method="post" class="newsletter-form">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          
+          <div class="form-group">
+            <input 
+              type="email" 
+              name="customer[email]" 
+              placeholder="Enter your email address"
+              class="email-input"
+              required
+            >
+            <button type="submit" class="email-submit">
+              Subscribe
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          
+          <p class="email-disclaimer">
+            {% if section.settings.email_disclaimer %}
+              {{ section.settings.email_disclaimer }}
+            {% else %}
+              Be the first to know about new releases and exclusive offers.
+            {% endif %}
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -1084,9 +1086,48 @@
     line-height: 1.6;
   }
   
-  .newsletter-form {
+  .email-form-box {
+    position: relative;
     max-width: 500px;
     margin: 0 auto;
+    background-color: var(--color-background-ui);
+    border: 2px solid rgba(215, 38, 56, 0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(215, 38, 56, 0.03),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+  }
+  
+  .email-form-box::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+      rgba(215, 38, 56, 0.06) 0%,
+      rgba(215, 38, 56, 0.02) 25%,
+      rgba(215, 38, 56, 0.04) 50%,
+      rgba(215, 38, 56, 0.02) 75%,
+      rgba(215, 38, 56, 0.06) 100%);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  .email-form-box:hover::before {
+    opacity: 1;
+  }
+  
+  .newsletter-form {
+    position: relative;
+    z-index: 2;
   }
   
   .form-group {
@@ -1101,8 +1142,8 @@
   .email-input {
     flex: 1;
     padding: 1rem 1.5rem;
-    background-color: var(--color-background-ui);
-    border: 2px solid rgba(215, 38, 56, 0.05);
+    background-color: var(--color-background);
+    border: 2px solid rgba(215, 38, 56, 0.06);
     border-right: none;
     color: var(--color-foreground);
     font-family: 'Oswald', sans-serif;
@@ -1118,7 +1159,8 @@
   }
   
   .email-input:focus {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(215, 38, 56, 0.15);
+    box-shadow: 0 0 0 2px rgba(215, 38, 56, 0.05);
   }
   
   .email-submit {
@@ -1126,8 +1168,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
-    background-color: var(--color-foreground);
-    color: var(--color-background);
+    background-color: rgba(215, 38, 56, 0.8);
+    color: var(--color-foreground);
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
@@ -1140,7 +1182,9 @@
   }
   
   .email-submit:hover {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(215, 38, 56, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(215, 38, 56, 0.3);
   }
   
   .email-disclaimer {
