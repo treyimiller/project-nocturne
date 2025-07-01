@@ -10,45 +10,29 @@
     <!-- Product Images Section -->
     <div class="product-media">
       {% if product.images.size > 0 %}
-        <!-- Main Product Image -->
-        <div class="product-main-image">
-          <div class="main-image-container">
-            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img 
-              src="{{ featured_image | image_url: width: 800 }}" 
-              alt="{{ featured_image.alt | default: product.title }}"
-              class="main-product-img"
-              id="main-product-image"
-              loading="eager"
-            >
-            
-            <!-- Image Zoom Overlay -->
-            <div class="image-zoom-overlay">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="M21 21l-4.35-4.35"/>
-                <path d="M11 8v6M8 11h6"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product Thumbnails -->
-        {% if product.images.size > 1 %}
-          <div class="product-thumbnails">
-            <div class="thumbnails-container">
-              {% for image in product.images %}
-                <div class="thumbnail-item {% if forloop.first %}active{% endif %}" data-image="{{ image | image_url: width: 800 }}">
-                  <img 
-                    src="{{ image | image_url: width: 150 }}" 
-                    alt="{{ image.alt | default: product.title }}"
-                    loading="lazy"
-                  >
+        <div class="product-images-grid">
+          {% for image in product.images %}
+            <div class="product-image-item">
+              <div class="image-container">
+                <img 
+                  src="{{ image | image_url: width: 600 }}" 
+                  alt="{{ image.alt | default: product.title }}"
+                  class="product-grid-img"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                >
+                
+                <!-- Image Zoom Overlay -->
+                <div class="image-zoom-overlay">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                    <path d="M11 8v6M8 11h6"/>
+                  </svg>
                 </div>
-              {% endfor %}
+              </div>
             </div>
-          </div>
-        {% endif %}
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
 
@@ -219,20 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const addToCartBtn = document.querySelector('.add-to-cart-btn');
   const mainImage = document.getElementById('main-product-image');
   
-  // Thumbnail switching
-  const thumbnails = document.querySelectorAll('.thumbnail-item');
-  thumbnails.forEach(thumbnail => {
-    thumbnail.addEventListener('click', function() {
-      const imageUrl = this.dataset.image;
-      if (mainImage && imageUrl) {
-        mainImage.src = imageUrl;
-        
-        // Update active thumbnail
-        thumbnails.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-      }
-    });
-  });
+  // Image grid interactions (optional click to enlarge functionality can be added here)
   
   // Quantity controls
   const quantityInput = document.querySelector('.quantity-input');
@@ -382,9 +353,15 @@ document.addEventListener('DOMContentLoaded', function() {
     top: 2rem;
   }
   
-  .product-main-image {
+  .product-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .product-image-item {
     position: relative;
-    margin-bottom: 1.5rem;
     background-color: var(--color-background-ui);
     border-radius: 8px;
     overflow: hidden;
@@ -393,15 +370,25 @@ document.addEventListener('DOMContentLoaded', function() {
       0 4px 16px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(215, 38, 56, 0.02);
     border: 2px solid rgba(215, 38, 56, 0.05);
+    transition: all 0.3s ease;
   }
   
-  .main-image-container {
+  .product-image-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 6px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(215, 38, 56, 0.04);
+    border-color: rgba(215, 38, 56, 0.1);
+  }
+  
+  .image-container {
     position: relative;
     aspect-ratio: 1;
     overflow: hidden;
   }
   
-  .main-product-img {
+  .product-grid-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -410,10 +397,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .image-zoom-overlay {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     display: flex;
@@ -426,47 +413,12 @@ document.addEventListener('DOMContentLoaded', function() {
     backdrop-filter: blur(10px);
   }
   
-  .main-image-container:hover .image-zoom-overlay {
+  .image-container:hover .image-zoom-overlay {
     opacity: 1;
   }
   
-  .main-image-container:hover .main-product-img {
+  .image-container:hover .product-grid-img {
     transform: scale(1.05);
-  }
-  
-  /* Product Thumbnails */
-  .product-thumbnails {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  
-  .thumbnail-item {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    background-color: var(--color-background-ui);
-  }
-  
-  .thumbnail-item.active {
-    border-color: rgba(215, 38, 56, 0.4);
-    box-shadow: 0 0 0 1px rgba(215, 38, 56, 0.2);
-  }
-  
-  .thumbnail-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .thumbnail-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
   
   /* Product Details Section */
@@ -827,8 +779,9 @@ document.addEventListener('DOMContentLoaded', function() {
       position: static;
     }
     
-    .product-thumbnails {
-      justify-content: center;
+    .product-images-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.75rem;
     }
   }
   
@@ -846,9 +799,9 @@ document.addEventListener('DOMContentLoaded', function() {
       font-size: 1.5rem;
     }
     
-    .thumbnail-item {
-      width: 60px;
-      height: 60px;
+    .product-images-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
     }
     
     .add-to-cart-btn {
@@ -870,6 +823,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     .product-actions {
       gap: 1rem;
+    }
+    
+    .product-images-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 {% endstylesheet %}
