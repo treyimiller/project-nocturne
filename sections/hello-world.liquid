@@ -172,33 +172,20 @@
 </section>
 
 {% stylesheet %}
-  /* Global Texture Background */
-  html {
-    background: 
-      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.025) 0%, transparent 60%),
-      radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
-      radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 45%);
-    background-color: var(--color-background);
-  }
-  
-  html::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  /* Global Texture Background - Applied to body for maximum compatibility */
+  body {
+    background-color: #0E0E10 !important;
     background-image: 
-      radial-gradient(circle at 15% 35%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      radial-gradient(circle at 85% 65%, rgba(255, 255, 255, 0.015) 0.5px, transparent 0.5px),
-      radial-gradient(circle at 45% 15%, rgba(255, 255, 255, 0.01) 0.8px, transparent 0.8px);
-    background-size: 80px 80px, 120px 120px, 100px 100px;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.6;
-    animation: backgroundDrift 120s linear infinite;
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+      radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 45%),
+      radial-gradient(circle at 15% 35%, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      radial-gradient(circle at 85% 65%, rgba(255, 255, 255, 0.03) 0.5px, transparent 0.5px),
+      radial-gradient(circle at 45% 15%, rgba(255, 255, 255, 0.02) 0.8px, transparent 0.8px) !important;
+    background-size: 150px 150px, 200px 200px, 180px 180px, 120px 120px, 160px 160px, 80px 80px, 120px 120px, 100px 100px !important;
+    animation: globalTextureDrift 180s linear infinite !important;
   }
 
   /* Hero Section */
@@ -510,7 +497,7 @@
   .featured-products {
     position: relative;
     padding: 5rem 2rem;
-    background-color: var(--color-background);
+    background: transparent;
   }
   
   .featured-products::before {
@@ -773,9 +760,7 @@
   .email-capture {
     position: relative;
     padding: 5rem 2rem;
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.02) 0%, 
-      rgba(255, 255, 255, 0.05) 100%);
+    background: transparent;
   }
   
   .email-capture::before {
@@ -921,12 +906,12 @@
     }
   }
   
-  @keyframes backgroundDrift {
+  @keyframes globalTextureDrift {
     0% {
-      background-position: 0px 0px, 0px 0px, 0px 0px;
+      background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px;
     }
     100% {
-      background-position: 80px 80px, -120px 120px, 100px -100px;
+      background-position: 150px 150px, -200px 200px, 180px -180px, 120px -120px, -160px 160px, 80px 80px, -120px 120px, 100px -100px;
     }
   }
   
