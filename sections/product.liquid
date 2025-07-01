@@ -284,6 +284,45 @@ document.addEventListener('DOMContentLoaded', function() {
   variantSelects.forEach(select => {
     select.addEventListener('change', updateVariant);
   });
+
+  // AJAX Add to Cart
+  const productForm = document.getElementById('product-form');
+  if (productForm) {
+    productForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(productForm);
+      const addToCartData = {
+        id: formData.get('id'),
+        quantity: parseInt(formData.get('quantity')) || 1
+      };
+
+      // Add variant options if they exist
+      const variantSelects = productForm.querySelectorAll('.variant-select');
+      variantSelects.forEach(select => {
+        if (select.name && select.value) {
+          addToCartData[select.name] = select.value;
+        }
+      });
+
+      try {
+        addToCartBtn.disabled = true;
+        addToCartBtn.querySelector('.btn-text').textContent = 'Adding...';
+        
+        await window.addToCart(addToCartData);
+        
+        // Reset button
+        addToCartBtn.disabled = false;
+        addToCartBtn.querySelector('.btn-text').textContent = 'Add to Cart';
+        
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        addToCartBtn.disabled = false;
+        addToCartBtn.querySelector('.btn-text').textContent = 'Add to Cart';
+        alert('Error adding item to cart. Please try again.');
+      }
+    });
+  }
 });
 </script>
 
