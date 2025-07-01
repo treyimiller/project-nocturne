@@ -11,7 +11,24 @@
   "sections": {
     "main": {
       "type": "hello-world",
-      "settings": {}
+      "settings": {
+        "hero_subtitle": "Exclusive Gothic Fashion",
+        "hero_title": "THE SAINTS & SINNERS COLLECTION",
+        "hero_description": "Embrace the darkness with our exclusive gothic fashion collection. Where elegance meets rebellion.",
+        "hero_background_image": "shopify://shop_images/AD2.png",
+        "primary_cta_text": "Shop Collection",
+        "primary_cta_url": "",
+        "secondary_cta_text": "Learn More",
+        "secondary_cta_url": "",
+        "featured_title": "Featured Collection",
+        "featured_description": "Discover our most coveted pieces, carefully curated for the discerning gothic aesthetic.",
+        "featured_collection": "",
+        "products_count": 4,
+        "view_all_url": "",
+        "email_title": "Join the Inner Circle",
+        "email_description": "Be the first to know about new releases, exclusive offers, and behind-the-scenes content.",
+        "email_disclaimer": "Be the first to know about new releases and exclusive offers."
+      }
     }
   },
   "order": [
