@@ -11,6 +11,16 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "announcement_text": "The Inner Circle - Now on Discord",
+        "announcement_url": "",
+        "announcement_icon": "🗿",
+        "show_close_button": true
+      }
+    },
     "header": {
       "type": "header",
       "settings": {
@@ -21,6 +31,7 @@
     }
   },
   "order": [
+    "announcement",
     "header"
   ]
 }
