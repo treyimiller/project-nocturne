@@ -60,6 +60,20 @@
 </section>
 
 
+<!-- Decorative Divider -->
+<div class="section-divider">
+  <div class="divider-line"></div>
+  <div class="divider-ornament">
+    <div class="ornament-diamond"></div>
+    <div class="ornament-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="divider-line"></div>
+</div>
+
 <!-- Featured Products Section -->
 <section class="featured-products">
   <div class="section-header">
@@ -121,6 +135,20 @@
     </div>
   {% endif %}
 </section>
+
+<!-- Decorative Divider -->
+<div class="section-divider">
+  <div class="divider-line"></div>
+  <div class="divider-ornament">
+    <div class="ornament-diamond"></div>
+    <div class="ornament-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="divider-line"></div>
+</div>
 
 <!-- Email Capture Section -->
 <section class="email-capture">
@@ -505,11 +533,99 @@
   
   
   
+  /* Section Dividers */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    position: relative;
+  }
+  
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.2) 50%, 
+      transparent 100%);
+    position: relative;
+  }
+  
+  .divider-ornament {
+    position: relative;
+    margin: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ornament-diamond {
+    width: 12px;
+    height: 12px;
+    background: var(--color-foreground);
+    transform: rotate(45deg);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .ornament-lines {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1;
+  }
+  
+  .ornament-lines span {
+    width: 30px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+    display: block;
+  }
+  
+  .ornament-lines span:nth-child(2) {
+    width: 20px;
+    margin: 0 auto;
+  }
+  
+  /* Divider Animation */
+  .section-divider {
+    animation: dividerPulse 8s ease-in-out infinite;
+  }
+  
+  @keyframes dividerPulse {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
   /* Featured Products */
   .featured-products {
     position: relative;
     padding: 5rem 2rem;
     background: transparent;
+  }
+  
+  .featured-products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.1) 80%,
+      transparent 100%);
+    z-index: 1;
   }
   
   
@@ -528,6 +644,22 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
+    position: relative;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%);
   }
   
   .section-description {
@@ -755,7 +887,26 @@
   .email-capture {
     position: relative;
     padding: 5rem 2rem;
-    background: transparent;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.02) 0%, 
+      rgba(255, 255, 255, 0.01) 50%,
+      rgba(255, 255, 255, 0.03) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .email-capture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
+    z-index: 1;
+    pointer-events: none;
   }
   
   
