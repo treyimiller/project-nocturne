@@ -331,12 +331,12 @@
   /* Search Results Grid */
   .search-results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-bottom: 2rem;
     width: 100%;
     padding: 0 2rem;
-    max-width: 1600px;
+    max-width: 1400px;
     margin: 0 auto 2rem;
   }
   
@@ -349,9 +349,8 @@
       0 8px 32px rgba(0, 0, 0, 0.2),
       inset 0 1px 0 rgba(215, 38, 56, 0.02);
     transition: all 0.3s ease;
-    min-height: 320px;
+    min-height: 350px;
     width: 100%;
-    min-width: 250px;
   }
   
   .search-result-item:hover {
@@ -656,8 +655,8 @@
     }
     
     .search-results-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
       padding: 0 1.5rem;
       max-width: 1200px;
     }
@@ -679,7 +678,7 @@
     }
     
     .search-results-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       padding: 0 1rem;
       max-width: 800px;
@@ -690,8 +689,7 @@
     }
     
     .search-result-item {
-      min-height: 280px;
-      min-width: 220px;
+      min-height: 300px;
     }
   }
   
