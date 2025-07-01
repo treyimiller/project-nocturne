@@ -44,9 +44,6 @@
     {% if section.settings.primary_cta_text %}
       <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="hero-cta-button">
         {{ section.settings.primary_cta_text }}
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
       </a>
     {% endif %}
   </div>
@@ -165,6 +162,23 @@
 </section>
 
 {% stylesheet %}
+  /* Page Background Texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
+      radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.008) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
   /* Hero Section */
   .hero-section {
     position: relative;
@@ -407,13 +421,6 @@
     opacity: 1;
   }
   
-  .hero-cta-button svg {
-    transition: transform 0.3s ease;
-  }
-  
-  .hero-cta-button:hover svg {
-    transform: translateX(3px);
-  }
   
   
   
