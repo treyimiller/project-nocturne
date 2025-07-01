@@ -111,6 +111,7 @@
     const searchOverlay = document.getElementById('search-overlay');
     const searchClose = document.getElementById('search-close');
     const searchInput = document.getElementById('search-input');
+    const searchForm = document.querySelector('.search-form');
     
     // Open search
     if (searchToggle) {
@@ -129,6 +130,18 @@
     function closeSearch() {
       searchOverlay.style.display = 'none';
       document.body.style.overflow = 'auto';
+    }
+    
+    // Close search on form submission
+    if (searchForm) {
+      searchForm.addEventListener('submit', function(e) {
+        // Only close if there's a search query
+        if (searchInput && searchInput.value.trim() !== '') {
+          closeSearch();
+        } else {
+          e.preventDefault(); // Prevent empty search submission
+        }
+      });
     }
     
     // Close search on close button
