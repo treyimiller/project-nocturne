@@ -454,15 +454,16 @@
     backdrop-filter: blur(10px);
     z-index: 1000;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding-top: 100px;
+    padding: 2rem;
   }
   
   .search-container {
+    position: relative;
     width: 100%;
     max-width: 600px;
-    margin: 0 2rem;
+    margin: 0 4rem;
   }
   
   .search-box {
@@ -515,17 +516,18 @@
   
   .search-close {
     position: absolute;
-    right: 1rem;
+    right: -3rem;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     color: var(--color-foreground);
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 50%;
     transition: all 0.3s ease;
-    opacity: 0.7;
+    opacity: 0.8;
+    backdrop-filter: blur(10px);
   }
   
   .search-close:hover {
@@ -626,11 +628,16 @@
     }
     
     .search-container {
-      margin: 0 1rem;
+      margin: 0 3rem;
     }
     
     .search-overlay {
-      padding-top: 80px;
+      padding: 1rem;
+    }
+    
+    .search-close {
+      right: -2rem;
+      padding: 0.5rem;
     }
     
     .logo-image {
