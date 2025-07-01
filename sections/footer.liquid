@@ -18,9 +18,8 @@
   
   <!-- Footer Content -->
   <div class="footer-content">
-    <!-- Customer Service Links -->
+    <!-- Policy Links -->
     <div class="footer-section links-section">
-      <h3 class="footer-title">Customer Care</h3>
       <nav class="footer-links">
         {% if section.settings.privacy_policy_url != blank %}
           <a href="{{ section.settings.privacy_policy_url }}" class="footer-link">Privacy Policy</a>
@@ -290,9 +289,11 @@
   /* Footer Links */
   .footer-links {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    flex-direction: row;
+    gap: 2rem;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
   
   .footer-link {
@@ -405,7 +406,7 @@
     }
     
     .footer-links {
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
   }
   
@@ -436,6 +437,11 @@
     .payment-bottom {
       margin-top: 1rem;
       padding-top: 1rem;
+    }
+    
+    .footer-links {
+      gap: 1rem;
+      flex-direction: column;
     }
     
     .footer-link {
