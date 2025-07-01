@@ -83,12 +83,12 @@
     width: 100%;
     height: 100%;
     background-image: 
-      radial-gradient(circle at 25% 75%, rgba(255, 255, 255, 0.03) 0.5px, transparent 0.5px),
-      radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.02) 0.5px, transparent 0.5px),
-      radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      radial-gradient(circle at 25% 75%, rgba(215, 38, 56, 0.04) 0.5px, transparent 0.5px),
+      radial-gradient(circle at 75% 25%, rgba(215, 38, 56, 0.03) 0.5px, transparent 0.5px),
+      radial-gradient(circle at 50% 90%, rgba(215, 38, 56, 0.02) 1px, transparent 1px);
     background-size: 20px 20px, 30px 30px, 40px 40px;
     animation: footerTextureShift 50s linear infinite;
-    opacity: 0.4;
+    opacity: 0.6;
   }
   
   .footer-gradient {
@@ -99,8 +99,8 @@
     height: 100%;
     background: linear-gradient(180deg, 
       transparent 0%, 
-      rgba(255, 255, 255, 0.01) 30%, 
-      rgba(255, 255, 255, 0.02) 100%);
+      rgba(215, 38, 56, 0.015) 30%, 
+      rgba(215, 38, 56, 0.03) 100%);
     z-index: 2;
   }
   
@@ -127,13 +127,13 @@
     top: 2px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 10%,
-      rgba(255, 255, 255, 0.2) 25%,
-      rgba(255, 255, 255, 0.4) 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.4) 60%,
-      rgba(255, 255, 255, 0.2) 75%,
-      rgba(255, 255, 255, 0.05) 90%,
+      rgba(215, 38, 56, 0.05) 10%,
+      rgba(215, 38, 56, 0.15) 25%,
+      rgba(215, 38, 56, 0.25) 40%,
+      rgba(215, 38, 56, 0.3) 50%,
+      rgba(215, 38, 56, 0.25) 60%,
+      rgba(215, 38, 56, 0.15) 75%,
+      rgba(215, 38, 56, 0.05) 90%,
       transparent 100%);
     filter: blur(0.3px);
     animation: borderGlow 10s ease-in-out infinite;
@@ -143,13 +143,13 @@
     top: 4px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.03) 15%,
-      rgba(255, 255, 255, 0.1) 35%,
-      rgba(255, 255, 255, 0.25) 45%,
-      rgba(255, 255, 255, 0.3) 50%,
-      rgba(255, 255, 255, 0.25) 55%,
-      rgba(255, 255, 255, 0.1) 65%,
-      rgba(255, 255, 255, 0.03) 85%,
+      rgba(215, 38, 56, 0.03) 15%,
+      rgba(215, 38, 56, 0.08) 35%,
+      rgba(215, 38, 56, 0.18) 45%,
+      rgba(215, 38, 56, 0.2) 50%,
+      rgba(215, 38, 56, 0.18) 55%,
+      rgba(215, 38, 56, 0.08) 65%,
+      rgba(215, 38, 56, 0.03) 85%,
       transparent 100%);
     filter: blur(0.2px);
     animation: borderGlow 10s ease-in-out infinite 3s;
@@ -172,11 +172,11 @@
     height: 1px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.2) 20%,
-      rgba(255, 255, 255, 0.5) 40%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(255, 255, 255, 0.5) 60%,
-      rgba(255, 255, 255, 0.2) 80%,
+      rgba(215, 38, 56, 0.15) 20%,
+      rgba(215, 38, 56, 0.35) 40%,
+      rgba(215, 38, 56, 0.4) 50%,
+      rgba(215, 38, 56, 0.35) 60%,
+      rgba(215, 38, 56, 0.15) 80%,
       transparent 100%);
     animation: ornamentPulse 8s ease-in-out infinite;
   }
@@ -331,10 +331,10 @@
     font-family: 'Oswald', sans-serif;
     font-size: 0.75rem;
     font-weight: 300;
-    color: var(--color-foreground);
+    color: rgba(215, 38, 56, 0.8);
     letter-spacing: 0.05em;
-    opacity: 0.5;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 8px rgba(215, 38, 56, 0.3);
   }
   
   /* Animations */
