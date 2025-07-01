@@ -18,20 +18,6 @@
   
   <!-- Footer Content -->
   <div class="footer-content">
-    <!-- Payment Options -->
-    <div class="footer-section payment-section">
-      <h3 class="footer-title">Secure Payments</h3>
-      <div class="payment-icons">
-        {% if section.settings.show_payment_icons %}
-          {% for type in shop.enabled_payment_types %}
-            <div class="payment-icon">
-              {{ type | payment_type_svg_tag }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-    
     <!-- Customer Service Links -->
     <div class="footer-section links-section">
       <h3 class="footer-title">Customer Care</h3>
@@ -64,6 +50,19 @@
       {% endif %}
     </div>
   </div>
+  
+  <!-- Payment Options Bottom -->
+  {% if section.settings.show_payment_icons %}
+    <div class="payment-bottom">
+      <div class="payment-icons">
+        {% for type in shop.enabled_payment_types %}
+          <div class="payment-icon">
+            {{ type | payment_type_svg_tag }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </footer>
 
 {% stylesheet %}
@@ -226,10 +225,11 @@
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
     align-items: start;
     z-index: 3;
+    margin-bottom: 2rem;
   }
   
   /* Footer Sections */
@@ -252,27 +252,39 @@
     opacity: 0.9;
   }
   
-  /* Payment Icons */
+  /* Payment Bottom Section */
+  .payment-bottom {
+    position: relative;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 3;
+  }
+  
   .payment-icons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 1rem;
     justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
   }
   
   .payment-icon {
     transition: all 0.3s ease;
-    opacity: 0.7;
+    opacity: 0.6;
   }
   
   .payment-icon:hover {
-    opacity: 1;
-    transform: translateY(-2px);
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
   
   .payment-icon svg {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
     color: var(--color-foreground);
+    height: 24px;
+    width: auto;
   }
   
   /* Footer Links */
@@ -381,10 +393,15 @@
     .footer-content {
       grid-template-columns: 1fr;
       gap: 2rem;
+      margin-bottom: 1.5rem;
     }
     
     .payment-icons {
-      gap: 0.5rem;
+      gap: 0.75rem;
+    }
+    
+    .payment-icon svg {
+      height: 20px;
     }
     
     .footer-links {
@@ -400,6 +417,7 @@
     
     .footer-content {
       gap: 1.5rem;
+      margin-bottom: 1rem;
     }
     
     .footer-title {
@@ -408,7 +426,16 @@
     }
     
     .payment-icons {
-      gap: 0.4rem;
+      gap: 0.5rem;
+    }
+    
+    .payment-icon svg {
+      height: 18px;
+    }
+    
+    .payment-bottom {
+      margin-top: 1rem;
+      padding-top: 1rem;
     }
     
     .footer-link {
