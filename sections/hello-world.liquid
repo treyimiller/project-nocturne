@@ -1,5 +1,17 @@
 <!-- Hero Section -->
 <section class="hero-section">
+  {% if section.settings.hero_background_image %}
+    <!-- Hero Background Image -->
+    <div class="hero-background">
+      <img 
+        src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
+        alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
+        class="hero-bg-image"
+        loading="eager"
+      >
+    </div>
+  {% endif %}
+  
   <!-- Background Elements -->
   <div class="hero-texture">
     <div class="hero-noise"></div>
@@ -50,18 +62,6 @@
         {% endif %}
       </div>
     </div>
-    
-    {% if section.settings.hero_image %}
-      <div class="hero-image">
-        <img 
-          src="{{ section.settings.hero_image | image_url: width: 600 }}" 
-          alt="{{ section.settings.hero_image.alt | default: shop.name }}"
-          width="600"
-          height="auto"
-          loading="eager"
-        >
-      </div>
-    {% endif %}
   </div>
 </section>
 
@@ -191,6 +191,26 @@
     overflow: hidden;
   }
   
+  /* Hero Background Image */
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+    filter: brightness(0.7) contrast(1.1);
+  }
+  
   .hero-texture {
     position: absolute;
     top: 0;
@@ -283,17 +303,17 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
     z-index: 3;
   }
   
   .hero-text {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   
   .hero-subtitle {
@@ -381,18 +401,6 @@
     background-color: rgba(255, 255, 255, 0.05);
   }
   
-  .hero-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .hero-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3));
-  }
   
   
   /* Featured Products */
@@ -696,17 +704,7 @@
   /* Responsive Design */
   @media (max-width: 768px) {
     .hero-content {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      text-align: center;
-    }
-    
-    .hero-text {
-      align-items: center;
-    }
-    
-    .hero-cta {
-      justify-content: center;
+      padding: 0 1rem;
     }
     
     .products-grid {
@@ -778,8 +776,9 @@
     },
     {
       "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero Image"
+      "id": "hero_background_image",
+      "label": "Hero Background Image",
+      "info": "Full-width background image that will blend with the dark theme"
     },
     {
       "type": "text",
