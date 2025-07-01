@@ -30,8 +30,8 @@
         </svg>
       </div>
 
-      <!-- Error Title -->
-      <h1 class="error-title">{{ '404.title' | t | default: 'Page Not Found' }}</h1>
+      <!-- Error Number -->
+      <div class="error-number">404</div>
 
       <!-- Error Message -->
       <p class="error-message">
@@ -230,16 +230,16 @@
     animation: pulse 2s ease-in-out infinite;
   }
   
-  /* Error Title */
-  .error-title {
+  /* Error Number */
+  .error-number {
     font-family: 'Oswald', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 600;
-    color: rgba(215, 38, 56, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 4px 16px rgba(215, 38, 56, 0.3);
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 700;
+    color: rgba(215, 38, 56, 0.8);
+    text-shadow: 0 4px 20px rgba(215, 38, 56, 0.3);
+    margin-bottom: 1rem;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
   }
   
   /* Error Message */
