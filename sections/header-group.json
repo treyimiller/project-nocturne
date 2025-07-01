@@ -17,7 +17,7 @@
         "show_announcement": true,
         "announcement_text": "The Inner Circle - Now on Discord",
         "announcement_url": "",
-        "announcement_icon": "🗿",
+        "announcement_icon": "",
         "show_close_button": true
       }
     },
