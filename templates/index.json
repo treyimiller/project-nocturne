@@ -9,6 +9,16 @@
  */
 {
   "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "announcement_text": "The Inner Circle - Now on Discord",
+        "announcement_url": "",
+        "announcement_icon": "🗿",
+        "show_close_button": true
+      }
+    },
     "main": {
       "type": "hello-world",
       "settings": {
@@ -30,6 +40,7 @@
     }
   },
   "order": [
+    "announcement",
     "main"
   ]
 }
