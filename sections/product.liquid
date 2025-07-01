@@ -143,7 +143,7 @@
               >
                 <span class="btn-text">
                   {% if current_variant.available %}
-                    Add to Cart
+                    Reserve Item
                   {% else %}
                     Sold Out
                   {% endif %}
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
         addToCartBtn.disabled = !isAvailable;
         const btnText = addToCartBtn.querySelector('.btn-text');
         if (btnText) {
-          btnText.textContent = isAvailable ? 'Add to Cart' : 'Sold Out';
+          btnText.textContent = isAvailable ? 'Reserve Item' : 'Sold Out';
         }
       }
     }
@@ -307,19 +307,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         addToCartBtn.disabled = true;
-        addToCartBtn.querySelector('.btn-text').textContent = 'Adding...';
+        addToCartBtn.querySelector('.btn-text').textContent = 'Reserving...';
         
         await window.addToCart(addToCartData);
         
         // Reset button
         addToCartBtn.disabled = false;
-        addToCartBtn.querySelector('.btn-text').textContent = 'Add to Cart';
+        addToCartBtn.querySelector('.btn-text').textContent = 'Reserve Item';
         
       } catch (error) {
         console.error('Error adding to cart:', error);
         addToCartBtn.disabled = false;
-        addToCartBtn.querySelector('.btn-text').textContent = 'Add to Cart';
-        alert('Error adding item to cart. Please try again.');
+        addToCartBtn.querySelector('.btn-text').textContent = 'Reserve Item';
+        alert('Error reserving item. Please try again.');
       }
     });
   }
@@ -678,8 +678,8 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 1.25rem 2.5rem;
     width: 100%;
     background: linear-gradient(135deg, 
-      rgba(215, 38, 56, 0.9) 0%, 
-      rgba(160, 27, 42, 0.95) 100%);
+      rgba(215, 38, 56, 0.4) 0%, 
+      rgba(160, 27, 42, 0.5) 100%);
     color: var(--color-foreground);
     font-family: 'Oswald', sans-serif;
     font-size: 1rem;
@@ -691,14 +691,14 @@ document.addEventListener('DOMContentLoaded', function() {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 
-      0 8px 25px rgba(215, 38, 56, 0.3),
+      0 8px 25px rgba(215, 38, 56, 0.15),
       0 4px 10px rgba(0, 0, 0, 0.2);
   }
   
   .add-to-cart-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 
-      0 12px 35px rgba(215, 38, 56, 0.4),
+      0 12px 35px rgba(215, 38, 56, 0.2),
       0 6px 15px rgba(0, 0, 0, 0.3);
   }
   
