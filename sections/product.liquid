@@ -86,28 +86,34 @@
             <div class="product-variants">
               {% for option in product.options_with_values %}
                 <div class="variant-option">
-                  <label class="variant-label">{{ option.name }}</label>
-                  <div class="variant-selector">
-                    <select 
-                      class="variant-select" 
-                      name="options[{{ option.name | escape }}]" 
-                      data-option-index="{{ forloop.index0 }}"
-                    >
-                      {% for value in option.values %}
-                        <option 
-                          value="{{ value | escape }}"
-                          {% if option.selected_value == value %}selected{% endif %}
-                        >
-                          {{ value }}
-                        </option>
-                      {% endfor %}
-                    </select>
-                    <div class="select-arrow">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6,9 12,15 18,9"/>
-                      </svg>
-                    </div>
+                  <div class="variant-buttons" data-option-index="{{ forloop.index0 }}">
+                    {% for value in option.values %}
+                      <button 
+                        type="button"
+                        class="variant-btn {% if option.selected_value == value %}active{% endif %}"
+                        data-value="{{ value | escape }}"
+                        data-option-name="{{ option.name | escape }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {% endfor %}
                   </div>
+                  <!-- Hidden select for form submission -->
+                  <select 
+                    class="variant-select" 
+                    name="options[{{ option.name | escape }}]" 
+                    data-option-index="{{ forloop.index0 }}"
+                    style="display: none;"
+                  >
+                    {% for value in option.values %}
+                      <option 
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}selected{% endif %}
+                      >
+                        {{ value }}
+                      </option>
+                    {% endfor %}
+                  </select>
                 </div>
               {% endfor %}
             </div>
@@ -169,7 +175,9 @@
 
               <!-- Smart Payment Buttons -->
               <div class="smart-payment-buttons">
-                {{ form | payment_button }}
+                {% if shop.enabled_payment_types.size > 0 %}
+                  {{ form | payment_button }}
+                {% endif %}
               </div>
             </div>
           </div>
@@ -177,14 +185,8 @@
       </div>
 
       <!-- Product Meta Information -->
-      {% if product.vendor != blank or product.type != blank %}
+      {% if product.type != blank or product.tags.size > 0 %}
         <div class="product-meta">
-          {% if product.vendor != blank %}
-            <div class="meta-item">
-              <span class="meta-label">Brand:</span>
-              <span class="meta-value">{{ product.vendor }}</span>
-            </div>
-          {% endif %}
           {% if product.type != blank %}
             <div class="meta-item">
               <span class="meta-label">Type:</span>
@@ -249,9 +251,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  // Variant button handling
+  const variantBtns = document.querySelectorAll('.variant-btn');
+  
+  variantBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const value = this.dataset.value;
+      const optionName = this.dataset.optionName;
+      const container = this.closest('.variant-option');
+      const hiddenSelect = container.querySelector('.variant-select');
+      
+      // Update button states
+      container.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Update hidden select
+      if (hiddenSelect) {
+        hiddenSelect.value = value;
+      }
+      
+      // Update variant
+      updateVariant();
+    });
+  });
+  
   // Variant selection handling
   function updateVariant() {
-    if (!variantSelects.length || !variantIdSelect) return;
+    if (!variantIdSelect) return;
     
     const selectedOptions = Array.from(variantSelects).map(select => select.value);
     const matchingVariant = Array.from(variantIdSelect.options).find(option => {
@@ -530,51 +556,56 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-bottom: 1.5rem;
   }
   
-  .variant-label {
-    display: block;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
+  .variant-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
   
-  .variant-selector {
+  .variant-btn {
     position: relative;
-  }
-  
-  .variant-select {
-    width: 100%;
     background-color: var(--color-background-ui);
     border: 2px solid rgba(215, 38, 56, 0.1);
     border-radius: 6px;
-    padding: 0.75rem 1rem;
-    padding-right: 3rem;
+    padding: 0.75rem 1.25rem;
     color: var(--color-foreground);
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
-    font-weight: 400;
-    appearance: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-width: 60px;
+    text-align: center;
   }
   
-  .variant-select:focus {
-    outline: none;
+  .variant-btn:hover {
     border-color: rgba(215, 38, 56, 0.3);
-    box-shadow: 0 0 0 2px rgba(215, 38, 56, 0.1);
+    background-color: rgba(215, 38, 56, 0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
   
-  .select-arrow {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+  .variant-btn.active {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.2) 0%, 
+      rgba(160, 27, 42, 0.25) 100%);
+    border-color: rgba(215, 38, 56, 0.4);
     color: var(--color-foreground);
-    opacity: 0.6;
+    box-shadow: 
+      0 0 0 1px rgba(215, 38, 56, 0.2),
+      0 4px 12px rgba(215, 38, 56, 0.2);
+  }
+  
+  .variant-btn.active:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.3) 0%, 
+      rgba(160, 27, 42, 0.35) 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 0 0 1px rgba(215, 38, 56, 0.3),
+      0 6px 16px rgba(215, 38, 56, 0.3);
   }
   
   /* Product Actions */
@@ -687,7 +718,42 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   .smart-payment-buttons {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  
+  .smart-payment-buttons .shopify-payment-button {
+    width: 100%;
+  }
+  
+  .smart-payment-buttons .shopify-payment-button__button {
+    width: 100% !important;
+    border-radius: 6px !important;
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .smart-payment-buttons .shopify-payment-button__button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .smart-payment-buttons .shopify-payment-button__more-options {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    color: var(--color-foreground) !important;
+    opacity: 0.7 !important;
+    text-align: center !important;
+    margin-top: 0.75rem !important;
+    text-decoration: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .smart-payment-buttons .shopify-payment-button__more-options:hover {
+    opacity: 1 !important;
   }
   
   /* Product Meta */
