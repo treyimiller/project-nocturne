@@ -1,41 +1,558 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
+<!-- Collection Page Container -->
+<div class="collection-page full-width">
+  <!-- Atmospheric Background -->
+  <div class="collection-atmosphere">
+    <div class="atmosphere-texture"></div>
+    <div class="atmosphere-gradient"></div>
+  </div>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
-
-<h1>{{ collection.title }}</h1>
-
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+  <div class="collection-container">
+    <!-- Collection Header -->
+    <div class="collection-header">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      
+      {% if collection.description != blank %}
+        <div class="collection-description">
+          {{ collection.description }}
         </div>
+      {% endif %}
+      
+      <!-- Collection Stats -->
+      <div class="collection-stats">
+        <span class="product-count">
+          {{ collection.products_count }} 
+          {% if collection.products_count == 1 %}
+            Item
+          {% else %}
+            Items
+          {% endif %}
+        </span>
       </div>
-    {% endfor %}
+    </div>
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
+    <!-- Collection Products Grid -->
+    <div class="collection-products">
+      {% paginate collection.products by 16 %}
+        {% if collection.products.size > 0 %}
+          <div class="products-grid">
+            {% for product in collection.products %}
+              <div class="collection-product-card">
+                <a href="{{ product.url }}" class="product-card-link">
+                  <!-- Product Image -->
+                  <div class="product-image-container">
+                    {% if product.featured_image %}
+                      <img 
+                        src="{{ product.featured_image | image_url: width: 400 }}" 
+                        alt="{{ product.featured_image.alt | default: product.title }}"
+                        class="product-image"
+                        loading="{% if forloop.index <= 8 %}eager{% else %}lazy{% endif %}"
+                      >
+                    {% else %}
+                      <div class="product-image-placeholder">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5"/>
+                          <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                      </div>
+                    {% endif %}
+                    
+                    <!-- Product Overlay -->
+                    <div class="product-overlay">
+                      <span class="view-product">View</span>
+                    </div>
+                    
+                    <!-- Sale Badge -->
+                    {% assign current_variant = product.selected_or_first_available_variant %}
+                    {% if current_variant.compare_at_price > current_variant.price %}
+                      <div class="sale-badge">Sale</div>
+                    {% endif %}
+                  </div>
+                  
+                  <!-- Product Content -->
+                  <div class="product-content">
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    
+                    <div class="product-pricing">
+                      <span class="current-price">{{ current_variant.price | money }}</span>
+                      {% if current_variant.compare_at_price > current_variant.price %}
+                        <span class="original-price">{{ current_variant.compare_at_price | money }}</span>
+                      {% endif %}
+                    </div>
+                    
+                    {% if product.available == false %}
+                      <div class="product-status sold-out">Sold Out</div>
+                    {% endif %}
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          
+          <!-- Pagination -->
+          {% if paginate.pages > 1 %}
+            <div class="collection-pagination">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% else %}
+          <!-- Empty Collection -->
+          <div class="collection-empty">
+            <div class="empty-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <h2 class="empty-title">No Products Found</h2>
+            <p class="empty-text">This collection is currently empty. Check back soon for new arrivals.</p>
+            <a href="{{ routes.all_products_collection_url }}" class="browse-all-btn">Browse All Products</a>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
 </div>
 
 {% stylesheet %}
+  /* Collection Page Styles */
+  .collection-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    overflow: hidden;
+  }
+  
+  /* Atmospheric Background */
+  .collection-atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .atmosphere-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(215, 38, 56, 0.02) 0.5px, transparent 0.5px),
+      radial-gradient(circle at 80% 70%, rgba(215, 38, 56, 0.015) 0.5px, transparent 0.5px),
+      radial-gradient(circle at 40% 80%, rgba(215, 38, 56, 0.01) 1px, transparent 1px);
+    background-size: 25px 25px, 35px 35px, 50px 50px;
+    animation: atmosphereShift 80s linear infinite;
+    opacity: 0.4;
+  }
+  
+  .atmosphere-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, 
+      rgba(215, 38, 56, 0.008) 0%, 
+      rgba(215, 38, 56, 0.003) 40%, 
+      transparent 70%);
+  }
+  
+  /* Collection Container */
+  .collection-container {
+    position: relative;
+    width: 100%;
+    padding: 3rem 2rem;
+    z-index: 2;
+  }
+  
+  /* Collection Header */
+  .collection-header {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .collection-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .collection-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .collection-stats {
+    margin-top: 1rem;
+  }
+  
+  .product-count {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    background-color: var(--color-background-ui);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  /* Collection Products */
   .collection-products {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .collection-product-card {
+    background-color: var(--color-background-ui);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(215, 38, 56, 0.05);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(215, 38, 56, 0.02);
+    transition: all 0.3s ease;
+  }
+  
+  .collection-product-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(215, 38, 56, 0.1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(215, 38, 56, 0.04);
+  }
+  
+  .product-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .product-image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background-color: rgba(215, 38, 56, 0.02);
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card-link:hover .product-image {
+    transform: scale(1.05);
+  }
+  
+  .product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-foreground);
+    opacity: 0.3;
+  }
+  
+  .product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.6) 0%, 
+      rgba(0, 0, 0, 0.3) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .product-card-link:hover .product-overlay {
+    opacity: 1;
+  }
+  
+  .view-product {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(215, 38, 56, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    border: 2px solid rgba(215, 38, 56, 0.3);
+    backdrop-filter: blur(10px);
+  }
+  
+  .sale-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 0.95) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(215, 38, 56, 0.3);
+    z-index: 2;
+  }
+  
+  .product-content {
+    padding: 1.5rem;
+  }
+  
+  .product-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  
+  .product-pricing {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .current-price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: rgba(215, 38, 56, 0.9);
+  }
+  
+  .original-price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    text-decoration: line-through;
+  }
+  
+  .product-status.sold-out {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    background-color: rgba(100, 100, 100, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  /* Empty Collection */
+  .collection-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .empty-icon {
+    margin-bottom: 2rem;
+    opacity: 0.3;
+  }
+  
+  .empty-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  
+  .empty-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .browse-all-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.2);
+  }
+  
+  .browse-all-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(215, 38, 56, 0.3);
+  }
+  
+  /* Pagination */
+  .collection-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 2rem 0;
+  }
+  
+  .collection-pagination a,
+  .collection-pagination span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-background-ui);
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--color-foreground);
+    transition: all 0.3s ease;
+  }
+  
+  .collection-pagination a:hover {
+    border-color: rgba(215, 38, 56, 0.3);
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.1) 0%, 
+      rgba(160, 27, 42, 0.15) 100%);
+    transform: translateY(-1px);
+  }
+  
+  .collection-pagination .current {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    border-color: rgba(215, 38, 56, 0.4);
+    color: var(--color-foreground);
+  }
+  
+  /* Animations */
+  @keyframes atmosphereShift {
+    0% {
+      background-position: 0px 0px, 0px 0px, 0px 0px;
+    }
+    100% {
+      background-position: 25px 25px, -35px 35px, 50px -50px;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .collection-container {
+      padding: 2rem 1.5rem;
+    }
+    
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .collection-container {
+      padding: 1.5rem 1rem;
+    }
+    
+    .collection-header {
+      margin-bottom: 2rem;
+    }
+    
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    
+    .product-content {
+      padding: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .collection-container {
+      padding: 1rem 0.75rem;
+    }
+    
+    .products-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .collection-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .product-content {
+      padding: 1rem;
+    }
   }
 {% endstylesheet %}
 
