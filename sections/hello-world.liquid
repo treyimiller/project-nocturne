@@ -978,17 +978,23 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: var(--color-background-ui);
+    border-top: 1px solid rgba(215, 38, 56, 0.1);
   }
   
   .product-title {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 600;
     color: var(--color-foreground);
     margin-bottom: 0.75rem;
     line-height: 1.3;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    min-height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .product-price {
@@ -997,6 +1003,7 @@
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    min-height: 1.8rem;
   }
   
   .current-price {
@@ -1017,17 +1024,20 @@
   
   .product-cta {
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    color: rgba(215, 38, 56, 0.8);
+    color: rgba(215, 38, 56, 0.9);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     transition: all 0.3s ease;
-    opacity: 0.8;
+    opacity: 1;
     padding: 0.5rem 0;
     pointer-events: none;
+    min-height: 2rem;
   }
   
   .cta-text {
