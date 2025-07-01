@@ -116,7 +116,7 @@
     // Open search
     if (searchToggle) {
       searchToggle.addEventListener('click', function() {
-        searchOverlay.style.display = 'block';
+        searchOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
         setTimeout(function() {
           if (searchInput) {
@@ -128,7 +128,7 @@
     
     // Close search function
     function closeSearch() {
-      searchOverlay.style.display = 'none';
+      searchOverlay.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
     
@@ -160,7 +160,7 @@
     
     // Close search on escape key
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && searchOverlay.style.display === 'block') {
+      if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
         closeSearch();
       }
     });
@@ -466,6 +466,10 @@
     background-color: rgba(0, 0, 0, 0.8) !important;
     backdrop-filter: blur(10px) !important;
     z-index: 9999 !important;
+    display: none !important;
+  }
+  
+  .search-overlay.active {
     display: block !important;
   }
   
