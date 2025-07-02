@@ -729,6 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .product-images-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(400px, auto);
     gap: 1rem;
     width: 100%;
     min-height: 900px;
@@ -745,6 +746,7 @@ document.addEventListener('DOMContentLoaded', function() {
       inset 0 1px 0 rgba(215, 38, 56, 0.02);
     border: 2px solid rgba(215, 38, 56, 0.05);
     transition: all 0.3s ease;
+    min-height: 400px;
   }
   
   .product-image-item:hover {
