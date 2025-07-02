@@ -1,0 +1,404 @@
+<!-- Policy Page Section -->
+<div class="policy-page full-width">
+  <!-- Subtle Background -->
+  <div class="policy-atmosphere">
+    <div class="atmosphere-texture"></div>
+  </div>
+
+  <div class="policy-container">
+    <!-- Policy Header -->
+    <div class="policy-header">
+      <h1 class="policy-title">{{ page.title }}</h1>
+      
+      {% if page.content contains 'Last updated' or page.content contains 'Effective date' %}
+        <div class="policy-meta">
+          {% assign content_lines = page.content | split: '<p>' %}
+          {% for line in content_lines limit: 3 %}
+            {% if line contains 'Last updated' or line contains 'Effective date' %}
+              <div class="policy-date">{{ line | strip_html | strip }}</div>
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Policy Content -->
+    <div class="policy-content">
+      <div class="policy-text">
+        {{ page.content }}
+      </div>
+      
+      <!-- Back to Store Link -->
+      <div class="policy-footer">
+        <a href="{{ routes.root_url }}" class="back-to-store-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Store
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* Policy Page Styles */
+  .policy-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    padding: 2rem 0;
+  }
+  
+  /* Subtle Background */
+  .policy-atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .atmosphere-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(215, 38, 56, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(215, 38, 56, 0.015) 1px, transparent 1px);
+    background-size: 60px 60px, 80px 80px;
+    animation: subtleShift 120s linear infinite;
+    opacity: 0.4;
+  }
+  
+  /* Policy Container */
+  .policy-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    z-index: 2;
+  }
+  
+  /* Policy Header */
+  .policy-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .policy-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .policy-meta {
+    margin-top: 1rem;
+  }
+  
+  .policy-date {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Policy Content */
+  .policy-content {
+    background-color: var(--color-background-ui);
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(215, 38, 56, 0.02);
+    border: 1px solid rgba(215, 38, 56, 0.05);
+  }
+  
+  .policy-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  
+  /* Typography Styles for Policy Content */
+  .policy-text h1,
+  .policy-text h2,
+  .policy-text h3,
+  .policy-text h4,
+  .policy-text h5,
+  .policy-text h6 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--color-foreground);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  
+  .policy-text h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid rgba(215, 38, 56, 0.2);
+    padding-bottom: 0.5rem;
+  }
+  
+  .policy-text h2 {
+    font-size: 1.4rem;
+    color: rgba(215, 38, 56, 0.9);
+  }
+  
+  .policy-text h3 {
+    font-size: 1.2rem;
+  }
+  
+  .policy-text h4,
+  .policy-text h5,
+  .policy-text h6 {
+    font-size: 1.1rem;
+  }
+  
+  .policy-text p {
+    margin-bottom: 1.25rem;
+  }
+  
+  .policy-text ul,
+  .policy-text ol {
+    margin: 1.25rem 0;
+    padding-left: 2rem;
+  }
+  
+  .policy-text li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+  
+  .policy-text strong,
+  .policy-text b {
+    font-weight: 500;
+    color: rgba(215, 38, 56, 0.9);
+  }
+  
+  .policy-text em,
+  .policy-text i {
+    font-style: italic;
+    opacity: 0.9;
+  }
+  
+  .policy-text a {
+    color: rgba(215, 38, 56, 0.8);
+    text-decoration: underline;
+    text-decoration-color: rgba(215, 38, 56, 0.3);
+    text-underline-offset: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .policy-text a:hover {
+    color: rgba(215, 38, 56, 1);
+    text-decoration-color: rgba(215, 38, 56, 0.6);
+  }
+  
+  .policy-text blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: rgba(215, 38, 56, 0.03);
+    border-left: 4px solid rgba(215, 38, 56, 0.3);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    opacity: 0.9;
+  }
+  
+  .policy-text table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .policy-text th,
+  .policy-text td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .policy-text th {
+    background-color: rgba(215, 38, 56, 0.05);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+  }
+  
+  /* Policy Footer */
+  .policy-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .back-to-store-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.1) 0%, 
+      rgba(160, 27, 42, 0.15) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 2px solid rgba(215, 38, 56, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-to-store-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.2) 0%, 
+      rgba(160, 27, 42, 0.25) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: rgba(215, 38, 56, 0.3);
+  }
+  
+  .back-to-store-btn svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .back-to-store-btn:hover svg {
+    transform: translateX(-2px);
+  }
+  
+  /* Animations */
+  @keyframes subtleShift {
+    0% {
+      background-position: 0px 0px, 0px 0px;
+    }
+    100% {
+      background-position: 60px 60px, -80px 80px;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .policy-container {
+      padding: 0 1.5rem;
+    }
+    
+    .policy-content {
+      padding: 2.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .policy-page {
+      padding: 1rem 0;
+    }
+    
+    .policy-container {
+      padding: 0 1rem;
+    }
+    
+    .policy-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+    }
+    
+    .policy-content {
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    
+    .policy-text {
+      font-size: 0.95rem;
+    }
+    
+    .policy-text h1 {
+      font-size: 1.5rem;
+    }
+    
+    .policy-text h2 {
+      font-size: 1.25rem;
+    }
+    
+    .policy-text h3 {
+      font-size: 1.1rem;
+    }
+    
+    .policy-text ul,
+    .policy-text ol {
+      padding-left: 1.5rem;
+    }
+    
+    .policy-text table {
+      font-size: 0.9rem;
+    }
+    
+    .policy-text th,
+    .policy-text td {
+      padding: 0.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .policy-container {
+      padding: 0 0.75rem;
+    }
+    
+    .policy-content {
+      padding: 1.5rem;
+    }
+    
+    .policy-text {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .back-to-store-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.85rem;
+    }
+    
+    .policy-text table {
+      font-size: 0.8rem;
+    }
+    
+    .policy-text th,
+    .policy-text td {
+      padding: 0.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Policy Page",
+  "settings": []
+}
+{% endschema %}
