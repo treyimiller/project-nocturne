@@ -91,13 +91,6 @@
         </div>
       </div>
 
-      <!-- Product Description -->
-      {% if product.description != blank %}
-        <div class="product-description">
-          {{ product.description }}
-        </div>
-      {% endif %}
-
       <!-- Product Form -->
       <div class="product-form-section">
         {% form 'product', product, class: 'product-form', id: 'product-form' %}
@@ -205,6 +198,13 @@
           </div>
         {% endform %}
       </div>
+
+      <!-- Product Description -->
+      {% if product.description != blank %}
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+      {% endif %}
 
       <!-- Product Meta Information -->
       {% if product.type != blank or product.tags.size > 0 %}
