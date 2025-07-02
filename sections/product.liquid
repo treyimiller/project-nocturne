@@ -556,16 +556,22 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         e.stopPropagation();
         
-        const imageContainer = overlay.closest('.image-container');
-        const img = imageContainer.querySelector('.product-grid-img');
-        const imageSrc = img.src.replace('width=600', 'width=1200'); // Get higher resolution
-        
-        openImageModal(imageSrc, index);
+        openImageModal(index);
       });
     });
   }
 
-  function openImageModal(imageSrc, currentIndex = 0) {
+  function openImageModal(currentIndex = 0) {
+    // Get all product images
+    const allImages = document.querySelectorAll('.product-grid-img');
+    const imageUrls = Array.from(allImages).map(img => 
+      img.src.replace('width=600', 'width=1200')
+    );
+    
+    if (imageUrls.length === 0) return;
+    
+    let activeIndex = currentIndex;
+    
     // Create modal container
     const modal = document.createElement('div');
     modal.className = 'image-zoom-modal';
@@ -574,17 +580,49 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="zoom-modal-content">
         <button class="zoom-close-btn" aria-label="Close">&times;</button>
         <div class="zoom-image-container">
-          <img src="${imageSrc}" alt="Product Image" class="zoom-image">
+          <img src="${imageUrls[activeIndex]}" alt="Product Image" class="zoom-image">
         </div>
-        <div class="zoom-navigation">
+        <div class="zoom-navigation" ${imageUrls.length <= 1 ? 'style="display: none;"' : ''}>
           <button class="zoom-prev-btn" aria-label="Previous Image">‹</button>
           <button class="zoom-next-btn" aria-label="Next Image">›</button>
+        </div>
+        <div class="zoom-counter" ${imageUrls.length <= 1 ? 'style="display: none;"' : ''}>
+          <span class="current-image">${activeIndex + 1}</span> / <span class="total-images">${imageUrls.length}</span>
         </div>
       </div>
     `;
     
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
+    
+    const zoomImage = modal.querySelector('.zoom-image');
+    const currentImageSpan = modal.querySelector('.current-image');
+    const prevBtn = modal.querySelector('.zoom-prev-btn');
+    const nextBtn = modal.querySelector('.zoom-next-btn');
+    
+    // Update image function
+    const updateImage = (index) => {
+      activeIndex = index;
+      zoomImage.src = imageUrls[activeIndex];
+      if (currentImageSpan) {
+        currentImageSpan.textContent = activeIndex + 1;
+      }
+    };
+    
+    // Navigation functions
+    const showPrevImage = () => {
+      const newIndex = activeIndex > 0 ? activeIndex - 1 : imageUrls.length - 1;
+      updateImage(newIndex);
+    };
+    
+    const showNextImage = () => {
+      const newIndex = activeIndex < imageUrls.length - 1 ? activeIndex + 1 : 0;
+      updateImage(newIndex);
+    };
+    
+    // Navigation event listeners
+    if (prevBtn) prevBtn.addEventListener('click', showPrevImage);
+    if (nextBtn) nextBtn.addEventListener('click', showNextImage);
     
     // Close modal functionality
     const closeBtn = modal.querySelector('.zoom-close-btn');
@@ -593,6 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModal = () => {
       document.body.removeChild(modal);
       document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeydown);
     };
     
     closeBtn.addEventListener('click', closeModal);
@@ -602,7 +641,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const handleKeydown = (e) => {
       if (e.key === 'Escape') {
         closeModal();
-        document.removeEventListener('keydown', handleKeydown);
+      } else if (e.key === 'ArrowLeft') {
+        showPrevImage();
+      } else if (e.key === 'ArrowRight') {
+        showNextImage();
       }
     };
     
@@ -715,7 +757,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .image-container {
     position: relative;
-    aspect-ratio: 3/4;
+    aspect-ratio: 3/5;
     overflow: hidden;
   }
   
@@ -833,7 +875,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .mobile-image-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4/5;
+    aspect-ratio: 3/5;
     overflow: hidden;
   }
   
@@ -1528,7 +1570,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     .mobile-image-container {
-      aspect-ratio: 3/4;
+      aspect-ratio: 3/5;
     }
     
     .swiper-button-prev,
@@ -1573,7 +1615,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     .mobile-image-container {
-      aspect-ratio: 1/1;
+      aspect-ratio: 3/5;
     }
     
     .swiper-button-prev,
@@ -1707,6 +1749,23 @@ document.addEventListener('DOMContentLoaded', function() {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.5);
     transform: scale(1.1);
+  }
+
+  .zoom-counter {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   /* Mobile adjustments for zoom modal */
