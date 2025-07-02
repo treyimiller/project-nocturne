@@ -527,8 +527,10 @@
     }
     
     .products-grid {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: 1fr !important;
       gap: 1rem;
+      max-width: 400px;
+      margin: 0 auto 3rem;
     }
     
     .product-content {
@@ -542,8 +544,10 @@
     }
     
     .products-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
       gap: 1rem;
+      max-width: 350px;
+      margin: 0 auto 3rem;
     }
     
     .collection-header {
