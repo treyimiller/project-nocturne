@@ -922,11 +922,31 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
     gap: 2rem;
     margin-bottom: 3rem;
     z-index: 2;
+  }
+  
+  /* Ensure 4 columns even with fewer products */
+  .products-grid .product-card {
+    width: 100%;
+    max-width: none;
+  }
+  
+  /* Desktop 4-column layout - force override */
+  @media (min-width: 1025px) {
+    .products-grid.desktop-only {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 2rem !important;
+    }
+    
+    .products-grid.desktop-only .product-card {
+      width: 100% !important;
+      max-width: none !important;
+    }
   }
   
   /* Featured Products Mobile Swiper */
