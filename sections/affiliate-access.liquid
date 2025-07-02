@@ -193,6 +193,46 @@
                       </div>
                     </div>
                   </div>
+                  
+                  <!-- Affiliate Exclusive Collection -->
+                  {% if section.settings.exclusive_collection != blank %}
+                    {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+                  {% else %}
+                    {% assign exclusive_collection = collections['affiliate-products'] %}
+                  {% endif %}
+                  
+                  {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+                    <div class="exclusive-products">
+                      <h3>
+                        {% if section.settings.collection_title != blank %}
+                          {{ section.settings.collection_title }}
+                        {% else %}
+                          Exclusive Partner Products
+                        {% endif %}
+                      </h3>
+                      <div class="products-preview">
+                        {% assign products_limit = section.settings.products_display_count | default: 4 %}
+                        {% for product in exclusive_collection.products limit: products_limit %}
+                          <div class="preview-product">
+                            <a href="{{ product.url }}">
+                              {% if product.featured_image %}
+                                <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
+                              {% endif %}
+                              <p>{{ product.title }}</p>
+                              <span>{{ product.price | money }}</span>
+                            </a>
+                          </div>
+                        {% endfor %}
+                      </div>
+                      <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">
+                        {% if section.settings.view_all_text != blank %}
+                          {{ section.settings.view_all_text }}
+                        {% else %}
+                          View All Partner Products
+                        {% endif %}
+                      </a>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
             </div>
@@ -776,6 +816,110 @@
     box-shadow: 0 4px 12px rgba(215, 38, 56, 0.3);
   }
   
+  /* Exclusive Products */
+  .exclusive-products {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--color-background);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .exclusive-products h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .products-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .preview-product {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--color-background-ui);
+    border-radius: 8px;
+    border: 1px solid rgba(215, 38, 56, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .preview-product:hover {
+    border-color: rgba(215, 38, 56, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .preview-product a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .preview-product img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .preview-product p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    margin: 0;
+  }
+  
+  .preview-product span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(215, 38, 56, 0.8);
+  }
+  
+  .view-all-exclusive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.2);
+    width: 100%;
+  }
+  
+  .view-all-exclusive:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.3);
+  }
+  
   /* Access Footer */
   .access-footer {
     text-align: center;
@@ -932,6 +1076,40 @@
       "label": "Affiliate Customer Tags",
       "info": "Enter customer tags that grant affiliate access, separated by commas (e.g., affiliate, partner, reseller)",
       "default": "affiliate, partner, reseller"
+    },
+    {
+      "type": "header",
+      "content": "Exclusive Collection Settings"
+    },
+    {
+      "type": "collection",
+      "id": "exclusive_collection",
+      "label": "Exclusive Collection",
+      "info": "Select the collection to display for affiliate partners (defaults to 'affiliate-products' collection)"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Collection Section Title",
+      "default": "Exclusive Partner Products",
+      "info": "Title displayed above the collection products"
+    },
+    {
+      "type": "range",
+      "id": "products_display_count",
+      "label": "Number of Products to Display",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "info": "How many products to show in the preview"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "View All Partner Products",
+      "info": "Text for the button that links to the full collection"
     }
   ]
 }

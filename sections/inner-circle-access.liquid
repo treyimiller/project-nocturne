@@ -133,12 +133,24 @@
                 </div>
                 
                 <!-- Inner Circle Collection -->
-                {% assign inner_circle_collection = collections['inner-circle'] %}
-                {% if inner_circle_collection and inner_circle_collection.products.size > 0 %}
+                {% if section.settings.exclusive_collection != blank %}
+                  {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+                {% else %}
+                  {% assign exclusive_collection = collections['inner-circle'] %}
+                {% endif %}
+                
+                {% if exclusive_collection and exclusive_collection.products.size > 0 %}
                   <div class="exclusive-products">
-                    <h3>Your Exclusive Collection</h3>
+                    <h3>
+                      {% if section.settings.collection_title != blank %}
+                        {{ section.settings.collection_title }}
+                      {% else %}
+                        Your Exclusive Collection
+                      {% endif %}
+                    </h3>
                     <div class="products-preview">
-                      {% for product in inner_circle_collection.products limit: 4 %}
+                      {% assign products_limit = section.settings.products_display_count | default: 4 %}
+                      {% for product in exclusive_collection.products limit: products_limit %}
                         <div class="preview-product">
                           <a href="{{ product.url }}">
                             {% if product.featured_image %}
@@ -150,7 +162,13 @@
                         </div>
                       {% endfor %}
                     </div>
-                    <a href="{{ inner_circle_collection.url }}" class="view-all-exclusive">View All Inner Circle Items</a>
+                    <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">
+                      {% if section.settings.view_all_text != blank %}
+                        {{ section.settings.view_all_text }}
+                      {% else %}
+                        View All Inner Circle Items
+                      {% endif %}
+                    </a>
                   </div>
                 {% endif %}
               </div>
@@ -985,6 +1003,40 @@
       "label": "Inner Circle Access Password",
       "info": "Set the password required to access Inner Circle content",
       "default": "innercircle2024"
+    },
+    {
+      "type": "header",
+      "content": "Exclusive Collection Settings"
+    },
+    {
+      "type": "collection",
+      "id": "exclusive_collection",
+      "label": "Exclusive Collection",
+      "info": "Select the collection to display for Inner Circle members (defaults to 'inner-circle' collection)"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Collection Section Title",
+      "default": "Your Exclusive Collection",
+      "info": "Title displayed above the collection products"
+    },
+    {
+      "type": "range",
+      "id": "products_display_count",
+      "label": "Number of Products to Display",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "info": "How many products to show in the preview"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "View All Inner Circle Items",
+      "info": "Text for the button that links to the full collection"
     }
   ]
 }
