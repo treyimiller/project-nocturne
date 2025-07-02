@@ -1,0 +1,912 @@
+<!-- Affiliate Access Page Section -->
+<div class="limited-access-page full-width">
+  <!-- Atmospheric Background -->
+  <div class="limited-access-atmosphere">
+    <div class="atmosphere-texture"></div>
+    <div class="atmosphere-gradient"></div>
+    <div class="restricted-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+  </div>
+
+  <div class="limited-access-container">
+    <!-- Access Gate Header -->
+    <div class="access-gate-header">
+      <!-- Lock Icon -->
+      <div class="lock-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <circle cx="12" cy="16" r="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      
+      <!-- Access Title -->
+      <h1 class="access-title">Affiliate Portal</h1>
+      
+      <!-- Access Subtitle -->
+      <div class="access-subtitle">Registered Partners Only</div>
+      
+      <!-- Access Message -->
+      <div class="access-message">
+        <p>This content is restricted to registered affiliates only. Please verify your access credentials below.</p>
+      </div>
+    </div>
+
+    <!-- Access Methods -->
+    <div class="access-methods">
+      <!-- Customer Login Check -->
+      {% unless customer %}
+        <div class="access-method account-login">
+          <div class="method-header">
+            <div class="method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3 class="method-title">Affiliate Login</h3>
+            <p class="method-description">Sign in with your affiliate account</p>
+          </div>
+          
+          <div class="login-actions">
+            <a href="{{ routes.account_login_url }}" class="login-btn">
+              Partner Sign In
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="/pages/affiliate-registration" class="register-link">
+              Not a partner yet? <span>Apply here</span>
+            </a>
+          </div>
+        </div>
+      {% else %}
+        <!-- Customer is logged in - Check Affiliate access -->
+        {% assign has_affiliate_access = false %}
+        
+        <!-- Check for Affiliate specific tags -->
+        {% for tag in customer.tags %}
+          {% assign tag_lower = tag | downcase %}
+          {% if tag_lower contains 'affiliate' or tag_lower contains 'partner' or tag_lower contains 'reseller' %}
+            {% assign has_affiliate_access = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        
+        {% if has_affiliate_access %}
+          <!-- Customer has Affiliate access -->
+          <div class="access-method member-welcome">
+            <div class="method-header">
+              <div class="method-icon verified">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22,4 12,14.01 9,11.01"/>
+                </svg>
+              </div>
+              <h3 class="method-title">Welcome Partner {{ customer.first_name }}!</h3>
+              <p class="method-description">Affiliate Access Verified</p>
+            </div>
+            
+            <!-- Affiliate Protected Content -->
+            <div class="protected-content">
+              {% if page.content != blank %}
+                {{ page.content }}
+              {% else %}
+                <div class="default-content">
+                  <h2>Affiliate Resource Center</h2>
+                  <p>Welcome to your exclusive affiliate portal. Access marketing materials, track commissions, and manage your partnership with us.</p>
+                  
+                  <div class="member-benefits">
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"/>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                      </svg>
+                      <span>Competitive commission structure</span>
+                    </div>
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                      </svg>
+                      <span>Marketing materials & assets</span>
+                    </div>
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                      </svg>
+                      <span>Real-time performance tracking</span>
+                    </div>
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                      </svg>
+                      <span>Dedicated partner support</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Affiliate Resources -->
+                  <div class="affiliate-resources">
+                    <h3>Partner Resources</h3>
+                    <div class="resources-grid">
+                      <div class="resource-item">
+                        <div class="resource-icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                          </svg>
+                        </div>
+                        <h4>Marketing Kit</h4>
+                        <p>Download logos, banners, and promotional materials</p>
+                        <a href="/pages/marketing-kit" class="resource-link">Access Kit</a>
+                      </div>
+                      
+                      <div class="resource-item">
+                        <div class="resource-icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                          </svg>
+                        </div>
+                        <h4>Commission Tracker</h4>
+                        <p>View earnings, clicks, and conversion rates</p>
+                        <a href="/pages/commission-tracker" class="resource-link">View Stats</a>
+                      </div>
+                      
+                      <div class="resource-item">
+                        <div class="resource-icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                          </svg>
+                        </div>
+                        <h4>Partner Support</h4>
+                        <p>Get help with your affiliate account</p>
+                        <a href="/pages/partner-support" class="resource-link">Contact Us</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% else %}
+          <!-- Customer logged in but lacks Affiliate access -->
+          <div class="access-method access-denied">
+            <div class="method-header">
+              <div class="method-icon denied">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+              </div>
+              <h3 class="method-title">Affiliate Access Required</h3>
+              <p class="method-description">You need affiliate partner status to access this content</p>
+            </div>
+            
+            <div class="upgrade-message">
+              <p>This content requires <strong>Affiliate Partner</strong> approval.</p>
+              
+              <a href="/pages/affiliate-application" class="upgrade-btn">
+                Apply for Partnership
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              
+              <div class="current-access">
+                <p>Your current status:</p>
+                <div class="access-tags">
+                  <span class="access-tag basic">Standard Customer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endunless %}
+    </div>
+
+    <!-- Additional Information -->
+    <div class="access-footer">
+      <p class="footer-message">Our affiliate program offers competitive commissions and dedicated support. For partnership inquiries, please contact our affiliate team.</p>
+      
+      <div class="help-links">
+        <a href="{{ routes.root_url }}" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Store
+        </a>
+        
+        <a href="/pages/affiliate-info" class="contact-link">
+          Partnership Info
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* Affiliate Access Page Styles - Same base styles as Inner Circle with specific customizations */
+  .limited-access-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+  
+  /* Atmospheric Background */
+  .limited-access-atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .atmosphere-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(215, 38, 56, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(215, 38, 56, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 40% 60%, rgba(215, 38, 56, 0.015) 0.5px, transparent 0.5px);
+    background-size: 40px 40px, 60px 60px, 80px 80px;
+    animation: restrictedShift 100s linear infinite;
+    opacity: 0.6;
+  }
+  
+  .atmosphere-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, 
+      rgba(215, 38, 56, 0.015) 0%, 
+      rgba(215, 38, 56, 0.008) 40%, 
+      transparent 70%);
+  }
+  
+  .restricted-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .restricted-particles .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(215, 38, 56, 0.3);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+  }
+  
+  .restricted-particles .particle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+  
+  .restricted-particles .particle:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation-delay: 2s;
+  }
+  
+  .restricted-particles .particle:nth-child(3) {
+    top: 80%;
+    left: 30%;
+    animation-delay: 4s;
+  }
+  
+  .restricted-particles .particle:nth-child(4) {
+    top: 30%;
+    left: 70%;
+    animation-delay: 6s;
+  }
+  
+  .restricted-particles .particle:nth-child(5) {
+    top: 70%;
+    left: 60%;
+    animation-delay: 1s;
+  }
+  
+  /* Container */
+  .limited-access-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    z-index: 2;
+  }
+  
+  /* Access Gate Header */
+  .access-gate-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--color-background-ui);
+    border-radius: 16px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(215, 38, 56, 0.03);
+  }
+  
+  .lock-icon {
+    margin-bottom: 1.5rem;
+    color: rgba(215, 38, 56, 0.7);
+    animation: lockPulse 3s infinite ease-in-out;
+  }
+  
+  .access-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .access-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(215, 38, 56, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .access-message {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Access Methods */
+  .access-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .access-method {
+    background-color: var(--color-background-ui);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px solid rgba(215, 38, 56, 0.08);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(215, 38, 56, 0.02);
+    transition: all 0.3s ease;
+  }
+  
+  .access-method:hover {
+    border-color: rgba(215, 38, 56, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(215, 38, 56, 0.04);
+  }
+  
+  .method-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .method-icon {
+    margin-bottom: 1rem;
+    color: rgba(215, 38, 56, 0.7);
+  }
+  
+  .method-icon.verified {
+    color: rgba(34, 197, 94, 0.8);
+  }
+  
+  .method-icon.denied {
+    color: rgba(239, 68, 68, 0.8);
+  }
+  
+  .method-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  
+  .method-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Login Actions */
+  .login-actions {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.2);
+  }
+  
+  .login-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.3);
+  }
+  
+  .register-link {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s ease;
+  }
+  
+  .register-link:hover {
+    opacity: 1;
+  }
+  
+  .register-link span {
+    color: rgba(215, 38, 56, 0.8);
+    font-weight: 400;
+  }
+  
+  /* Protected Content */
+  .protected-content {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.05) 0%, 
+      rgba(160, 27, 42, 0.08) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .default-content h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  
+  .default-content p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .member-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .benefit-item svg {
+    color: rgba(215, 38, 56, 0.7);
+    flex-shrink: 0;
+  }
+  
+  /* Access Denied Styles */
+  .access-denied {
+    border-color: rgba(239, 68, 68, 0.15);
+  }
+  
+  .upgrade-message {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(239, 68, 68, 0.05) 0%, 
+      rgba(220, 38, 38, 0.08) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(239, 68, 68, 0.1);
+  }
+  
+  .upgrade-message p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .upgrade-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.2);
+  }
+  
+  .upgrade-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.3);
+  }
+  
+  .current-access p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .access-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .access-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    background: rgba(215, 38, 56, 0.1);
+    border: 1px solid rgba(215, 38, 56, 0.2);
+    border-radius: 4px;
+  }
+  
+  .access-tag.basic {
+    background: rgba(156, 163, 175, 0.1);
+    border-color: rgba(156, 163, 175, 0.2);
+    opacity: 0.7;
+  }
+  
+  /* Affiliate Resources */
+  .affiliate-resources {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--color-background);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .affiliate-resources h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .resource-item {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--color-background-ui);
+    border-radius: 8px;
+    border: 1px solid rgba(215, 38, 56, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .resource-item:hover {
+    border-color: rgba(215, 38, 56, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .resource-icon {
+    margin-bottom: 1rem;
+    color: rgba(215, 38, 56, 0.7);
+  }
+  
+  .resource-item h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resource-item p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+  
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(215, 38, 56, 0.2);
+  }
+  
+  .resource-link:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(215, 38, 56, 0.3);
+  }
+  
+  /* Access Footer */
+  .access-footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--color-background-ui);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.05);
+  }
+  
+  .footer-message {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .help-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .back-link,
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .back-link:hover,
+  .contact-link:hover {
+    opacity: 1;
+    color: rgba(215, 38, 56, 0.8);
+  }
+  
+  /* Animations */
+  @keyframes restrictedShift {
+    0% {
+      background-position: 0px 0px, 0px 0px, 0px 0px;
+    }
+    100% {
+      background-position: 40px 40px, -60px 60px, 80px -80px;
+    }
+  }
+  
+  @keyframes lockPulse {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-10px) translateX(5px);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(-5px) translateX(-3px);
+      opacity: 0.5;
+    }
+    75% {
+      transform: translateY(-15px) translateX(8px);
+      opacity: 0.8;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .limited-access-container {
+      padding: 0 1rem;
+    }
+    
+    .access-gate-header {
+      padding: 1.5rem;
+    }
+    
+    .access-method {
+      padding: 1.5rem;
+    }
+    
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .help-links {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .limited-access-container {
+      padding: 0 0.75rem;
+    }
+    
+    .access-gate-header {
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .access-method {
+      padding: 1rem;
+    }
+    
+    .access-footer {
+      padding: 1.5rem;
+    }
+    
+    .member-benefits {
+      gap: 0.75rem;
+    }
+    
+    .benefit-item {
+      font-size: 0.8rem;
+    }
+    
+    .resource-item {
+      padding: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Affiliate Access",
+  "settings": []
+}
+{% endschema %}
