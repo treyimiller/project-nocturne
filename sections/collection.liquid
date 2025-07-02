@@ -116,6 +116,22 @@
 </div>
 
 {% stylesheet %}
+  /* Global mobile collection grid override */
+  @media (max-width: 768px) {
+    [class*="products-grid"],
+    [class*="collection-products"],
+    .products-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1rem !important;
+    }
+    
+    [class*="product-image-container"],
+    [class*="collection-product"] .product-image-container {
+      aspect-ratio: 3/4 !important;
+    }
+  }
+
   /* Collection Page Styles */
   .collection-page {
     position: relative;
@@ -228,9 +244,9 @@
   }
   
   .products-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Mobile first - two columns */
-    gap: 1rem;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Mobile first - two columns */
+    gap: 1rem !important;
     margin-bottom: 3rem;
   }
   
@@ -269,7 +285,7 @@
   
   .product-image-container {
     position: relative;
-    aspect-ratio: 3/4;
+    aspect-ratio: 3/4 !important;
     overflow: hidden;
     background-color: rgba(215, 38, 56, 0.02);
   }
@@ -513,6 +529,23 @@
     }
   }
   
+  /* Force mobile grid layout */
+  @media (max-width: 768px) {
+    .collection-page .products-grid,
+    .collection-products .products-grid,
+    .shopify-section[id*="collection"] .products-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1rem !important;
+    }
+    
+    .collection-page .product-image-container,
+    .collection-products .product-image-container,
+    .shopify-section[id*="collection"] .product-image-container {
+      aspect-ratio: 3/4 !important;
+    }
+  }
+
   /* Responsive Design */
   @media (max-width: 1024px) {
     .collection-container {
