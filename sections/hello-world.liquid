@@ -907,11 +907,11 @@
   
   /* Mobile/Desktop Display Control */
   .mobile-only {
-    display: none;
+    display: none !important;
   }
   
   .desktop-only {
-    display: block;
+    display: block !important;
   }
 
   .products-grid {
@@ -1426,7 +1426,15 @@
     line-height: 1.4;
   }
   
-  /* Responsive Design */
+  /* Tablet and Mobile Responsive Design */
+  @media (max-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+  
+  /* Mobile Responsive Design */
   @media (max-width: 768px) {
     .gothic-frame {
       padding: 0 1rem;
@@ -1456,11 +1464,11 @@
     }
     
     .desktop-only {
-      display: none;
+      display: none !important;
     }
     
     .mobile-only {
-      display: block;
+      display: block !important;
     }
     
     .featured-swiper-container {
