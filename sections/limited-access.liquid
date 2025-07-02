@@ -1282,8 +1282,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const sessionTimer = document.getElementById('session-timer');
   const resetButton = document.getElementById('reset-access');
   
-  // Get the access password from section settings
+  // Get the access password from section settings and create unique page identifier
   const accessPassword = '{{ section.settings.access_password | default: "AUDENTIA2025" }}';
+  const pageHandle = '{{ page.handle | default: "unknown" }}';
+  const pageAccessKey = `limitedAccess_${pageHandle}`;
+  const pageTimeKey = `accessTime_${pageHandle}`;
   
   if (passwordForm) {
     passwordForm.addEventListener('submit', function(e) {
@@ -1296,9 +1299,9 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordEntry.style.display = 'none';
         passwordContent.style.display = 'block';
         
-        // Store access in sessionStorage
-        sessionStorage.setItem('limitedAccessGranted', 'true');
-        sessionStorage.setItem('accessGrantedTime', Date.now().toString());
+        // Store access in sessionStorage with page-specific key
+        sessionStorage.setItem(pageAccessKey, 'true');
+        sessionStorage.setItem(pageTimeKey, Date.now().toString());
         
         // Start session timer
         startSessionTimer();
@@ -1315,13 +1318,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Check if access was previously granted in this session
-  if (sessionStorage.getItem('limitedAccessGranted') === 'true') {
-    const accessTime = parseInt(sessionStorage.getItem('accessGrantedTime'));
+  // Check if access was previously granted for this specific page
+  if (sessionStorage.getItem(pageAccessKey) === 'true') {
+    const accessTime = parseInt(sessionStorage.getItem(pageTimeKey));
     const currentTime = Date.now();
     const sessionDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
     
-    if (currentTime - accessTime < sessionDuration) {
+    if (accessTime && currentTime - accessTime < sessionDuration) {
       // Still within session time - show content
       if (passwordEntry) passwordEntry.style.display = 'none';
       if (passwordContent) passwordContent.style.display = 'block';
@@ -1330,9 +1333,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const remainingTime = sessionDuration - (currentTime - accessTime);
       startSessionTimer(remainingTime);
     } else {
-      // Session expired - clear storage
-      sessionStorage.removeItem('limitedAccessGranted');
-      sessionStorage.removeItem('accessGrantedTime');
+      // Session expired - clear storage for this page
+      sessionStorage.removeItem(pageAccessKey);
+      sessionStorage.removeItem(pageTimeKey);
     }
   }
   
@@ -1368,9 +1371,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Reset access functionality
   function resetAccess() {
-    // Clear session storage
-    sessionStorage.removeItem('limitedAccessGranted');
-    sessionStorage.removeItem('accessGrantedTime');
+    // Clear session storage for this specific page
+    sessionStorage.removeItem(pageAccessKey);
+    sessionStorage.removeItem(pageTimeKey);
     
     // Clear any timers
     if (window.accessTimer) {
