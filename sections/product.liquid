@@ -1372,6 +1372,38 @@ document.addEventListener('DOMContentLoaded', function() {
       margin-bottom: 1.5rem;
     }
     
+    /* Mobile sizing chart fixes */
+    .product-description table {
+      font-size: 0.75rem !important;
+      margin: 1rem 0 !important;
+      display: block !important;
+      overflow-x: auto !important;
+      white-space: nowrap !important;
+      max-width: 100% !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .product-description th,
+    .product-description td {
+      padding: 0.5rem 0.75rem !important;
+      font-size: 0.75rem !important;
+      min-width: auto !important;
+      white-space: nowrap !important;
+    }
+    
+    .product-description tbody,
+    .product-description thead,
+    .product-description tr {
+      display: table-row !important;
+      width: auto !important;
+    }
+    
+    .product-description th,
+    .product-description td {
+      display: table-cell !important;
+      width: auto !important;
+    }
+    
     /* Force hide desktop elements on mobile */
     .product-page .desktop-only,
     .desktop-only,
