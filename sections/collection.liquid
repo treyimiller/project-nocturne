@@ -118,15 +118,31 @@
 {% stylesheet %}
   /* Global mobile collection grid override */
   @media (max-width: 768px) {
+    /* Override Shopify section grid constraints */
+    .shopify-section {
+      grid-template-columns: 1fr !important;
+    }
+    
+    .shopify-section > * {
+      grid-column: 1 !important;
+    }
+    
+    .shopify-section > .full-width {
+      grid-column: 1 !important;
+    }
+    
     [class*="products-grid"],
     [class*="collection-products"],
     .products-grid {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 1rem !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 auto !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin: 0 !important;
+      padding: 0 1rem !important;
+      box-sizing: border-box !important;
+      margin-left: calc(-50vw + 50%) !important;
     }
     
     [class*="product-image-container"],
@@ -138,6 +154,17 @@
     .collection-product-card {
       width: 100% !important;
       max-width: none !important;
+    }
+    
+    .collection-page {
+      width: 100vw !important;
+      margin-left: calc(-50vw + 50%) !important;
+    }
+    
+    .collection-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 1rem !important;
     }
   }
 
