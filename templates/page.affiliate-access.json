@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "affiliate-access",
-      "settings": {}
+      "settings": {
+        "affiliate_tags": "TIER1, TIER2, TIER3"
+      }
     }
   },
   "order": [
