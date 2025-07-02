@@ -1382,12 +1382,14 @@ document.addEventListener('DOMContentLoaded', function() {
     .product-description table {
       display: block !important;
       overflow-x: auto !important;
-      overflow-y: visible !important;
+      overflow-y: hidden !important;
       -webkit-overflow-scrolling: touch !important;
       max-width: calc(100vw - 2rem) !important;
       width: 100% !important;
       margin: 1rem 0 !important;
       white-space: nowrap !important;
+      height: auto !important;
+      max-height: none !important;
     }
     
     /* Restore table structure inside the scrollable container */
