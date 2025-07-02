@@ -968,28 +968,29 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .product-description th,
   .product-description td {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1rem !important;
     text-align: left;
-    border: 1px solid rgba(215, 38, 56, 0.2);
-    color: var(--color-foreground);
-    font-family: 'Oswald', sans-serif;
-    font-weight: 400;
+    border: 1px solid rgba(215, 38, 56, 0.2) !important;
+    color: var(--color-foreground) !important;
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 400 !important;
+    background-color: var(--color-background-ui) !important;
   }
   
   .product-description th {
     background: linear-gradient(135deg, 
       rgba(215, 38, 56, 0.1) 0%, 
-      rgba(160, 27, 42, 0.15) 100%);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.9rem;
-    border: 1px solid rgba(215, 38, 56, 0.3);
+      rgba(160, 27, 42, 0.15) 100%) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    font-size: 0.9rem !important;
+    border: 1px solid rgba(215, 38, 56, 0.3) !important;
   }
   
   .product-description td {
-    font-size: 0.9rem;
-    font-weight: 300;
+    font-size: 0.9rem !important;
+    font-weight: 300 !important;
   }
   
   /* Remove the border removal rule to keep all borders visible */
@@ -998,9 +999,28 @@ document.addEventListener('DOMContentLoaded', function() {
     background-color: rgba(215, 38, 56, 0.05);
   }
   
-  /* Ensure any text in tables is visible */
-  .product-description table * {
+  /* Force override all table styling */
+  .product-description table,
+  .product-description table *,
+  .product-description tbody,
+  .product-description tbody *,
+  .product-description tr,
+  .product-description tr * {
     color: var(--color-foreground) !important;
+    background-color: var(--color-background-ui) !important;
+    border-color: rgba(215, 38, 56, 0.2) !important;
+  }
+  
+  /* Force header styling */
+  .product-description thead,
+  .product-description thead *,
+  .product-description th,
+  .product-description th * {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.1) 0%, 
+      rgba(160, 27, 42, 0.15) 100%) !important;
+    color: var(--color-foreground) !important;
+    border-color: rgba(215, 38, 56, 0.3) !important;
   }
   
   /* Handle embedded images in descriptions */
