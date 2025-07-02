@@ -356,16 +356,25 @@
   
   @media (max-width: 480px) {
     .collections-container {
-      padding: 1rem 0.75rem;
+      padding: 1rem 1rem;
     }
     
     .collections-grid {
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 0.75rem;
+      padding: 0 0.5rem;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .collection-card-wrapper {
+      min-width: 0;
+      width: 100%;
     }
     
     .collections-header {
       margin-bottom: 1.5rem;
+      padding: 0 0.5rem;
     }
     
     .collection-content {
