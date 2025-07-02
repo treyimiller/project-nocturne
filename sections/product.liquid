@@ -641,12 +641,37 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   /* Mobile Swiper Styles */
-  .mobile-only {
+  .product-page .mobile-only {
     display: none;
   }
   
-  .desktop-only {
+  .product-page .desktop-only {
     display: block;
+  }
+  
+  /* Ensure product images grid displays properly on desktop */
+  .product-images-grid.desktop-only {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+  
+  /* Desktop specific rules for product page */
+  @media (min-width: 769px) {
+    .product-page .desktop-only {
+      display: block !important;
+    }
+    
+    .product-page .mobile-only {
+      display: none !important;
+    }
+    
+    .product-page .product-images-grid.desktop-only {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
   }
   
   .product-images-swiper {
@@ -1139,11 +1164,11 @@ document.addEventListener('DOMContentLoaded', function() {
       font-size: 1.15rem;
     }
     
-    .desktop-only {
+    .product-page .desktop-only {
       display: none;
     }
     
-    .mobile-only {
+    .product-page .mobile-only {
       display: block;
     }
     
