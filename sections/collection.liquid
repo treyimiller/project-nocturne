@@ -31,10 +31,10 @@
     </div>
 
     <!-- Collection Products Grid -->
-    <div class="collection-products">
+    <div class="collection-products mobile-full-width">
       {% paginate collection.products by 16 %}
         {% if collection.products.size > 0 %}
-          <div class="products-grid">
+          <div class="products-grid mobile-two-column">
             {% for product in collection.products %}
               <div class="collection-product-card">
                 <a href="{{ product.url }}" class="product-card-link">
@@ -116,55 +116,72 @@
 </div>
 
 {% stylesheet %}
-  /* Global mobile collection grid override */
+  /* EXTREME MOBILE OVERRIDE - Force full width two column layout */
   @media (max-width: 768px) {
-    /* Override Shopify section grid constraints */
-    .shopify-section {
-      grid-template-columns: 1fr !important;
+    /* Complete section override */
+    body .shopify-section,
+    html .shopify-section {
+      display: block !important;
+      grid-template-columns: none !important;
+      width: 100vw !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     
-    .shopify-section > * {
-      grid-column: 1 !important;
+    body .shopify-section > *,
+    html .shopify-section > * {
+      grid-column: unset !important;
+      width: 100% !important;
     }
     
-    .shopify-section > .full-width {
-      grid-column: 1 !important;
+    /* Force full width containers */
+    body .collection-page,
+    html .collection-page,
+    body .mobile-full-width,
+    html .mobile-full-width,
+    body .collection-products,
+    html .collection-products {
+      position: relative !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      left: 50% !important;
+      right: 50% !important;
+      margin-left: -50vw !important;
+      margin-right: -50vw !important;
+      padding: 0 1rem !important;
+      box-sizing: border-box !important;
     }
     
-    [class*="products-grid"],
-    [class*="collection-products"],
-    .products-grid {
+    /* Force two column grid */
+    body .mobile-two-column,
+    html .mobile-two-column,
+    body .products-grid,
+    html .products-grid,
+    body [class*="products-grid"],
+    html [class*="products-grid"] {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 1rem !important;
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
       margin: 0 !important;
-      padding: 0 1rem !important;
-      box-sizing: border-box !important;
-      margin-left: calc(-50vw + 50%) !important;
+      padding: 0 !important;
     }
     
-    [class*="product-image-container"],
-    [class*="collection-product"] .product-image-container {
+    /* Force image aspect ratio */
+    body .product-image-container,
+    html .product-image-container,
+    body [class*="product-image"],
+    html [class*="product-image"] {
       aspect-ratio: 3/4 !important;
     }
     
-    [class*="collection-product-card"],
-    .collection-product-card {
+    /* Force card width */
+    body .collection-product-card,
+    html .collection-product-card {
       width: 100% !important;
       max-width: none !important;
-    }
-    
-    .collection-page {
-      width: 100vw !important;
-      margin-left: calc(-50vw + 50%) !important;
-    }
-    
-    .collection-container {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 1rem !important;
+      min-width: 0 !important;
     }
   }
 
