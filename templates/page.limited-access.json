@@ -10,11 +10,13 @@
 {
   "sections": {
     "main": {
-      "type": "page"
+      "type": "page",
+      "settings": {}
     },
     "limited-content": {
       "type": "limited-access",
       "settings": {
+        "display_mode": "access_gate",
         "required_customer_tag": "",
         "upgrade_link": "",
         "access_title": "Limited Access",
@@ -23,11 +25,10 @@
         "enable_password_access": true,
         "access_password": "AUDENTIA2025",
         "password_protected_content": "",
-        "exclusive_collection": "collection2",
+        "exclusive_collection": "legacy-unlock",
         "enable_email_verification": false,
         "footer_message": "For assistance accessing this content, please contact our support team.",
-        "contact_link": "",
-        "display_mode": "full_page"
+        "contact_link": ""
       }
     }
   },

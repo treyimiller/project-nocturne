@@ -10,12 +10,18 @@
 {
   "sections": {
     "main": {
-      "type": "page"
+      "type": "page",
+      "settings": {}
     },
     "inner-circle-content": {
       "type": "inner-circle-access",
       "settings": {
-        "display_mode": "full_page"
+        "display_mode": "access_gate",
+        "access_password": "innercircle2024",
+        "exclusive_collection": "inner-circle",
+        "collection_title": "Your Exclusive Collection",
+        "products_display_count": 4,
+        "view_all_text": "View All Inner Circle Items"
       }
     }
   },
