@@ -10,13 +10,18 @@
 {
   "sections": {
     "main": {
+      "type": "page"
+    },
+    "affiliate-content": {
       "type": "affiliate-access",
       "settings": {
-        "affiliate_tags": "TIER1, TIER2, TIER3"
+        "affiliate_tags": "TIER1, TIER2, TIER3",
+        "display_mode": "full_page"
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "affiliate-content"
   ]
 }

@@ -10,6 +10,9 @@
 {
   "sections": {
     "main": {
+      "type": "page"
+    },
+    "limited-content": {
       "type": "limited-access",
       "settings": {
         "required_customer_tag": "",
@@ -23,11 +26,13 @@
         "exclusive_collection": "collection2",
         "enable_email_verification": false,
         "footer_message": "For assistance accessing this content, please contact our support team.",
-        "contact_link": ""
+        "contact_link": "",
+        "display_mode": "full_page"
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "limited-content"
   ]
 }
