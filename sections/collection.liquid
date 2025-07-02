@@ -313,11 +313,58 @@
     margin-bottom: 3rem;
   }
   
-  /* Desktop specific rule */
+  /* Desktop specific rule - restore original layout */
   @media (min-width: 769px) {
+    /* Reset Shopify section grid for desktop */
+    body .shopify-section,
+    html .shopify-section {
+      display: grid !important;
+      grid-template-columns: var(--content-grid) !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    body .shopify-section > *,
+    html .shopify-section > * {
+      grid-column: 2 !important;
+    }
+    
+    body .shopify-section > .full-width,
+    html .shopify-section > .full-width {
+      grid-column: 1 / -1 !important;
+    }
+    
+    /* Reset containers for desktop */
+    body .collection-page,
+    html .collection-page,
+    body .mobile-full-width,
+    html .mobile-full-width,
+    body .collection-products,
+    html .collection-products {
+      position: relative !important;
+      width: 100% !important;
+      max-width: 1200px !important;
+      left: auto !important;
+      right: auto !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      padding: 0 2rem !important;
+    }
+    
+    /* Desktop grid layout */
     .products-grid {
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-      gap: 2rem;
+      gap: 2rem !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    /* Desktop image aspect ratio */
+    .product-image-container {
+      aspect-ratio: 4/3 !important;
     }
   }
   
