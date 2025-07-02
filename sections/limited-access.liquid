@@ -63,7 +63,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 12l2 2 4-4"/>
                 <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
-                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                <path d="M3 12c1 0 3-1-3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
                 <path d="M13 12c0-1.5 0-3 0-3s-1-2-3-2-3 2-3 2v3"/>
               </svg>
             </div>
@@ -71,26 +71,109 @@
             <p class="method-description">Enter your exclusive access code</p>
           </div>
           
-          <form class="password-form" action="" method="post">
-            <input type="hidden" name="form_type" value="storefront_password">
-            <input type="hidden" name="utf8" value="✓">
-            
-            <div class="input-group">
-              <input 
-                type="password" 
-                name="password" 
-                placeholder="Enter access code"
-                class="access-input"
-                required
-              >
-              <button type="submit" class="access-submit">
-                <span>Verify</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+          <!-- Password Entry Form -->
+          <div id="password-entry" class="password-entry">
+            <form class="password-form">
+              <div class="input-group">
+                <input 
+                  type="password" 
+                  id="access-password"
+                  placeholder="Enter access code"
+                  class="access-input"
+                  required
+                >
+                <button type="submit" class="access-submit">
+                  <span>Verify</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+              <div id="password-error" class="password-error" style="display: none;">
+                <p>Incorrect access code. Please try again.</p>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Password Protected Content -->
+          <div id="password-content" class="password-protected-content" style="display: none;">
+            <div class="method-header">
+              <div class="method-icon verified">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22,4 12,14.01 9,11.01"/>
                 </svg>
-              </button>
+              </div>
+              <h3 class="method-title">Access Granted</h3>
+              <p class="method-description">Welcome to the exclusive content area</p>
             </div>
-          </form>
+            
+            <div class="protected-content">
+              {% if section.settings.password_protected_content != blank %}
+                {{ section.settings.password_protected_content }}
+              {% elsif page.content != blank %}
+                {{ page.content }}
+              {% else %}
+                <div class="default-protected-content">
+                  <h2>Exclusive Access Content</h2>
+                  <p>Congratulations! You've successfully accessed this restricted area.</p>
+                  
+                  <div class="exclusive-benefits">
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                      <span>Access to exclusive products</span>
+                    </div>
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,6 12,12 16,14"/>
+                      </svg>
+                      <span>Early release notifications</span>
+                    </div>
+                    <div class="benefit-item">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                      </svg>
+                      <span>Special member pricing</span>
+                    </div>
+                  </div>
+                  
+                  {% if section.settings.exclusive_collection != blank %}
+                    <div class="exclusive-products">
+                      <h3>Exclusive Products</h3>
+                      <div class="products-preview">
+                        {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+                        {% for product in exclusive_collection.products limit: 3 %}
+                          <div class="preview-product">
+                            <a href="{{ product.url }}">
+                              {% if product.featured_image %}
+                                <img src="{{ product.featured_image | image_url: width: 150 }}" alt="{{ product.title }}">
+                              {% endif %}
+                              <p>{{ product.title }}</p>
+                              <span>{{ product.price | money }}</span>
+                            </a>
+                          </div>
+                        {% endfor %}
+                      </div>
+                      {% if exclusive_collection.products.size > 3 %}
+                        <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">View All Exclusive Items</a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="session-info">
+              <p>Session expires in <span id="session-timer">30:00</span></p>
+              <button id="reset-access" class="reset-btn">Reset Access</button>
+            </div>
+          </div>
         </div>
       {% endif %}
 
@@ -158,18 +241,104 @@
           </div>
         </div>
       {% else %}
-        <!-- Customer is logged in -->
-        <div class="access-method member-welcome">
-          <div class="method-header">
-            <div class="method-icon verified">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <polyline points="22,4 12,14.01 9,11.01"/>
-              </svg>
+        <!-- Customer is logged in - Check access level -->
+        {% assign has_vip_access = false %}
+        {% assign has_early_access = false %}
+        {% assign has_premium_access = false %}
+        
+        <!-- Check for specific customer tags -->
+        {% for tag in customer.tags %}
+          {% if tag == 'VIP' or tag == 'vip' %}
+            {% assign has_vip_access = true %}
+          {% elsif tag == 'early-access' or tag == 'Early Access' %}
+            {% assign has_early_access = true %}
+          {% elsif tag == 'premium' or tag == 'Premium' %}
+            {% assign has_premium_access = true %}
+          {% endif %}
+        {% endfor %}
+        
+        <!-- Check if customer has required access for this page -->
+        {% assign page_access_granted = false %}
+        {% if section.settings.required_customer_tag == blank %}
+          {% assign page_access_granted = true %}
+        {% else %}
+          {% assign required_tags = section.settings.required_customer_tag | split: ',' %}
+          {% for required_tag in required_tags %}
+            {% assign clean_tag = required_tag | strip | downcase %}
+            {% for customer_tag in customer.tags %}
+              {% assign customer_tag_clean = customer_tag | strip | downcase %}
+              {% if customer_tag_clean == clean_tag %}
+                {% assign page_access_granted = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+            {% if page_access_granted %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% if page_access_granted %}
+          <!-- Customer has required access -->
+          <div class="access-method member-welcome">
+            <div class="method-header">
+              <div class="method-icon verified">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22,4 12,14.01 9,11.01"/>
+                </svg>
+              </div>
+              <h3 class="method-title">Welcome, {{ customer.first_name }}!</h3>
+              <p class="method-description">
+                {% if has_vip_access %}VIP Access Verified{% elsif has_early_access %}Early Access Verified{% elsif has_premium_access %}Premium Access Verified{% else %}Membership Verified{% endif %}
+              </p>
             </div>
-            <h3 class="method-title">Welcome, {{ customer.first_name }}!</h3>
-            <p class="method-description">Your membership has been verified</p>
+        {% else %}
+          <!-- Customer logged in but lacks required access -->
+          <div class="access-method access-denied">
+            <div class="method-header">
+              <div class="method-icon denied">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+              </div>
+              <h3 class="method-title">Access Restricted</h3>
+              <p class="method-description">Your current membership level doesn't include access to this content</p>
+            </div>
+            
+            <div class="upgrade-message">
+              {% if section.settings.required_customer_tag != blank %}
+                <p>This content requires: <strong>{{ section.settings.required_customer_tag | replace: ',', ', ' }}</strong> membership level.</p>
+              {% endif %}
+              
+              {% if section.settings.upgrade_link != blank %}
+                <a href="{{ section.settings.upgrade_link }}" class="upgrade-btn">
+                  Upgrade Membership
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              {% endif %}
+              
+              <div class="current-access">
+                <p>Your current access levels:</p>
+                <div class="access-tags">
+                  {% if customer.tags.size > 0 %}
+                    {% for tag in customer.tags %}
+                      {% if tag contains 'access' or tag contains 'vip' or tag contains 'premium' or tag contains 'member' %}
+                        <span class="access-tag">{{ tag }}</span>
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <span class="access-tag basic">Standard Member</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
           </div>
+        {% endif %}
           
           <!-- Protected Content -->
           <div class="protected-content">
@@ -435,6 +604,10 @@
     color: rgba(34, 197, 94, 0.8);
   }
   
+  .method-icon.denied {
+    color: rgba(239, 68, 68, 0.8);
+  }
+  
   .method-title {
     font-family: 'Oswald', sans-serif;
     font-size: 1.3rem;
@@ -631,6 +804,312 @@
     flex-shrink: 0;
   }
   
+  /* Access Denied Styles */
+  .access-denied {
+    border-color: rgba(239, 68, 68, 0.15);
+  }
+  
+  .upgrade-message {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(239, 68, 68, 0.05) 0%, 
+      rgba(220, 38, 38, 0.08) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(239, 68, 68, 0.1);
+  }
+  
+  .upgrade-message p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .upgrade-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(239, 68, 68, 0.8) 0%, 
+      rgba(220, 38, 38, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+  }
+  
+  .upgrade-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(239, 68, 68, 0.9) 0%, 
+      rgba(220, 38, 38, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+  }
+  
+  .current-access p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .access-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .access-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    background: rgba(215, 38, 56, 0.1);
+    border: 1px solid rgba(215, 38, 56, 0.2);
+    border-radius: 4px;
+  }
+  
+  .access-tag.basic {
+    background: rgba(156, 163, 175, 0.1);
+    border-color: rgba(156, 163, 175, 0.2);
+    opacity: 0.7;
+  }
+  
+  /* Password Protected Content Styles */
+  .password-error {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, 
+      rgba(239, 68, 68, 0.1) 0%, 
+      rgba(220, 38, 38, 0.15) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .password-error p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(239, 68, 68, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+  
+  .password-protected-content {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .default-protected-content h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .default-protected-content > p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .exclusive-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.05) 0%, 
+      rgba(160, 27, 42, 0.08) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .exclusive-products {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--color-background);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .exclusive-products h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .products-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .preview-product {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--color-background-ui);
+    border-radius: 8px;
+    border: 1px solid rgba(215, 38, 56, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .preview-product:hover {
+    border-color: rgba(215, 38, 56, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .preview-product a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .preview-product img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .preview-product p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    margin: 0;
+  }
+  
+  .preview-product span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(215, 38, 56, 0.8);
+  }
+  
+  .view-all-exclusive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.2);
+    width: 100%;
+  }
+  
+  .view-all-exclusive:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.3);
+  }
+  
+  .session-info {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, 
+      rgba(156, 163, 175, 0.05) 0%, 
+      rgba(107, 114, 128, 0.08) 100%);
+    border-radius: 8px;
+    border: 1px solid rgba(156, 163, 175, 0.1);
+    text-align: center;
+  }
+  
+  .session-info p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  #session-timer {
+    color: rgba(215, 38, 56, 0.8);
+    font-weight: 500;
+  }
+  
+  .reset-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+  }
+  
+  .reset-btn:hover {
+    opacity: 1;
+    border-color: rgba(215, 38, 56, 0.3);
+    color: rgba(215, 38, 56, 0.8);
+  }
+  
   /* Access Footer */
   .access-footer {
     text-align: center;
@@ -721,6 +1200,17 @@
     }
   }
   
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   /* Responsive Design */
   @media (max-width: 768px) {
     .limited-access-container {
@@ -782,10 +1272,156 @@
   }
 {% endstylesheet %}
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Password Access Functionality
+  const passwordForm = document.querySelector('.password-form');
+  const passwordEntry = document.getElementById('password-entry');
+  const passwordContent = document.getElementById('password-content');
+  const passwordError = document.getElementById('password-error');
+  const sessionTimer = document.getElementById('session-timer');
+  const resetButton = document.getElementById('reset-access');
+  
+  // Get the access password from section settings
+  const accessPassword = '{{ section.settings.access_password | default: "AUDENTIA2025" }}';
+  
+  if (passwordForm) {
+    passwordForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const enteredPassword = document.getElementById('access-password').value;
+      
+      if (enteredPassword === accessPassword) {
+        // Password correct - show content
+        passwordEntry.style.display = 'none';
+        passwordContent.style.display = 'block';
+        
+        // Store access in sessionStorage
+        sessionStorage.setItem('limitedAccessGranted', 'true');
+        sessionStorage.setItem('accessGrantedTime', Date.now().toString());
+        
+        // Start session timer
+        startSessionTimer();
+      } else {
+        // Password incorrect - show error
+        passwordError.style.display = 'block';
+        document.getElementById('access-password').value = '';
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          passwordError.style.display = 'none';
+        }, 3000);
+      }
+    });
+  }
+  
+  // Check if access was previously granted in this session
+  if (sessionStorage.getItem('limitedAccessGranted') === 'true') {
+    const accessTime = parseInt(sessionStorage.getItem('accessGrantedTime'));
+    const currentTime = Date.now();
+    const sessionDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
+    
+    if (currentTime - accessTime < sessionDuration) {
+      // Still within session time - show content
+      if (passwordEntry) passwordEntry.style.display = 'none';
+      if (passwordContent) passwordContent.style.display = 'block';
+      
+      // Start timer with remaining time
+      const remainingTime = sessionDuration - (currentTime - accessTime);
+      startSessionTimer(remainingTime);
+    } else {
+      // Session expired - clear storage
+      sessionStorage.removeItem('limitedAccessGranted');
+      sessionStorage.removeItem('accessGrantedTime');
+    }
+  }
+  
+  // Session timer functionality
+  function startSessionTimer(initialTime = 30 * 60 * 1000) {
+    let timeRemaining = initialTime;
+    
+    const timer = setInterval(() => {
+      timeRemaining -= 1000;
+      
+      if (timeRemaining <= 0) {
+        // Session expired
+        clearInterval(timer);
+        resetAccess();
+        return;
+      }
+      
+      // Update timer display
+      const minutes = Math.floor(timeRemaining / 60000);
+      const seconds = Math.floor((timeRemaining % 60000) / 1000);
+      
+      if (sessionTimer) {
+        sessionTimer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
+    
+    // Store timer reference for cleanup
+    if (window.accessTimer) {
+      clearInterval(window.accessTimer);
+    }
+    window.accessTimer = timer;
+  }
+  
+  // Reset access functionality
+  function resetAccess() {
+    // Clear session storage
+    sessionStorage.removeItem('limitedAccessGranted');
+    sessionStorage.removeItem('accessGrantedTime');
+    
+    // Clear any timers
+    if (window.accessTimer) {
+      clearInterval(window.accessTimer);
+    }
+    
+    // Reset UI
+    if (passwordEntry) passwordEntry.style.display = 'block';
+    if (passwordContent) passwordContent.style.display = 'none';
+    if (passwordError) passwordError.style.display = 'none';
+    
+    // Clear password input
+    const passwordInput = document.getElementById('access-password');
+    if (passwordInput) passwordInput.value = '';
+  }
+  
+  // Reset button click handler
+  if (resetButton) {
+    resetButton.addEventListener('click', resetAccess);
+  }
+  
+  // Clear access when page unloads (optional - comment out if you want persistent sessions)
+  // window.addEventListener('beforeunload', resetAccess);
+});
+</script>
+
 {% schema %}
 {
   "name": "Limited Access",
   "settings": [
+    {
+      "type": "header",
+      "content": "Page Access Settings"
+    },
+    {
+      "type": "text",
+      "id": "required_customer_tag",
+      "label": "Required Customer Tags",
+      "info": "Comma-separated list of customer tags required for access (e.g., 'VIP, early-access, premium'). Leave blank to allow all logged-in customers.",
+      "placeholder": "VIP, early-access, premium"
+    },
+    {
+      "type": "url",
+      "id": "upgrade_link",
+      "label": "Upgrade Membership Link",
+      "info": "Link to upgrade page for customers without required access"
+    },
+    {
+      "type": "header",
+      "content": "Page Content"
+    },
     {
       "type": "text",
       "id": "access_title",
@@ -805,16 +1441,43 @@
       "default": "This content is restricted to verified members only. Please verify your access credentials below."
     },
     {
+      "type": "header",
+      "content": "Access Methods"
+    },
+    {
       "type": "checkbox",
       "id": "enable_password_access",
       "label": "Enable Password Access",
       "default": true
     },
     {
+      "type": "text",
+      "id": "access_password",
+      "label": "Access Password",
+      "default": "AUDENTIA2025",
+      "info": "The password required for access (case-sensitive)"
+    },
+    {
+      "type": "richtext",
+      "id": "password_protected_content",
+      "label": "Password Protected Content",
+      "info": "Custom content to show after successful password entry. Leave blank to use page content or default content."
+    },
+    {
+      "type": "collection",
+      "id": "exclusive_collection",
+      "label": "Exclusive Collection",
+      "info": "Collection to display in the protected content area"
+    },
+    {
       "type": "checkbox",
       "id": "enable_email_verification",
       "label": "Enable Email Verification",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Footer Settings"
     },
     {
       "type": "textarea",
