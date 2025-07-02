@@ -10,13 +10,18 @@
 {
   "sections": {
     "main": {
-      "type": "page"
+      "type": "page",
+      "settings": {}
     },
     "affiliate-content": {
       "type": "affiliate-access",
       "settings": {
+        "display_mode": "access_gate",
         "affiliate_tags": "TIER1, TIER2, TIER3",
-        "display_mode": "full_page"
+        "exclusive_collection": "inner-circle",
+        "collection_title": "Exclusive Partner Products",
+        "products_display_count": 4,
+        "view_all_text": "View All Partner Products"
       }
     }
   },

@@ -10,13 +10,12 @@
 {
   "sections": {
     "main": {
-      "type": "page"
+      "type": "page",
+      "settings": {}
     },
     "inner-circle-content": {
       "type": "inner-circle-access",
-      "settings": {
-        "display_mode": "full_page"
-      }
+      "settings": {}
     }
   },
   "order": [
