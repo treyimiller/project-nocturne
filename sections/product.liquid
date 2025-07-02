@@ -10,7 +10,8 @@
     <!-- Product Images Section -->
     <div class="product-media">
       {% if product.images.size > 0 %}
-        <div class="product-images-grid">
+        <!-- Desktop Grid View -->
+        <div class="product-images-grid desktop-only">
           {% for image in product.images %}
             <div class="product-image-item">
               <div class="image-container">
@@ -32,6 +33,43 @@
               </div>
             </div>
           {% endfor %}
+        </div>
+        
+        <!-- Mobile Swiper View -->
+        <div class="product-images-swiper mobile-only">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              {% for image in product.images %}
+                <div class="swiper-slide">
+                  <div class="mobile-image-container">
+                    <img 
+                      src="{{ image | image_url: width: 800 }}" 
+                      alt="{{ image.alt | default: product.title }}"
+                      class="mobile-product-img"
+                      loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    >
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            
+            <!-- Navigation Dots -->
+            {% if product.images.size > 1 %}
+              <div class="swiper-pagination"></div>
+              
+              <!-- Navigation Arrows -->
+              <div class="swiper-button-prev">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+              </div>
+              <div class="swiper-button-next">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
         </div>
       {% endif %}
     </div>
@@ -203,7 +241,122 @@ document.addEventListener('DOMContentLoaded', function() {
   const addToCartBtn = document.querySelector('.add-to-cart-btn');
   const mainImage = document.getElementById('main-product-image');
   
-  // Image grid interactions (optional click to enlarge functionality can be added here)
+  // Mobile Swiper Functionality
+  const swiperContainer = document.querySelector('.swiper-container');
+  if (swiperContainer) {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.swiper-slide');
+    const totalSlides = slides.length;
+    const swiperWrapper = document.querySelector('.swiper-wrapper');
+    const pagination = document.querySelector('.swiper-pagination');
+    const prevBtn = document.querySelector('.swiper-button-prev');
+    const nextBtn = document.querySelector('.swiper-button-next');
+    
+    // Create pagination dots
+    if (pagination && totalSlides > 1) {
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('pagination-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        pagination.appendChild(dot);
+      }
+    }
+    
+    // Update slide position
+    function updateSlide() {
+      if (swiperWrapper) {
+        swiperWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update pagination dots
+        document.querySelectorAll('.pagination-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentSlide);
+        });
+      }
+    }
+    
+    // Go to specific slide
+    function goToSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+      updateSlide();
+    }
+    
+    // Previous slide
+    function prevSlide() {
+      currentSlide = currentSlide > 0 ? currentSlide - 1 : totalSlides - 1;
+      updateSlide();
+    }
+    
+    // Next slide
+    function nextSlide() {
+      currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+      updateSlide();
+    }
+    
+    // Button event listeners
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Touch/swipe functionality
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    
+    swiperContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+    
+    swiperContainer.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      currentX = e.touches[0].clientX;
+      const diff = startX - currentX;
+      const threshold = 50; // Minimum swipe distance
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0 && currentSlide < totalSlides - 1) {
+          nextSlide();
+        } else if (diff < 0 && currentSlide > 0) {
+          prevSlide();
+        }
+        isDragging = false;
+      }
+    });
+    
+    swiperContainer.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+    
+    // Mouse drag functionality for desktop testing
+    swiperContainer.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+      e.preventDefault();
+    });
+    
+    swiperContainer.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      currentX = e.clientX;
+    });
+    
+    swiperContainer.addEventListener('mouseup', () => {
+      if (isDragging) {
+        const diff = startX - currentX;
+        const threshold = 50;
+        
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0 && currentSlide < totalSlides - 1) {
+            nextSlide();
+          } else if (diff < 0 && currentSlide > 0) {
+            prevSlide();
+          }
+        }
+      }
+      isDragging = false;
+    });
+  }
   
   // Quantity controls
   const quantityInput = document.querySelector('.quantity-input');
@@ -457,6 +610,124 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .image-container:hover .product-grid-img {
     transform: scale(1.05);
+  }
+  
+  /* Mobile Swiper Styles */
+  .mobile-only {
+    display: none;
+  }
+  
+  .desktop-only {
+    display: block;
+  }
+  
+  .product-images-swiper {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  
+  .swiper-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--color-background-ui);
+    border: 2px solid rgba(215, 38, 56, 0.05);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .swiper-wrapper {
+    display: flex;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .swiper-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+  }
+  
+  .mobile-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  
+  .mobile-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Swiper Navigation */
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-foreground);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  
+  .swiper-button-prev {
+    left: 1rem;
+  }
+  
+  .swiper-button-next {
+    right: 1rem;
+  }
+  
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    background: rgba(215, 38, 56, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  /* Swiper Pagination */
+  .swiper-pagination {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+  
+  .pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination-dot.active {
+    background: rgba(215, 38, 56, 0.9);
+    transform: scale(1.2);
+  }
+  
+  .pagination-dot:hover {
+    background: rgba(215, 38, 56, 0.7);
   }
   
   /* Product Details Section */
@@ -840,14 +1111,30 @@ document.addEventListener('DOMContentLoaded', function() {
       font-size: 1.15rem;
     }
     
-    .product-images-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      max-width: 100%;
+    .desktop-only {
+      display: none;
     }
     
-    .image-container {
-      aspect-ratio: 4/5;
+    .mobile-only {
+      display: block;
+    }
+    
+    .mobile-image-container {
+      aspect-ratio: 3/4;
+    }
+    
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .swiper-button-prev {
+      left: 0.75rem;
+    }
+    
+    .swiper-button-next {
+      right: 0.75rem;
     }
     
     .add-to-cart-btn {
@@ -876,20 +1163,27 @@ document.addEventListener('DOMContentLoaded', function() {
       gap: 1rem;
     }
     
-    .product-images-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      max-width: 100%;
-    }
-    
-    .image-container {
+    .mobile-image-container {
       aspect-ratio: 1/1;
     }
     
-    .product-grid-img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .swiper-button-prev {
+      left: 0.5rem;
+    }
+    
+    .swiper-button-next {
+      right: 0.5rem;
+    }
+    
+    .pagination-dot {
+      width: 6px;
+      height: 6px;
     }
   }
 {% endstylesheet %}
