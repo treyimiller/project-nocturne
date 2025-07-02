@@ -1,8 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "limited-access",
-      "settings": {}
+      "settings": {
+        "required_customer_tag": "AFFILIATES",
+        "upgrade_link": "",
+        "access_title": "Limited Access",
+        "access_subtitle": "Exclusive Content Area",
+        "access_message": "This content is restricted to verified members only. Please verify your access credentials below.",
+        "enable_password_access": true,
+        "access_password": "AUDENTIA2025",
+        "password_protected_content": "",
+        "exclusive_collection": "",
+        "enable_email_verification": true,
+        "footer_message": "For assistance accessing this content, please contact our support team.",
+        "contact_link": ""
+      }
     }
   },
   "order": [
