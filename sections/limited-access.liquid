@@ -1,0 +1,832 @@
+<!-- Limited Access Page Section -->
+<div class="limited-access-page full-width">
+  <!-- Atmospheric Background -->
+  <div class="limited-access-atmosphere">
+    <div class="atmosphere-texture"></div>
+    <div class="atmosphere-gradient"></div>
+    <div class="restricted-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+  </div>
+
+  <div class="limited-access-container">
+    <!-- Access Gate Header -->
+    <div class="access-gate-header">
+      <!-- Lock Icon -->
+      <div class="lock-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <circle cx="12" cy="16" r="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      
+      <!-- Access Title -->
+      <h1 class="access-title">
+        {% if section.settings.access_title != blank %}
+          {{ section.settings.access_title }}
+        {% else %}
+          Limited Access
+        {% endif %}
+      </h1>
+      
+      <!-- Access Subtitle -->
+      <div class="access-subtitle">
+        {% if section.settings.access_subtitle != blank %}
+          {{ section.settings.access_subtitle }}
+        {% else %}
+          Exclusive Content Area
+        {% endif %}
+      </div>
+      
+      <!-- Access Message -->
+      <div class="access-message">
+        {% if section.settings.access_message != blank %}
+          <p>{{ section.settings.access_message }}</p>
+        {% else %}
+          <p>This content is restricted to verified members only. Please verify your access credentials below.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Access Methods -->
+    <div class="access-methods">
+      <!-- Password Access -->
+      {% if section.settings.enable_password_access %}
+        <div class="access-method password-access">
+          <div class="method-header">
+            <div class="method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                <path d="M13 12c0-1.5 0-3 0-3s-1-2-3-2-3 2-3 2v3"/>
+              </svg>
+            </div>
+            <h3 class="method-title">Access Code</h3>
+            <p class="method-description">Enter your exclusive access code</p>
+          </div>
+          
+          <form class="password-form" action="" method="post">
+            <input type="hidden" name="form_type" value="storefront_password">
+            <input type="hidden" name="utf8" value="✓">
+            
+            <div class="input-group">
+              <input 
+                type="password" 
+                name="password" 
+                placeholder="Enter access code"
+                class="access-input"
+                required
+              >
+              <button type="submit" class="access-submit">
+                <span>Verify</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+
+      <!-- Email Verification -->
+      {% if section.settings.enable_email_verification %}
+        <div class="access-method email-verification">
+          <div class="method-header">
+            <div class="method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <h3 class="method-title">Email Verification</h3>
+            <p class="method-description">Verify your membership status</p>
+          </div>
+          
+          <form class="email-form" action="{{ routes.account_url }}" method="post">
+            <input type="hidden" name="form_type" value="customer">
+            <input type="hidden" name="utf8" value="✓">
+            
+            <div class="input-group">
+              <input 
+                type="email" 
+                name="customer[email]" 
+                placeholder="Enter your email address"
+                class="access-input"
+                required
+              >
+              <button type="submit" class="access-submit">
+                <span>Verify</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+
+      <!-- Account Login -->
+      {% unless customer %}
+        <div class="access-method account-login">
+          <div class="method-header">
+            <div class="method-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3 class="method-title">Member Login</h3>
+            <p class="method-description">Sign in to your account for access</p>
+          </div>
+          
+          <div class="login-actions">
+            <a href="{{ routes.account_login_url }}" class="login-btn">
+              Sign In
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="{{ routes.account_register_url }}" class="register-link">
+              Don't have an account? <span>Register here</span>
+            </a>
+          </div>
+        </div>
+      {% else %}
+        <!-- Customer is logged in -->
+        <div class="access-method member-welcome">
+          <div class="method-header">
+            <div class="method-icon verified">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22,4 12,14.01 9,11.01"/>
+              </svg>
+            </div>
+            <h3 class="method-title">Welcome, {{ customer.first_name }}!</h3>
+            <p class="method-description">Your membership has been verified</p>
+          </div>
+          
+          <!-- Protected Content -->
+          <div class="protected-content">
+            {% if page.content != blank %}
+              {{ page.content }}
+            {% else %}
+              <div class="default-content">
+                <h2>Exclusive Member Content</h2>
+                <p>Thank you for being a valued member. Access to exclusive products, early releases, and member-only content is now available.</p>
+                
+                <div class="member-benefits">
+                  <div class="benefit-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span>Exclusive product access</span>
+                  </div>
+                  <div class="benefit-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                    <span>Early release notifications</span>
+                  </div>
+                  <div class="benefit-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span>VIP customer support</span>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endunless %}
+    </div>
+
+    <!-- Additional Information -->
+    <div class="access-footer">
+      {% if section.settings.footer_message != blank %}
+        <p class="footer-message">{{ section.settings.footer_message }}</p>
+      {% endif %}
+      
+      <div class="help-links">
+        <a href="{{ routes.root_url }}" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Store
+        </a>
+        
+        {% if section.settings.contact_link %}
+          <a href="{{ section.settings.contact_link }}" class="contact-link">
+            Need Help?
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* Limited Access Page Styles */
+  .limited-access-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+  
+  /* Atmospheric Background */
+  .limited-access-atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .atmosphere-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(215, 38, 56, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(215, 38, 56, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 40% 60%, rgba(215, 38, 56, 0.015) 0.5px, transparent 0.5px);
+    background-size: 40px 40px, 60px 60px, 80px 80px;
+    animation: restrictedShift 100s linear infinite;
+    opacity: 0.6;
+  }
+  
+  .atmosphere-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, 
+      rgba(215, 38, 56, 0.015) 0%, 
+      rgba(215, 38, 56, 0.008) 40%, 
+      transparent 70%);
+  }
+  
+  .restricted-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .restricted-particles .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(215, 38, 56, 0.3);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+  }
+  
+  .restricted-particles .particle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+  
+  .restricted-particles .particle:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation-delay: 2s;
+  }
+  
+  .restricted-particles .particle:nth-child(3) {
+    top: 80%;
+    left: 30%;
+    animation-delay: 4s;
+  }
+  
+  .restricted-particles .particle:nth-child(4) {
+    top: 30%;
+    left: 70%;
+    animation-delay: 6s;
+  }
+  
+  .restricted-particles .particle:nth-child(5) {
+    top: 70%;
+    left: 60%;
+    animation-delay: 1s;
+  }
+  
+  /* Limited Access Container */
+  .limited-access-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    z-index: 2;
+  }
+  
+  /* Access Gate Header */
+  .access-gate-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--color-background-ui);
+    border-radius: 16px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(215, 38, 56, 0.03);
+  }
+  
+  .lock-icon {
+    margin-bottom: 1.5rem;
+    color: rgba(215, 38, 56, 0.7);
+    animation: lockPulse 3s infinite ease-in-out;
+  }
+  
+  .access-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .access-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(215, 38, 56, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .access-message {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Access Methods */
+  .access-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .access-method {
+    background-color: var(--color-background-ui);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px solid rgba(215, 38, 56, 0.08);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(215, 38, 56, 0.02);
+    transition: all 0.3s ease;
+  }
+  
+  .access-method:hover {
+    border-color: rgba(215, 38, 56, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(215, 38, 56, 0.04);
+  }
+  
+  .method-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .method-icon {
+    margin-bottom: 1rem;
+    color: rgba(215, 38, 56, 0.7);
+  }
+  
+  .method-icon.verified {
+    color: rgba(34, 197, 94, 0.8);
+  }
+  
+  .method-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  
+  .method-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Form Styles */
+  .password-form,
+  .email-form {
+    margin-top: 1rem;
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 0;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-group:focus-within {
+    border-color: rgba(215, 38, 56, 0.3);
+  }
+  
+  .access-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    outline: none;
+  }
+  
+  .access-input::placeholder {
+    color: var(--color-foreground);
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+  }
+  
+  .access-submit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .access-submit:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+  }
+  
+  /* Login Actions */
+  .login-actions {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.8) 0%, 
+      rgba(160, 27, 42, 0.9) 100%);
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.2);
+  }
+  
+  .login-btn:hover {
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.9) 0%, 
+      rgba(160, 27, 42, 1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.3);
+  }
+  
+  .register-link {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s ease;
+  }
+  
+  .register-link:hover {
+    opacity: 1;
+  }
+  
+  .register-link span {
+    color: rgba(215, 38, 56, 0.8);
+    font-weight: 400;
+  }
+  
+  /* Protected Content */
+  .protected-content {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, 
+      rgba(215, 38, 56, 0.05) 0%, 
+      rgba(160, 27, 42, 0.08) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .default-content h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  
+  .default-content p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .member-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .benefit-item svg {
+    color: rgba(215, 38, 56, 0.7);
+    flex-shrink: 0;
+  }
+  
+  /* Access Footer */
+  .access-footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--color-background-ui);
+    border-radius: 12px;
+    border: 2px solid rgba(215, 38, 56, 0.05);
+  }
+  
+  .footer-message {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .help-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .back-link,
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .back-link:hover,
+  .contact-link:hover {
+    opacity: 1;
+    color: rgba(215, 38, 56, 0.8);
+  }
+  
+  /* Animations */
+  @keyframes restrictedShift {
+    0% {
+      background-position: 0px 0px, 0px 0px, 0px 0px;
+    }
+    100% {
+      background-position: 40px 40px, -60px 60px, 80px -80px;
+    }
+  }
+  
+  @keyframes lockPulse {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-10px) translateX(5px);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(-5px) translateX(-3px);
+      opacity: 0.5;
+    }
+    75% {
+      transform: translateY(-15px) translateX(8px);
+      opacity: 0.8;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .limited-access-container {
+      padding: 0 1rem;
+    }
+    
+    .access-gate-header {
+      padding: 1.5rem;
+    }
+    
+    .access-method {
+      padding: 1.5rem;
+    }
+    
+    .input-group {
+      flex-direction: column;
+    }
+    
+    .access-input {
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .access-submit {
+      border-radius: 0 0 8px 8px;
+      justify-content: center;
+    }
+    
+    .help-links {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .limited-access-container {
+      padding: 0 0.75rem;
+    }
+    
+    .access-gate-header {
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .access-method {
+      padding: 1rem;
+    }
+    
+    .access-footer {
+      padding: 1.5rem;
+    }
+    
+    .member-benefits {
+      gap: 0.75rem;
+    }
+    
+    .benefit-item {
+      font-size: 0.8rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Limited Access",
+  "settings": [
+    {
+      "type": "text",
+      "id": "access_title",
+      "label": "Access Title",
+      "default": "Limited Access"
+    },
+    {
+      "type": "text",
+      "id": "access_subtitle",
+      "label": "Access Subtitle",
+      "default": "Exclusive Content Area"
+    },
+    {
+      "type": "textarea",
+      "id": "access_message",
+      "label": "Access Message",
+      "default": "This content is restricted to verified members only. Please verify your access credentials below."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_password_access",
+      "label": "Enable Password Access",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_email_verification",
+      "label": "Enable Email Verification",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "footer_message",
+      "label": "Footer Message",
+      "default": "For assistance accessing this content, please contact our support team."
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact Link"
+    }
+  ]
+}
+{% endschema %}
