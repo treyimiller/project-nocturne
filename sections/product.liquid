@@ -642,11 +642,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   /* Mobile Swiper Styles */
   .product-page .mobile-only {
-    display: none;
+    display: none !important;
   }
   
   .product-page .desktop-only {
-    display: block;
+    display: block !important;
   }
   
   /* Ensure product images grid displays properly on desktop */
@@ -657,20 +657,32 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 100% !important;
   }
   
+  /* Hide mobile swiper by default */
+  .product-images-swiper.mobile-only {
+    display: none !important;
+  }
+  
   /* Desktop specific rules for product page */
   @media (min-width: 769px) {
-    .product-page .desktop-only {
+    .product-page .desktop-only,
+    .desktop-only {
       display: block !important;
+      visibility: visible !important;
     }
     
-    .product-page .mobile-only {
+    .product-page .mobile-only,
+    .mobile-only,
+    .product-images-swiper.mobile-only {
       display: none !important;
+      visibility: hidden !important;
     }
     
-    .product-page .product-images-grid.desktop-only {
+    .product-page .product-images-grid.desktop-only,
+    .product-images-grid.desktop-only {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
       gap: 1rem !important;
+      visibility: visible !important;
     }
   }
   
@@ -1165,12 +1177,25 @@ document.addEventListener('DOMContentLoaded', function() {
       font-size: 1.15rem;
     }
     
-    .product-page .desktop-only {
-      display: none;
+    /* Force hide desktop elements on mobile */
+    .product-page .desktop-only,
+    .desktop-only,
+    .product-images-grid.desktop-only {
+      display: none !important;
+      visibility: hidden !important;
     }
     
-    .product-page .mobile-only {
-      display: block;
+    /* Force show mobile elements on mobile */
+    .product-page .mobile-only,
+    .mobile-only,
+    .product-images-swiper.mobile-only {
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    /* Ensure mobile swiper container displays correctly */
+    .product-images-swiper {
+      display: block !important;
     }
     
     .mobile-image-container {
