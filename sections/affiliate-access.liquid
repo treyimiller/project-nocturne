@@ -234,8 +234,8 @@
         {% endif %}
         
         {% if has_affiliate_access %}
-          <!-- Customer has Affiliate access -->
-          <div class="access-method member-welcome">
+          <!-- Customer has Affiliate access - Show loading message and trigger full page -->
+          <div id="affiliate-access-loading" class="access-method member-welcome">
             <div class="method-header">
               <div class="method-icon verified">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -244,134 +244,7 @@
                 </svg>
               </div>
               <h3 class="method-title">Welcome Partner {{ customer.first_name }}!</h3>
-              <p class="method-description">Affiliate Access Verified</p>
-            </div>
-            
-            <!-- Affiliate Protected Content -->
-            <div class="protected-content">
-              {% if page.content != blank %}
-                {{ page.content }}
-              {% else %}
-                <div class="default-content">
-                  <h2>Affiliate Resource Center</h2>
-                  <p>Welcome to your exclusive affiliate portal. Access marketing materials, track commissions, and manage your partnership with us.</p>
-                  
-                  <div class="member-benefits">
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="1" x2="12" y2="23"/>
-                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                      </svg>
-                      <span>Competitive commission structure</span>
-                    </div>
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
-                      </svg>
-                      <span>Marketing materials & assets</span>
-                    </div>
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3v18h18"/>
-                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                      </svg>
-                      <span>Real-time performance tracking</span>
-                    </div>
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                      </svg>
-                      <span>Dedicated partner support</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Affiliate Resources -->
-                  <div class="affiliate-resources">
-                    <h3>Partner Resources</h3>
-                    <div class="resources-grid">
-                      <div class="resource-item">
-                        <div class="resource-icon">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                            <polyline points="14,2 14,8 20,8"/>
-                          </svg>
-                        </div>
-                        <h4>Marketing Kit</h4>
-                        <p>Download logos, banners, and promotional materials</p>
-                        <a href="/pages/marketing-kit" class="resource-link">Access Kit</a>
-                      </div>
-                      
-                      <div class="resource-item">
-                        <div class="resource-icon">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 3v18h18"/>
-                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                          </svg>
-                        </div>
-                        <h4>Commission Tracker</h4>
-                        <p>View earnings, clicks, and conversion rates</p>
-                        <a href="/pages/commission-tracker" class="resource-link">View Stats</a>
-                      </div>
-                      
-                      <div class="resource-item">
-                        <div class="resource-icon">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                          </svg>
-                        </div>
-                        <h4>Partner Support</h4>
-                        <p>Get help with your affiliate account</p>
-                        <a href="/pages/partner-support" class="resource-link">Contact Us</a>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Affiliate Exclusive Collection -->
-                  {% if section.settings.exclusive_collection != blank %}
-                    {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-                  {% else %}
-                    {% assign exclusive_collection = collections['affiliate-products'] %}
-                  {% endif %}
-                  
-                  {% if exclusive_collection and exclusive_collection.products.size > 0 %}
-                    <div class="exclusive-products">
-                      <h3>
-                        {% if section.settings.collection_title != blank %}
-                          {{ section.settings.collection_title }}
-                        {% else %}
-                          Exclusive Partner Products
-                        {% endif %}
-                      </h3>
-                      <div class="products-preview">
-                        {% assign products_limit = section.settings.products_display_count | default: 4 %}
-                        {% for product in exclusive_collection.products limit: products_limit %}
-                          <div class="preview-product">
-                            <a href="{{ product.url }}">
-                              {% if product.featured_image %}
-                                <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
-                              {% endif %}
-                              <p>{{ product.title }}</p>
-                              <span>{{ product.price | money }}</span>
-                            </a>
-                          </div>
-                        {% endfor %}
-                      </div>
-                      <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">
-                        {% if section.settings.view_all_text != blank %}
-                          {{ section.settings.view_all_text }}
-                        {% else %}
-                          View All Partner Products
-                        {% endif %}
-                      </a>
-                    </div>
-                  {% endif %}
-                </div>
-              {% endif %}
+              <p class="method-description">Loading affiliate resources...</p>
             </div>
           </div>
         {% else %}
@@ -429,10 +302,227 @@
       </div>
     </div>
     </div>
+    
+    <!-- Full Page Content Area (shown when affiliate access is granted) -->
+    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
+      <div class="page-content">
+        {% if page.content != blank %}
+          {{ page.content }}
+        {% endif %}
+      </div>
+      
+      <div class="exclusive-content-section">
+        <div class="affiliate-content">
+          <h2>Affiliate Resource Center</h2>
+          <p>Welcome to your exclusive affiliate portal. Access marketing materials, track commissions, and manage your partnership with us.</p>
+          
+          <div class="member-benefits">
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <span>Competitive commission structure</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <span>Marketing materials & assets</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 3v18h18"/>
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+              </svg>
+              <span>Real-time performance tracking</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Dedicated partner support</span>
+            </div>
+          </div>
+          
+          <!-- Affiliate Resources -->
+          <div class="affiliate-resources">
+            <h3>Partner Resources</h3>
+            <div class="resources-grid">
+              <div class="resource-item">
+                <div class="resource-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                    <polyline points="14,2 14,8 20,8"/>
+                  </svg>
+                </div>
+                <h4>Marketing Kit</h4>
+                <p>Download logos, banners, and promotional materials</p>
+                <a href="/pages/marketing-kit" class="resource-link">Access Kit</a>
+              </div>
+              
+              <div class="resource-item">
+                <div class="resource-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 3v18h18"/>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                  </svg>
+                </div>
+                <h4>Commission Tracker</h4>
+                <p>View earnings, clicks, and conversion rates</p>
+                <a href="/pages/commission-tracker" class="resource-link">View Stats</a>
+              </div>
+              
+              <div class="resource-item">
+                <div class="resource-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </div>
+                <h4>Partner Support</h4>
+                <p>Get help with your affiliate account</p>
+                <a href="/pages/partner-support" class="resource-link">Contact Us</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Affiliate Exclusive Collection -->
+          {% if section.settings.exclusive_collection != blank %}
+            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+          {% else %}
+            {% assign exclusive_collection = collections['affiliate-products'] %}
+          {% endif %}
+          
+          {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+            <div class="exclusive-products-section">
+              <h3>
+                {% if section.settings.collection_title != blank %}
+                  {{ section.settings.collection_title }}
+                {% else %}
+                  Exclusive Partner Products
+                {% endif %}
+              </h3>
+              <div class="products-grid">
+                {% assign products_limit = section.settings.products_display_count | default: 12 %}
+                {% for product in exclusive_collection.products limit: products_limit %}
+                  <div class="product-card">
+                    <a href="{{ product.url }}">
+                      {% if product.featured_image %}
+                        <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+                      {% endif %}
+                      <h4>{{ product.title }}</h4>
+                      <span class="price">{{ product.price | money }}</span>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+              {% if exclusive_collection.products.size > products_limit %}
+                <a href="{{ exclusive_collection.url }}" class="view-all-products">
+                  {% if section.settings.view_all_text != blank %}
+                    {{ section.settings.view_all_text }}
+                  {% else %}
+                    View All Partner Products
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="session-controls">
+          <div class="session-info">
+            <p>Affiliate portal access</p>
+            <button id="reset-access" class="reset-btn">Exit Portal</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endif %}
 
 {% stylesheet %}
+  /* Full Page Exclusive Content Styles */
+  .full-page-exclusive-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-background);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 2rem 0;
+  }
+  
+  .full-page-exclusive-content .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .full-page-exclusive-content .exclusive-content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .session-controls {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--color-background-ui);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+  }
+  
+  .session-controls .session-info {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .session-controls .session-info p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .session-controls .reset-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    width: 100%;
+  }
+  
+  .session-controls .reset-btn:hover {
+    opacity: 1;
+    border-color: rgba(215, 38, 56, 0.3);
+    color: rgba(215, 38, 56, 0.8);
+  }
+
   /* Full Page Display Styles */
   .affiliate-full-page {
     width: 100%;
@@ -1474,6 +1564,33 @@
     }
   }
 {% endstylesheet %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if affiliate access loading element exists (meaning user has affiliate access)
+  const affiliateLoading = document.getElementById('affiliate-access-loading');
+  const fullPageContent = document.getElementById('full-page-content');
+  
+  if (affiliateLoading && fullPageContent) {
+    // Show full page content after 1.5 seconds
+    setTimeout(() => {
+      affiliateLoading.style.display = 'none';
+      fullPageContent.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }, 1500);
+    
+    // Add reset functionality
+    const resetButton = document.getElementById('reset-access');
+    if (resetButton) {
+      resetButton.addEventListener('click', function() {
+        fullPageContent.style.display = 'none';
+        document.body.style.overflow = '';
+        affiliateLoading.style.display = 'block';
+      });
+    }
+  }
+});
+</script>
 
 {% schema %}
 {

@@ -172,8 +172,8 @@
           </form>
         </div>
         
-        <!-- Password Protected Content -->
-        <div id="password-content" class="password-protected-content" style="display: none;">
+        <!-- Access Granted Message -->
+        <div id="access-granted-message" class="access-granted-message" style="display: none;">
           <div class="method-header">
             <div class="method-icon verified">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -182,91 +182,7 @@
               </svg>
             </div>
             <h3 class="method-title">Welcome to The Inner Circle!</h3>
-            <p class="method-description">Inner Circle Access Verified</p>
-          </div>
-          
-          <!-- Inner Circle Protected Content -->
-          <div class="protected-content">
-            {% if page.content != blank %}
-              {{ page.content }}
-            {% else %}
-              <div class="default-content">
-                <h2>Welcome to The Inner Circle</h2>
-                <p>You are now part of our most exclusive membership tier. Enjoy unlimited access to our premium collection, early releases, and member-only benefits.</p>
-                
-                <div class="member-benefits">
-                  <div class="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                    <span>Unlimited access to exclusive products</span>
-                  </div>
-                  <div class="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12,6 12,12 16,14"/>
-                    </svg>
-                    <span>48-hour early access to new releases</span>
-                  </div>
-                  <div class="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    <span>Dedicated Inner Circle support</span>
-                  </div>
-                  <div class="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="12" y1="1" x2="12" y2="23"/>
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                    </svg>
-                    <span>Exclusive member pricing & discounts</span>
-                  </div>
-                </div>
-                
-                <!-- Inner Circle Collection -->
-                {% if section.settings.exclusive_collection != blank %}
-                  {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-                {% else %}
-                  {% assign exclusive_collection = collections['inner-circle'] %}
-                {% endif %}
-                
-                {% if exclusive_collection and exclusive_collection.products.size > 0 %}
-                  <div class="exclusive-products">
-                    <h3>
-                      {% if section.settings.collection_title != blank %}
-                        {{ section.settings.collection_title }}
-                      {% else %}
-                        Your Exclusive Collection
-                      {% endif %}
-                    </h3>
-                    <div class="products-preview">
-                      {% assign products_limit = section.settings.products_display_count | default: 4 %}
-                      {% for product in exclusive_collection.products limit: products_limit %}
-                        <div class="preview-product">
-                          <a href="{{ product.url }}">
-                            {% if product.featured_image %}
-                              <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
-                            {% endif %}
-                            <p>{{ product.title }}</p>
-                            <span>{{ product.price | money }}</span>
-                          </a>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">
-                      {% if section.settings.view_all_text != blank %}
-                        {{ section.settings.view_all_text }}
-                      {% else %}
-                        View All Inner Circle Items
-                      {% endif %}
-                    </a>
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
+            <p class="method-description">Loading exclusive content...</p>
           </div>
         </div>
       </div>
@@ -290,10 +206,189 @@
       </div>
     </div>
     </div>
+    
+    <!-- Full Page Content Area (shown when access is granted) -->
+    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
+      <div class="page-content">
+        {% if page.content != blank %}
+          {{ page.content }}
+        {% endif %}
+      </div>
+      
+      <div class="exclusive-content-section">
+        <div class="inner-circle-content">
+          <h2>Welcome to The Inner Circle</h2>
+          <p>You are now part of our most exclusive membership tier. Enjoy unlimited access to our premium collection, early releases, and member-only benefits.</p>
+          
+          <div class="member-benefits">
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span>Unlimited access to exclusive products</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+              <span>48-hour early access to new releases</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Dedicated Inner Circle support</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <span>Exclusive member pricing & discounts</span>
+            </div>
+          </div>
+          
+          <!-- Inner Circle Collection -->
+          {% if section.settings.exclusive_collection != blank %}
+            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+          {% else %}
+            {% assign exclusive_collection = collections['inner-circle'] %}
+          {% endif %}
+          
+          {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+            <div class="exclusive-products-section">
+              <h3>
+                {% if section.settings.collection_title != blank %}
+                  {{ section.settings.collection_title }}
+                {% else %}
+                  Your Exclusive Collection
+                {% endif %}
+              </h3>
+              <div class="products-grid">
+                {% assign products_limit = section.settings.products_display_count | default: 12 %}
+                {% for product in exclusive_collection.products limit: products_limit %}
+                  <div class="product-card">
+                    <a href="{{ product.url }}">
+                      {% if product.featured_image %}
+                        <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+                      {% endif %}
+                      <h4>{{ product.title }}</h4>
+                      <span class="price">{{ product.price | money }}</span>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+              {% if exclusive_collection.products.size > products_limit %}
+                <a href="{{ exclusive_collection.url }}" class="view-all-products">
+                  {% if section.settings.view_all_text != blank %}
+                    {{ section.settings.view_all_text }}
+                  {% else %}
+                    View All Inner Circle Items
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="session-controls">
+          <div class="session-info">
+            <p>Session expires in <span id="session-timer">30:00</span></p>
+            <button id="reset-access" class="reset-btn">Reset Access</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endif %}
 
 {% stylesheet %}
+  /* Full Page Exclusive Content Styles */
+  .full-page-exclusive-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-background);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 2rem 0;
+  }
+  
+  .full-page-exclusive-content .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .full-page-exclusive-content .exclusive-content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .session-controls {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--color-background-ui);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+  }
+  
+  .session-controls .session-info {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .session-controls .session-info p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .session-controls #session-timer {
+    color: rgba(215, 38, 56, 0.8);
+    font-weight: 500;
+  }
+  
+  .session-controls .reset-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    width: 100%;
+  }
+  
+  .session-controls .reset-btn:hover {
+    opacity: 1;
+    border-color: rgba(215, 38, 56, 0.3);
+    color: rgba(215, 38, 56, 0.8);
+  }
+
   /* Full Page Display Styles */
   .inner-circle-full-page {
     width: 100%;
@@ -1222,7 +1317,7 @@
     
     // Check if user already has access
     if (sessionStorage.getItem(pageAccessKey) === 'granted') {
-      showContent();
+      showFullPageContent();
     }
     
     // Password form handling
@@ -1238,7 +1333,7 @@
         if (enteredPassword === correctPassword) {
           // Correct password
           sessionStorage.setItem(pageAccessKey, 'granted');
-          showContent();
+          showAccessGrantedMessage();
           errorDiv.style.display = 'none';
         } else {
           // Incorrect password
@@ -1254,13 +1349,41 @@
       });
     }
     
-    function showContent() {
+    function showAccessGrantedMessage() {
       const passwordEntry = document.getElementById('password-entry');
-      const passwordContent = document.getElementById('password-content');
+      const accessGrantedMessage = document.getElementById('access-granted-message');
       
-      if (passwordEntry && passwordContent) {
+      if (passwordEntry && accessGrantedMessage) {
         passwordEntry.style.display = 'none';
-        passwordContent.style.display = 'block';
+        accessGrantedMessage.style.display = 'block';
+        
+        // After 1.5 seconds, show full page content
+        setTimeout(() => {
+          showFullPageContent();
+        }, 1500);
+      }
+    }
+    
+    function showFullPageContent() {
+      const accessGrantedMessage = document.getElementById('access-granted-message');
+      const fullPageContent = document.getElementById('full-page-content');
+      
+      if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
+      if (fullPageContent) {
+        fullPageContent.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+      
+      // Add reset functionality
+      const resetButton = document.getElementById('reset-access');
+      if (resetButton) {
+        resetButton.addEventListener('click', function() {
+          sessionStorage.removeItem(pageAccessKey);
+          fullPageContent.style.display = 'none';
+          document.body.style.overflow = '';
+          document.getElementById('password-entry').style.display = 'block';
+          document.getElementById('access-password').value = '';
+        });
       }
     }
   });

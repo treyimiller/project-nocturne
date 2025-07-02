@@ -167,8 +167,8 @@
             </form>
           </div>
           
-          <!-- Password Protected Content -->
-          <div id="password-content" class="password-protected-content" style="display: none;">
+          <!-- Access Granted Message -->
+          <div id="access-granted-message" class="access-granted-message" style="display: none;">
             <div class="method-header">
               <div class="method-icon verified">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -177,73 +177,7 @@
                 </svg>
               </div>
               <h3 class="method-title">Access Granted</h3>
-              <p class="method-description">Welcome to the exclusive content area</p>
-            </div>
-            
-            <div class="protected-content">
-              {% if section.settings.password_protected_content != blank %}
-                {{ section.settings.password_protected_content }}
-              {% elsif page.content != blank %}
-                {{ page.content }}
-              {% else %}
-                <div class="default-protected-content">
-                  <h2>Exclusive Access Content</h2>
-                  <p>Congratulations! You've successfully accessed this restricted area.</p>
-                  
-                  <div class="exclusive-benefits">
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                      <span>Access to exclusive products</span>
-                    </div>
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12,6 12,12 16,14"/>
-                      </svg>
-                      <span>Early release notifications</span>
-                    </div>
-                    <div class="benefit-item">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                      </svg>
-                      <span>Special member pricing</span>
-                    </div>
-                  </div>
-                  
-                  {% if section.settings.exclusive_collection != blank %}
-                    <div class="exclusive-products">
-                      <h3>Exclusive Products</h3>
-                      <div class="products-preview">
-                        {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-                        {% for product in exclusive_collection.products limit: 3 %}
-                          <div class="preview-product">
-                            <a href="{{ product.url }}">
-                              {% if product.featured_image %}
-                                <img src="{{ product.featured_image | image_url: width: 150 }}" alt="{{ product.title }}">
-                              {% endif %}
-                              <p>{{ product.title }}</p>
-                              <span>{{ product.price | money }}</span>
-                            </a>
-                          </div>
-                        {% endfor %}
-                      </div>
-                      {% if exclusive_collection.products.size > 3 %}
-                        <a href="{{ exclusive_collection.url }}" class="view-all-exclusive">View All Exclusive Items</a>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                </div>
-              {% endif %}
-            </div>
-            
-            <div class="session-info">
-              <p>Session expires in <span id="session-timer">30:00</span></p>
-              <button id="reset-access" class="reset-btn">Reset Access</button>
+              <p class="method-description">Loading exclusive content...</p>
             </div>
           </div>
         </div>
@@ -310,10 +244,167 @@
       </div>
     </div>
     </div>
+    
+    <!-- Full Page Content Area (shown when access is granted) -->
+    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
+      <div class="page-content">
+        {% if page.content != blank %}
+          {{ page.content }}
+        {% endif %}
+      </div>
+      
+      <div class="exclusive-content-section">
+        {% if section.settings.password_protected_content != blank %}
+          {{ section.settings.password_protected_content }}
+        {% else %}
+          <div class="default-exclusive-content">
+            <h2>Exclusive Access Content</h2>
+            <p>Welcome to our exclusive content area with special access benefits and premium products.</p>
+            
+            <div class="exclusive-benefits">
+              <div class="benefit-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span>Access to exclusive products</span>
+              </div>
+              <div class="benefit-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12,6 12,12 16,14"/>
+                </svg>
+                <span>Early release notifications</span>
+              </div>
+              <div class="benefit-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <span>Special member pricing</span>
+              </div>
+            </div>
+            
+            {% if section.settings.exclusive_collection != blank %}
+              <div class="exclusive-products-section">
+                <h3>Exclusive Products</h3>
+                <div class="products-grid">
+                  {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+                  {% for product in exclusive_collection.products limit: 12 %}
+                    <div class="product-card">
+                      <a href="{{ product.url }}">
+                        {% if product.featured_image %}
+                          <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+                        {% endif %}
+                        <h4>{{ product.title }}</h4>
+                        <span class="price">{{ product.price | money }}</span>
+                      </a>
+                    </div>
+                  {% endfor %}
+                </div>
+                {% if exclusive_collection.products.size > 12 %}
+                  <a href="{{ exclusive_collection.url }}" class="view-all-products">View All Exclusive Items</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        <div class="session-controls">
+          <div class="session-info">
+            <p>Session expires in <span id="session-timer">30:00</span></p>
+            <button id="reset-access" class="reset-btn">Reset Access</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endif %}
 
 {% stylesheet %}
+  /* Full Page Exclusive Content Styles */
+  .full-page-exclusive-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-background);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 2rem 0;
+  }
+  
+  .full-page-exclusive-content .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .full-page-exclusive-content .exclusive-content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .session-controls {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--color-background-ui);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid rgba(215, 38, 56, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+  }
+  
+  .session-controls .session-info {
+    margin: 0;
+    text-align: center;
+  }
+  
+  .session-controls .session-info p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .session-controls #session-timer {
+    color: rgba(215, 38, 56, 0.8);
+    font-weight: 500;
+  }
+  
+  .session-controls .reset-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    width: 100%;
+  }
+  
+  .session-controls .reset-btn:hover {
+    opacity: 1;
+    border-color: rgba(215, 38, 56, 0.3);
+    color: rgba(215, 38, 56, 0.8);
+  }
+
   /* Full Page Display Styles */
   .limited-access-full-page {
     width: 100%;
@@ -1308,7 +1399,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Password Access Functionality
   const passwordForm = document.querySelector('.password-form');
   const passwordEntry = document.getElementById('password-entry');
-  const passwordContent = document.getElementById('password-content');
+  const accessGrantedMessage = document.getElementById('access-granted-message');
+  const fullPageContent = document.getElementById('full-page-content');
   const passwordError = document.getElementById('password-error');
   const sessionTimer = document.getElementById('session-timer');
   const resetButton = document.getElementById('reset-access');
@@ -1326,13 +1418,20 @@ document.addEventListener('DOMContentLoaded', function() {
       const enteredPassword = document.getElementById('access-password').value;
       
       if (enteredPassword === accessPassword) {
-        // Password correct - show content
+        // Password correct - show access granted message briefly then full content
         passwordEntry.style.display = 'none';
-        passwordContent.style.display = 'block';
+        accessGrantedMessage.style.display = 'block';
         
         // Store access in sessionStorage with page-specific key
         sessionStorage.setItem(pageAccessKey, 'true');
         sessionStorage.setItem(pageTimeKey, Date.now().toString());
+        
+        // After 1.5 seconds, show full page content
+        setTimeout(() => {
+          accessGrantedMessage.style.display = 'none';
+          fullPageContent.style.display = 'block';
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }, 1500);
         
         // Start session timer
         startSessionTimer();
@@ -1356,9 +1455,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const sessionDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
     
     if (accessTime && currentTime - accessTime < sessionDuration) {
-      // Still within session time - show content
+      // Still within session time - show full page content directly
       if (passwordEntry) passwordEntry.style.display = 'none';
-      if (passwordContent) passwordContent.style.display = 'block';
+      if (fullPageContent) {
+        fullPageContent.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
       
       // Start timer with remaining time
       const remainingTime = sessionDuration - (currentTime - accessTime);
@@ -1412,9 +1514,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Reset UI
+    if (fullPageContent) fullPageContent.style.display = 'none';
+    if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
     if (passwordEntry) passwordEntry.style.display = 'block';
-    if (passwordContent) passwordContent.style.display = 'none';
     if (passwordError) passwordError.style.display = 'none';
+    document.body.style.overflow = ''; // Restore background scrolling
     
     // Clear password input
     const passwordInput = document.getElementById('access-password');
