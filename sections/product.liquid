@@ -1373,22 +1373,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /* Mobile sizing chart fixes */
+    .product-description {
+      overflow-x: hidden !important;
+      max-width: 100% !important;
+    }
+    
     .product-description table {
       font-size: 0.75rem !important;
       margin: 1rem 0 !important;
       display: block !important;
       overflow-x: auto !important;
       white-space: nowrap !important;
-      max-width: 100% !important;
+      width: 100% !important;
+      max-width: calc(100vw - 2rem) !important;
+      box-sizing: border-box !important;
       -webkit-overflow-scrolling: touch !important;
     }
     
     .product-description th,
     .product-description td {
-      padding: 0.5rem 0.75rem !important;
-      font-size: 0.75rem !important;
-      min-width: auto !important;
+      padding: 0.5rem 0.5rem !important;
+      font-size: 0.7rem !important;
+      min-width: 0 !important;
+      max-width: 80px !important;
       white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
     }
     
     .product-description tbody,
