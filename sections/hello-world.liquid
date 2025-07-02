@@ -150,6 +150,7 @@
   <div class="featured-products-swiper mobile-only">
     <div class="featured-swiper-container">
       <div class="featured-swiper-wrapper">
+        {% assign featured_collection = collections[section.settings.featured_collection] | default: collections.all %}
         {% for product in featured_collection.products limit: section.settings.products_count %}
           <div class="featured-swiper-slide">
             <a href="{{ product.url }}" class="product-card mobile-product-card">
@@ -955,6 +956,10 @@
     }
     
     /* Ensure mobile swiper is completely hidden on desktop */
+    .mobile-only {
+      display: none !important;
+    }
+    
     .featured-products-swiper.mobile-only {
       display: none !important;
       width: 0 !important;
@@ -1550,6 +1555,13 @@
       display: block !important;
     }
     
+    .featured-products-swiper.mobile-only {
+      display: block !important;
+      width: auto !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    
     .featured-swiper-container {
       padding: 0 2.5rem;
     }
@@ -1743,6 +1755,15 @@
     .featured-pagination-dot {
       width: 8px;
       height: 8px;
+    }
+    
+    /* Force mobile swiper visibility on small screens */
+    .featured-products-swiper.mobile-only {
+      display: block !important;
+      visibility: visible !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
     }
     
     /* Mobile product card improvements */
