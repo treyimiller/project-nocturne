@@ -299,6 +299,12 @@
 </section>
 
 {% stylesheet %}
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  
   /* Atmospheric Red Background */
   html body::before {
     content: '' !important;
@@ -947,6 +953,19 @@
       width: 100% !important;
       max-width: none !important;
     }
+    
+    /* Ensure mobile swiper is completely hidden on desktop */
+    .featured-products-swiper.mobile-only {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+    
+    /* Prevent any horizontal overflow */
+    .featured-products {
+      overflow-x: hidden;
+    }
   }
   
   /* Featured Products Mobile Swiper */
@@ -955,6 +974,7 @@
     max-width: 1200px;
     margin: 0 auto 3rem;
     z-index: 2;
+    overflow: hidden;
   }
   
   .featured-swiper-container {
@@ -963,6 +983,7 @@
     height: auto;
     overflow: hidden;
     padding: 0 3rem;
+    max-width: 100%;
   }
   
   .featured-swiper-wrapper {
@@ -970,6 +991,7 @@
     width: 100%;
     height: auto;
     transition: transform 0.3s ease;
+    overflow: hidden;
   }
   
   .featured-swiper-slide {
@@ -977,6 +999,7 @@
     width: 100%;
     height: auto;
     padding: 0 1rem;
+    box-sizing: border-box;
   }
   
   .mobile-product-card {
