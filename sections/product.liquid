@@ -1375,26 +1375,35 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Mobile sizing chart fixes */
     .product-description {
       max-width: 100% !important;
+      overflow-x: hidden !important;
     }
     
-    /* Create a scrollable wrapper for tables */
+    /* Create a scrollable container for tables only */
     .product-description table {
-      font-size: 0.75rem !important;
+      display: block !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      -webkit-overflow-scrolling: touch !important;
+      max-width: calc(100vw - 2rem) !important;
+      width: 100% !important;
       margin: 1rem 0 !important;
-      display: table !important;
-      width: auto !important;
-      min-width: 100% !important;
-      height: auto !important;
-      max-height: none !important;
-      border-collapse: collapse !important;
-      table-layout: auto !important;
+      white-space: nowrap !important;
     }
     
-    /* Wrap tables in scrollable container */
-    .product-description {
-      overflow-x: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      max-width: 100% !important;
+    /* Restore table structure inside the scrollable container */
+    .product-description table tbody,
+    .product-description table thead,
+    .product-description table tfoot {
+      display: table-header-group !important;
+      width: 100% !important;
+    }
+    
+    .product-description table tbody {
+      display: table-row-group !important;
+    }
+    
+    .product-description table tr {
+      display: table-row !important;
     }
     
     .product-description th,
