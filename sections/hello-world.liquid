@@ -99,7 +99,8 @@
     {% endif %}
   </div>
   
-  <div class="products-grid">
+  <!-- Desktop Grid View -->
+  <div class="products-grid desktop-only">
     {% assign featured_collection = collections[section.settings.featured_collection] | default: collections.all %}
     {% for product in featured_collection.products limit: section.settings.products_count %}
       <a href="{{ product.url }}" class="product-card">
@@ -143,6 +144,74 @@
         </div>
       </a>
     {% endfor %}
+  </div>
+  
+  <!-- Mobile Swiper View -->
+  <div class="featured-products-swiper mobile-only">
+    <div class="featured-swiper-container">
+      <div class="featured-swiper-wrapper">
+        {% for product in featured_collection.products limit: section.settings.products_count %}
+          <div class="featured-swiper-slide">
+            <a href="{{ product.url }}" class="product-card mobile-product-card">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 600 }}" 
+                    alt="{{ product.featured_image.alt | default: product.title }}"
+                    width="600"
+                    height="600"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="product-image-placeholder">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21,15 16,10 5,21"/>
+                    </svg>
+                  </div>
+                {% endif %}
+                
+                {% if product.compare_at_price > product.price %}
+                  <div class="product-badge">Sale</div>
+                {% endif %}
+              </div>
+              
+              <div class="product-info">
+                <h3 class="product-title">{{ product.title }}</h3>
+                <div class="product-price">
+                  <span class="current-price">{{ product.price | money }}</span>
+                  {% if product.compare_at_price > product.price %}
+                    <span class="original-price">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+                
+                <div class="product-cta">
+                  <span class="cta-text">View</span>
+                  <span class="cta-underline"></span>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Navigation for mobile swiper -->
+      {% if featured_collection.products.size > 1 %}
+        <div class="featured-swiper-pagination"></div>
+        
+        <div class="featured-swiper-button-prev">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15,18 9,12 15,6"></polyline>
+          </svg>
+        </div>
+        <div class="featured-swiper-button-next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"></polyline>
+          </svg>
+        </div>
+      {% endif %}
+    </div>
   </div>
   
   {% if section.settings.view_all_url %}
@@ -836,6 +905,15 @@
     margin: 0 auto;
   }
   
+  /* Mobile/Desktop Display Control */
+  .mobile-only {
+    display: none;
+  }
+  
+  .desktop-only {
+    display: block;
+  }
+
   .products-grid {
     position: relative;
     max-width: 1200px;
@@ -845,6 +923,110 @@
     gap: 2rem;
     margin-bottom: 3rem;
     z-index: 2;
+  }
+  
+  /* Featured Products Mobile Swiper */
+  .featured-products-swiper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    z-index: 2;
+  }
+  
+  .featured-swiper-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding: 0 3rem;
+  }
+  
+  .featured-swiper-wrapper {
+    display: flex;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .featured-swiper-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    padding: 0 1rem;
+  }
+  
+  .mobile-product-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Featured Swiper Navigation */
+  .featured-swiper-button-prev,
+  .featured-swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-foreground);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .featured-swiper-button-prev {
+    left: 0.5rem;
+  }
+  
+  .featured-swiper-button-next {
+    right: 0.5rem;
+  }
+  
+  .featured-swiper-button-prev:hover,
+  .featured-swiper-button-next:hover {
+    background: rgba(215, 38, 56, 0.8);
+    border-color: rgba(215, 38, 56, 0.3);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  /* Featured Swiper Pagination */
+  .featured-swiper-pagination {
+    position: absolute;
+    bottom: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 10;
+  }
+  
+  .featured-pagination-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .featured-pagination-dot.active {
+    background: rgba(215, 38, 56, 0.9);
+    border-color: rgba(215, 38, 56, 0.3);
+    transform: scale(1.2);
+  }
+  
+  .featured-pagination-dot:hover {
+    background: rgba(215, 38, 56, 0.7);
+    border-color: rgba(215, 38, 56, 0.2);
   }
   
   .product-card {
@@ -1273,8 +1455,30 @@
       padding: 0 1rem 2rem 1rem;
     }
     
-    .products-grid {
-      gap: 1.5rem;
+    .desktop-only {
+      display: none;
+    }
+    
+    .mobile-only {
+      display: block;
+    }
+    
+    .featured-swiper-container {
+      padding: 0 2.5rem;
+    }
+    
+    .featured-swiper-button-prev,
+    .featured-swiper-button-next {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .featured-swiper-button-prev {
+      left: 0.25rem;
+    }
+    
+    .featured-swiper-button-next {
+      right: 0.25rem;
     }
     
     .hero-cta-button {
@@ -1427,9 +1631,31 @@
       letter-spacing: 0.15em;
     }
     
-    
     .featured-products {
       padding: 4rem 1rem;
+    }
+    
+    .featured-swiper-container {
+      padding: 0 2rem;
+    }
+    
+    .featured-swiper-button-prev,
+    .featured-swiper-button-next {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .featured-swiper-button-prev {
+      left: 0;
+    }
+    
+    .featured-swiper-button-next {
+      right: 0;
+    }
+    
+    .featured-pagination-dot {
+      width: 8px;
+      height: 8px;
     }
     
     .email-capture {
@@ -1441,6 +1667,156 @@
     }
   }
 {% endstylesheet %}
+
+<!-- JavaScript for Featured Products Swiper -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Featured Products Mobile Swiper Functionality
+  const featuredSwiperContainer = document.querySelector('.featured-swiper-container');
+  if (featuredSwiperContainer) {
+    let currentFeaturedSlide = 0;
+    const featuredSlides = document.querySelectorAll('.featured-swiper-slide');
+    const totalFeaturedSlides = featuredSlides.length;
+    const featuredSwiperWrapper = document.querySelector('.featured-swiper-wrapper');
+    const featuredPagination = document.querySelector('.featured-swiper-pagination');
+    const featuredPrevBtn = document.querySelector('.featured-swiper-button-prev');
+    const featuredNextBtn = document.querySelector('.featured-swiper-button-next');
+    
+    // Create pagination dots for featured products
+    if (featuredPagination && totalFeaturedSlides > 1) {
+      for (let i = 0; i < totalFeaturedSlides; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('featured-pagination-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToFeaturedSlide(i));
+        featuredPagination.appendChild(dot);
+      }
+    }
+    
+    // Update featured slide position
+    function updateFeaturedSlide() {
+      if (featuredSwiperWrapper) {
+        featuredSwiperWrapper.style.transform = `translateX(-${currentFeaturedSlide * 100}%)`;
+        
+        // Update pagination dots
+        document.querySelectorAll('.featured-pagination-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentFeaturedSlide);
+        });
+      }
+    }
+    
+    // Go to specific featured slide
+    function goToFeaturedSlide(index) {
+      currentFeaturedSlide = Math.max(0, Math.min(index, totalFeaturedSlides - 1));
+      updateFeaturedSlide();
+    }
+    
+    // Previous featured slide
+    function prevFeaturedSlide() {
+      if (currentFeaturedSlide > 0) {
+        currentFeaturedSlide = currentFeaturedSlide - 1;
+      } else {
+        currentFeaturedSlide = totalFeaturedSlides - 1;
+      }
+      updateFeaturedSlide();
+    }
+    
+    // Next featured slide
+    function nextFeaturedSlide() {
+      if (currentFeaturedSlide < totalFeaturedSlides - 1) {
+        currentFeaturedSlide = currentFeaturedSlide + 1;
+      } else {
+        currentFeaturedSlide = 0;
+      }
+      updateFeaturedSlide();
+    }
+    
+    // Button event listeners
+    if (featuredPrevBtn) featuredPrevBtn.addEventListener('click', prevFeaturedSlide);
+    if (featuredNextBtn) featuredNextBtn.addEventListener('click', nextFeaturedSlide);
+    
+    // Touch/swipe functionality for featured products
+    let featuredStartX = 0;
+    let featuredCurrentX = 0;
+    let featuredIsDragging = false;
+    let featuredHasSwiped = false;
+    
+    featuredSwiperContainer.addEventListener('touchstart', (e) => {
+      featuredStartX = e.touches[0].clientX;
+      featuredCurrentX = featuredStartX;
+      featuredIsDragging = true;
+      featuredHasSwiped = false;
+    });
+    
+    featuredSwiperContainer.addEventListener('touchmove', (e) => {
+      if (!featuredIsDragging) return;
+      e.preventDefault();
+      featuredCurrentX = e.touches[0].clientX;
+    });
+    
+    featuredSwiperContainer.addEventListener('touchend', (e) => {
+      if (!featuredIsDragging || featuredHasSwiped) {
+        featuredIsDragging = false;
+        return;
+      }
+      
+      const diff = featuredStartX - featuredCurrentX;
+      const threshold = 50; // Minimum swipe distance
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+          // Swiped left - go to next slide
+          nextFeaturedSlide();
+        } else {
+          // Swiped right - go to previous slide
+          prevFeaturedSlide();
+        }
+        featuredHasSwiped = true;
+      }
+      
+      featuredIsDragging = false;
+    });
+    
+    // Mouse drag functionality for desktop testing
+    featuredSwiperContainer.addEventListener('mousedown', (e) => {
+      featuredStartX = e.clientX;
+      featuredCurrentX = featuredStartX;
+      featuredIsDragging = true;
+      featuredHasSwiped = false;
+      e.preventDefault();
+    });
+    
+    featuredSwiperContainer.addEventListener('mousemove', (e) => {
+      if (!featuredIsDragging) return;
+      e.preventDefault();
+      featuredCurrentX = e.clientX;
+    });
+    
+    featuredSwiperContainer.addEventListener('mouseup', () => {
+      if (!featuredIsDragging || featuredHasSwiped) {
+        featuredIsDragging = false;
+        return;
+      }
+      
+      const diff = featuredStartX - featuredCurrentX;
+      const threshold = 50;
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+          // Dragged left - go to next slide
+          nextFeaturedSlide();
+        } else {
+          // Dragged right - go to previous slide
+          prevFeaturedSlide();
+        }
+        featuredHasSwiped = true;
+      }
+      
+      featuredIsDragging = false;
+    });
+  }
+});
+</script>
 
 {% schema %}
 {

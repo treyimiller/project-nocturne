@@ -283,13 +283,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Previous slide
     function prevSlide() {
-      currentSlide = currentSlide > 0 ? currentSlide - 1 : totalSlides - 1;
+      if (currentSlide > 0) {
+        currentSlide = currentSlide - 1;
+      } else {
+        currentSlide = totalSlides - 1;
+      }
       updateSlide();
     }
     
     // Next slide
     function nextSlide() {
-      currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+      if (currentSlide < totalSlides - 1) {
+        currentSlide = currentSlide + 1;
+      } else {
+        currentSlide = 0;
+      }
       updateSlide();
     }
     
@@ -301,37 +309,50 @@ document.addEventListener('DOMContentLoaded', function() {
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
+    let hasSwiped = false;
     
     swiperContainer.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
+      currentX = startX;
       isDragging = true;
+      hasSwiped = false;
     });
     
     swiperContainer.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
       e.preventDefault();
       currentX = e.touches[0].clientX;
+    });
+    
+    swiperContainer.addEventListener('touchend', (e) => {
+      if (!isDragging || hasSwiped) {
+        isDragging = false;
+        return;
+      }
+      
       const diff = startX - currentX;
       const threshold = 50; // Minimum swipe distance
       
       if (Math.abs(diff) > threshold) {
-        if (diff > 0 && currentSlide < totalSlides - 1) {
+        if (diff > 0) {
+          // Swiped left - go to next slide
           nextSlide();
-        } else if (diff < 0 && currentSlide > 0) {
+        } else {
+          // Swiped right - go to previous slide
           prevSlide();
         }
-        isDragging = false;
+        hasSwiped = true;
       }
-    });
-    
-    swiperContainer.addEventListener('touchend', () => {
+      
       isDragging = false;
     });
     
     // Mouse drag functionality for desktop testing
     swiperContainer.addEventListener('mousedown', (e) => {
       startX = e.clientX;
+      currentX = startX;
       isDragging = true;
+      hasSwiped = false;
       e.preventDefault();
     });
     
@@ -342,18 +363,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     swiperContainer.addEventListener('mouseup', () => {
-      if (isDragging) {
-        const diff = startX - currentX;
-        const threshold = 50;
-        
-        if (Math.abs(diff) > threshold) {
-          if (diff > 0 && currentSlide < totalSlides - 1) {
-            nextSlide();
-          } else if (diff < 0 && currentSlide > 0) {
-            prevSlide();
-          }
-        }
+      if (!isDragging || hasSwiped) {
+        isDragging = false;
+        return;
       }
+      
+      const diff = startX - currentX;
+      const threshold = 50;
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+          // Dragged left - go to next slide
+          nextSlide();
+        } else {
+          // Dragged right - go to previous slide
+          prevSlide();
+        }
+        hasSwiped = true;
+      }
+      
       isDragging = false;
     });
   }
