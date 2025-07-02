@@ -70,13 +70,31 @@
         {% assign has_affiliate_access = false %}
         
         <!-- Check for Affiliate specific tags -->
-        {% for tag in customer.tags %}
-          {% assign tag_lower = tag | downcase %}
-          {% if tag_lower contains 'affiliate' or tag_lower contains 'partner' or tag_lower contains 'reseller' %}
-            {% assign has_affiliate_access = true %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+        {% if section.settings.affiliate_tags != blank %}
+          {% assign required_tags = section.settings.affiliate_tags | split: ',' %}
+          {% for required_tag in required_tags %}
+            {% assign required_tag_clean = required_tag | strip | downcase %}
+            {% for customer_tag in customer.tags %}
+              {% assign customer_tag_lower = customer_tag | downcase %}
+              {% if customer_tag_lower == required_tag_clean or customer_tag_lower contains required_tag_clean %}
+                {% assign has_affiliate_access = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+            {% if has_affiliate_access %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <!-- Default tags if none configured -->
+          {% for tag in customer.tags %}
+            {% assign tag_lower = tag | downcase %}
+            {% if tag_lower contains 'affiliate' or tag_lower contains 'partner' or tag_lower contains 'reseller' %}
+              {% assign has_affiliate_access = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
         
         {% if has_affiliate_access %}
           <!-- Customer has Affiliate access -->
@@ -907,6 +925,14 @@
 {% schema %}
 {
   "name": "Affiliate Access",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "affiliate_tags",
+      "label": "Affiliate Customer Tags",
+      "info": "Enter customer tags that grant affiliate access, separated by commas (e.g., affiliate, partner, reseller)",
+      "default": "affiliate, partner, reseller"
+    }
+  ]
 }
 {% endschema %}
