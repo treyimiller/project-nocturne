@@ -1,4 +1,4 @@
-<!-- Inner Circle - Advance Access Page -->
+<!-- Inner Circle - Advance Access Section -->
 <div class="inner-circle-page full-width">
   <!-- Atmospheric Background -->
   <div class="inner-circle-atmosphere">
@@ -9,11 +9,27 @@
   <div class="inner-circle-container">
     <!-- Inner Circle Header -->
     <div class="inner-circle-header">
-      <h1 class="inner-circle-title">The Inner Circle</h1>
-      <div class="inner-circle-subtitle">Advance Access</div>
+      <h1 class="inner-circle-title">
+        {% if section.settings.page_title != blank %}
+          {{ section.settings.page_title }}
+        {% else %}
+          The Inner Circle
+        {% endif %}
+      </h1>
+      <div class="inner-circle-subtitle">
+        {% if section.settings.page_subtitle != blank %}
+          {{ section.settings.page_subtitle }}
+        {% else %}
+          Advance Access
+        {% endif %}
+      </div>
       
       <div class="inner-circle-description">
-        <p>Exclusive access to limited releases, early drops, and member-only products. Join our elite community of collectors and enthusiasts.</p>
+        {% if section.settings.page_description != blank %}
+          <p>{{ section.settings.page_description }}</p>
+        {% else %}
+          <p>Exclusive access to limited releases, early drops, and member-only products. Join our elite community of collectors and enthusiasts.</p>
+        {% endif %}
       </div>
       
       <!-- Membership Stats -->
