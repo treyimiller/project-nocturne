@@ -349,21 +349,34 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Touch/swipe functionality
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
+    let currentY = 0;
     let isDragging = false;
     let hasSwiped = false;
     
     swiperContainer.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
       currentX = startX;
+      currentY = startY;
       isDragging = true;
       hasSwiped = false;
     });
     
     swiperContainer.addEventListener('touchmove', (e) => {
       if (!isDragging) return;
-      e.preventDefault();
+      
       currentX = e.touches[0].clientX;
+      currentY = e.touches[0].clientY;
+      
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      
+      // Only prevent default if horizontal movement is greater than vertical
+      if (diffX > diffY) {
+        e.preventDefault();
+      }
     });
     
     swiperContainer.addEventListener('touchend', (e) => {
