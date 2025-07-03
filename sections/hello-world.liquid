@@ -867,6 +867,8 @@
     background: transparent;
     margin-top: -20px;
     margin-bottom: 2rem;
+    touch-action: pan-y;
+    overflow: visible;
     z-index: 10;
   }
   
@@ -980,8 +982,9 @@
     position: relative;
     width: 100%;
     height: auto;
-    overflow: hidden;
+    overflow: visible;
     padding: 0 3rem;
+    touch-action: pan-y;
   }
   
   .featured-swiper-wrapper {
@@ -1003,7 +1006,7 @@
     max-width: 350px;
     margin: 0 auto;
     min-height: auto;
-    touch-action: manipulation;
+    touch-action: pan-y;
   }
   
   /* Mobile product card specific styling */
@@ -1118,7 +1121,7 @@
     text-decoration: none;
     color: inherit;
     min-height: 520px;
-    touch-action: manipulation;
+    touch-action: pan-y;
   }
   
   .product-card::before {
