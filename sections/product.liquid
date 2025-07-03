@@ -856,7 +856,7 @@ document.addEventListener('DOMContentLoaded', function() {
     position: relative;
     width: 100%;
     height: auto;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 8px;
     background-color: var(--color-background-ui);
     border: 2px solid rgba(215, 38, 56, 0.05);
@@ -882,7 +882,8 @@ document.addEventListener('DOMContentLoaded', function() {
     position: relative;
     width: 100%;
     aspect-ratio: 2/3;
-    overflow: hidden;
+    overflow: visible;
+    touch-action: pan-y;
   }
   
   .mobile-product-img {
