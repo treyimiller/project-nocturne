@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:shop.darcsport.com)"
+    ],
+    "deny": []
+  }
+}
