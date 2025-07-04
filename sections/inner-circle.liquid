@@ -54,7 +54,13 @@
       {% assign inner_circle_collection = collections['inner-circle'] %}
       {% if inner_circle_collection and inner_circle_collection.products.size > 0 %}
         <div class="products-grid">
+          {%- comment %}<locksmith:3e98>{% endcomment -%}
+            {%- assign locksmith_9e21_forloop__size = 0 %}{% for product in inner_circle_collection.products limit: 12 %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: inner_circle_collection, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_9e21_forloop__size = locksmith_9e21_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_9e21_forloop__index = nil -%}
+          {%- comment %}</locksmith:3e98>{% endcomment -%}
           {% for product in inner_circle_collection.products limit: 12 %}
+            {%- comment %}<locksmith:da34>{% endcomment -%}
+              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: inner_circle_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_9e21_forloop__index == nil %}{% assign locksmith_9e21_forloop__index = 1 %}{% assign locksmith_9e21_forloop__index0 = 0 %}{% else %}{% assign locksmith_9e21_forloop__index = locksmith_9e21_forloop__index | plus: 1 %}{% assign locksmith_9e21_forloop__index0 = locksmith_9e21_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_9e21_forloop__index == 1 %}{% assign locksmith_9e21_forloop__first = true %}{% else %}{% assign locksmith_9e21_forloop__first = false %}{% endif %}{% if locksmith_9e21_forloop__index == locksmith_9e21_forloop__size %}{% assign locksmith_9e21_forloop__last = true %}{% else %}{% assign locksmith_9e21_forloop__last = false %}{% endif %}{% assign locksmith_9e21_forloop__rindex = locksmith_9e21_forloop__size | minus: locksmith_9e21_forloop__index | minus: 1 %}{% assign locksmith_9e21_forloop__rindex0 = locksmith_9e21_forloop__size | minus: locksmith_9e21_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+            {%- comment %}</locksmith:da34>{% endcomment -%}
             <div class="inner-circle-product-card">
               <a href="{{ product.url }}" class="product-card-link">
                 <!-- Product Image -->
@@ -64,7 +70,7 @@
                       src="{{ product.featured_image | image_url: width: 400 }}" 
                       alt="{{ product.featured_image.alt | default: product.title }}"
                       class="product-image"
-                      loading="{% if forloop.index <= 8 %}eager{% else %}lazy{% endif %}"
+                      loading="{% if locksmith_9e21_forloop__index <= 8 %}eager{% else %}lazy{% endif %}"
                     >
                   {% else %}
                     <div class="product-image-placeholder">

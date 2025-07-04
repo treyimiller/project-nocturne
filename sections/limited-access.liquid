@@ -40,6 +40,9 @@
               <div class="products-grid">
                 {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
                 {% for product in exclusive_collection.products limit: 8 %}
+                  {%- comment %}<locksmith:f582>{% endcomment -%}
+                    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                  {%- comment %}</locksmith:f582>{% endcomment -%}
                   <div class="product-card">
                     <a href="{{ product.url }}">
                       {% if product.featured_image %}
@@ -289,6 +292,9 @@
           </h3>
           <div class="exclusive-products-grid">
             {% for product in exclusive_collection.products %}
+              {%- comment %}<locksmith:ff09>{% endcomment -%}
+                {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+              {%- comment %}</locksmith:ff09>{% endcomment -%}
               <div class="exclusive-product-card">
                 <div class="product-image-container">
                   {% if product.featured_image %}

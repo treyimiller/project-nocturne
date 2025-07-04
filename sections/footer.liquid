@@ -34,6 +34,9 @@
           <a href="{{ section.settings.contact_url }}" class="footer-link">Contact Us</a>
         {% endif %}
         {% for link in section.settings.menu.links %}
+          {%- comment %}<locksmith:f3c0>{% endcomment -%}
+            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: section.settings.menu, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+          {%- comment %}</locksmith:f3c0>{% endcomment -%}
           <a href="{{ link.url }}" class="footer-link">{{ link.title }}</a>
         {% endfor %}
       </nav>

@@ -35,7 +35,13 @@
       {% paginate collection.products by 16 %}
         {% if collection.products.size > 0 %}
           <div class="products-grid mobile-two-column">
+            {%- comment %}<locksmith:9a1c>{% endcomment -%}
+              {%- assign locksmith_3816_forloop__size = 0 %}{% for product in collection.products %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collection, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_3816_forloop__size = locksmith_3816_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_3816_forloop__index = nil -%}
+            {%- comment %}</locksmith:9a1c>{% endcomment -%}
             {% for product in collection.products %}
+              {%- comment %}<locksmith:342b>{% endcomment -%}
+                {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_3816_forloop__index == nil %}{% assign locksmith_3816_forloop__index = 1 %}{% assign locksmith_3816_forloop__index0 = 0 %}{% else %}{% assign locksmith_3816_forloop__index = locksmith_3816_forloop__index | plus: 1 %}{% assign locksmith_3816_forloop__index0 = locksmith_3816_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_3816_forloop__index == 1 %}{% assign locksmith_3816_forloop__first = true %}{% else %}{% assign locksmith_3816_forloop__first = false %}{% endif %}{% if locksmith_3816_forloop__index == locksmith_3816_forloop__size %}{% assign locksmith_3816_forloop__last = true %}{% else %}{% assign locksmith_3816_forloop__last = false %}{% endif %}{% assign locksmith_3816_forloop__rindex = locksmith_3816_forloop__size | minus: locksmith_3816_forloop__index | minus: 1 %}{% assign locksmith_3816_forloop__rindex0 = locksmith_3816_forloop__size | minus: locksmith_3816_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+              {%- comment %}</locksmith:342b>{% endcomment -%}
               <div class="collection-product-card">
                 <a href="{{ product.url }}" class="product-card-link">
                   <!-- Product Image -->
@@ -45,7 +51,7 @@
                         src="{{ product.featured_image | image_url: width: 400 }}" 
                         alt="{{ product.featured_image.alt | default: product.title }}"
                         class="product-image"
-                        loading="{% if forloop.index <= 8 %}eager{% else %}lazy{% endif %}"
+                        loading="{% if locksmith_3816_forloop__index <= 8 %}eager{% else %}lazy{% endif %}"
                       >
                     {% else %}
                       <div class="product-image-placeholder">

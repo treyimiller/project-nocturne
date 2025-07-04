@@ -109,6 +109,9 @@
             <div class="exclusive-products-grid">
               {% assign products_limit = section.settings.products_display_count | default: 8 %}
               {% for product in exclusive_collection.products limit: products_limit %}
+                {%- comment %}<locksmith:8b5d>{% endcomment -%}
+                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                {%- comment %}</locksmith:8b5d>{% endcomment -%}
                 <div class="exclusive-product-card">
                   <div class="product-image-container">
                     {% if product.featured_image %}
@@ -448,6 +451,9 @@
             <div class="exclusive-products-grid">
               {% assign products_limit = section.settings.products_display_count | default: 12 %}
               {% for product in exclusive_collection.products limit: products_limit %}
+                {%- comment %}<locksmith:e781>{% endcomment -%}
+                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                {%- comment %}</locksmith:e781>{% endcomment -%}
                 <div class="exclusive-product-card">
                   <div class="product-image-container">
                     {% if product.featured_image %}

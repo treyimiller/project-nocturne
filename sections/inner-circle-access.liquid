@@ -66,6 +66,9 @@
             </h3>
             <div class="products-grid">
               {% for product in exclusive_collection.products %}
+                {%- comment %}<locksmith:cdc2>{% endcomment -%}
+                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                {%- comment %}</locksmith:cdc2>{% endcomment -%}
                 <div class="product-card">
                   <a href="{{ product.url }}">
                     {% if product.featured_image %}
@@ -257,6 +260,9 @@
             </h3>
             <div class="exclusive-products-grid">
               {% for product in exclusive_collection.products %}
+                {%- comment %}<locksmith:4763>{% endcomment -%}
+                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: exclusive_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                {%- comment %}</locksmith:4763>{% endcomment -%}
                 <div class="exclusive-product-card">
                   <div class="product-image-container">
                     {% if product.featured_image %}

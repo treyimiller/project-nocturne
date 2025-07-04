@@ -67,6 +67,9 @@
           <div class="search-results-grid">
             {% paginate search.results by 16 %}
               {% for result in search.results %}
+                {%- comment %}<locksmith:583b>{% endcomment -%}
+                  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: result, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                {%- comment %}</locksmith:583b>{% endcomment -%}
                 {% unless result.object_type == 'page' %}
                 <div class="search-result-item">
                   {% assign featured_image = result.featured_image | default: result.image %}

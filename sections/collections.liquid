@@ -15,7 +15,13 @@
 
     <!-- Collections Grid -->
     <div class="collections-grid {{ section.settings.grid_item_width }}" style="--grid-gap: {{ section.settings.grid_gap }}px">
+      {%- comment %}<locksmith:cb7c>{% endcomment -%}
+        {%- assign locksmith_494a_forloop__size = 0 %}{% for collection in collections %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_494a_forloop__size = locksmith_494a_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_494a_forloop__index = nil -%}
+      {%- comment %}</locksmith:cb7c>{% endcomment -%}
       {% for collection in collections %}
+        {%- comment %}<locksmith:3088>{% endcomment -%}
+          {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_494a_forloop__index == nil %}{% assign locksmith_494a_forloop__index = 1 %}{% assign locksmith_494a_forloop__index0 = 0 %}{% else %}{% assign locksmith_494a_forloop__index = locksmith_494a_forloop__index | plus: 1 %}{% assign locksmith_494a_forloop__index0 = locksmith_494a_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_494a_forloop__index == 1 %}{% assign locksmith_494a_forloop__first = true %}{% else %}{% assign locksmith_494a_forloop__first = false %}{% endif %}{% if locksmith_494a_forloop__index == locksmith_494a_forloop__size %}{% assign locksmith_494a_forloop__last = true %}{% else %}{% assign locksmith_494a_forloop__last = false %}{% endif %}{% assign locksmith_494a_forloop__rindex = locksmith_494a_forloop__size | minus: locksmith_494a_forloop__index | minus: 1 %}{% assign locksmith_494a_forloop__rindex0 = locksmith_494a_forloop__size | minus: locksmith_494a_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+        {%- comment %}</locksmith:3088>{% endcomment -%}
         {% unless collection.handle == 'frontpage' %}
           <div class="collection-card-wrapper">
             <a class="collection-card" href="{{ collection.url }}">
@@ -26,7 +32,7 @@
                     src="{{ collection.featured_image | image_url: width: 600 }}" 
                     alt="{{ collection.featured_image.alt | default: collection.title }}"
                     class="collection-image"
-                    loading="{% if forloop.index <= 6 %}eager{% else %}lazy{% endif %}"
+                    loading="{% if locksmith_494a_forloop__index <= 6 %}eager{% else %}lazy{% endif %}"
                   >
                 {% else %}
                   <div class="collection-image-placeholder">
