@@ -1347,13 +1347,23 @@
     
     // Password form handling
     const passwordForm = document.querySelector('.password-form');
+    console.log('Password form element:', passwordForm);
     if (passwordForm) {
+      console.log('Adding event listener to password form');
       passwordForm.addEventListener('submit', function(e) {
+        console.log('Form submit event triggered');
         e.preventDefault();
         
         const passwordInput = document.getElementById('access-password');
-        const enteredPassword = passwordInput.value.trim();
+        const enteredPassword = passwordInput ? passwordInput.value.trim() : '';
         const errorDiv = document.getElementById('password-error');
+        
+        console.log('Password form submitted');
+        console.log('Password input element:', passwordInput);
+        console.log('Entered password:', JSON.stringify(enteredPassword));
+        console.log('Expected password:', JSON.stringify(correctPassword));
+        console.log('Lengths - entered:', enteredPassword.length, 'expected:', correctPassword.length);
+        console.log('Are equal?', enteredPassword === correctPassword);
         
         if (enteredPassword === correctPassword) {
           // Correct password
@@ -1363,17 +1373,53 @@
           if (errorDiv) errorDiv.style.display = 'none';
         } else {
           // Incorrect password
-          console.log('Password incorrect:', enteredPassword, 'Expected:', correctPassword);
-          if (errorDiv) errorDiv.style.display = 'block';
-          passwordInput.value = '';
+          console.log('Password incorrect - showing error');
+          if (errorDiv) {
+            errorDiv.style.display = 'block';
+            console.log('Error div shown');
+          } else {
+            console.log('Error div not found');
+          }
+          if (passwordInput) passwordInput.value = '';
           
           // Add shake animation
-          passwordInput.style.animation = 'shake 0.5s ease-in-out';
-          setTimeout(() => {
-            passwordInput.style.animation = '';
-          }, 500);
+          if (passwordInput) {
+            passwordInput.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+              passwordInput.style.animation = '';
+            }, 500);
+          }
         }
       });
+    } else {
+      console.log('Password form not found, looking for submit button');
+      const submitButton = document.querySelector('.access-submit');
+      console.log('Submit button:', submitButton);
+      if (submitButton) {
+        submitButton.addEventListener('click', function(e) {
+          console.log('Submit button clicked');
+          e.preventDefault();
+          
+          const passwordInput = document.getElementById('access-password');
+          const enteredPassword = passwordInput ? passwordInput.value.trim() : '';
+          const errorDiv = document.getElementById('password-error');
+          
+          console.log('Button click - Password input element:', passwordInput);
+          console.log('Button click - Entered password:', JSON.stringify(enteredPassword));
+          console.log('Button click - Expected password:', JSON.stringify(correctPassword));
+          
+          if (enteredPassword === correctPassword) {
+            console.log('Password correct via button click');
+            sessionStorage.setItem(pageAccessKey, 'granted');
+            showAccessGrantedMessage();
+            if (errorDiv) errorDiv.style.display = 'none';
+          } else {
+            console.log('Password incorrect via button click');
+            if (errorDiv) errorDiv.style.display = 'block';
+            if (passwordInput) passwordInput.value = '';
+          }
+        });
+      }
     }
     
     function showAccessGrantedMessage() {
