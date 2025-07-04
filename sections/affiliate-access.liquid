@@ -1884,7 +1884,16 @@ document.addEventListener('DOMContentLoaded', function() {
   if (affiliateLoading && fullPageContent) {
     // Show full page content after 1.5 seconds
     setTimeout(() => {
+      // Hide the access gate sections
+      const accessGate = document.querySelector('.limited-access-page');
+      if (accessGate) {
+        accessGate.style.display = 'none';
+      }
+      
+      // Hide the loading screen
       affiliateLoading.style.display = 'none';
+      
+      // Show and style the affiliate content
       fullPageContent.style.display = 'block';
       fullPageContent.style.position = 'static';
       fullPageContent.style.width = '100%';
@@ -1899,7 +1908,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetButton = document.getElementById('reset-access');
     if (resetButton) {
       resetButton.addEventListener('click', function() {
+        // Hide the affiliate content
         fullPageContent.style.display = 'none';
+        
+        // Show the access gate sections again
+        const accessGate = document.querySelector('.limited-access-page');
+        if (accessGate) {
+          accessGate.style.display = 'block';
+        }
+        
+        // Show the loading screen
         affiliateLoading.style.display = 'block';
       });
     }
