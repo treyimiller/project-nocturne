@@ -335,7 +335,19 @@
             </ul>
           </div>
           
+          <!-- DEBUG: Check collection before display -->
+          <div style="background: orange; color: black; padding: 1rem; margin: 1rem 0; border: 3px solid purple;">
+            <h4>🔧 PRODUCTS DISPLAY DEBUG</h4>
+            <p>exclusive_collection variable: {{ exclusive_collection.title | default: 'NULL/UNDEFINED' }}</p>
+            <p>products.size: {{ exclusive_collection.products.size | default: 'NULL' }}</p>
+            <p>Condition check: exclusive_collection = {{ exclusive_collection != null }}, products > 0 = {{ exclusive_collection.products.size > 0 }}</p>
+            <p>products_limit setting: {{ section.settings.products_display_count | default: 12 }}</p>
+          </div>
+          
           {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+            <div style="background: green; color: white; padding: 1rem; margin: 1rem 0;">
+              <h4>✅ ENTERING PRODUCTS SECTION</h4>
+            </div>
             <div class="exclusive-products-section">
               <h3>
                 {% if section.settings.collection_title != blank %}
@@ -346,7 +358,15 @@
               </h3>
               <div class="products-grid">
                 {% assign products_limit = section.settings.products_display_count | default: 12 %}
+                <div style="background: yellow; color: black; padding: 1rem; margin: 1rem 0;">
+                  <h5>🔄 STARTING PRODUCT LOOP</h5>
+                  <p>Loop limit: {{ products_limit }}</p>
+                  <p>Total products available: {{ exclusive_collection.products.size }}</p>
+                </div>
                 {% for product in exclusive_collection.products limit: products_limit %}
+                  <div style="background: lime; color: black; padding: 0.5rem; margin: 0.5rem;">
+                    <strong>Product {{ forloop.index }}: {{ product.title }}</strong>
+                  </div>
                   <div class="product-card">
                     <a href="{{ product.url }}">
                       {% if product.featured_image %}
