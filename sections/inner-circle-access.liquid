@@ -1525,7 +1525,9 @@
       if (resetButton) {
         resetButton.addEventListener('click', function() {
           sessionStorage.removeItem(pageAccessKey);
-          if (fullPageContent) fullPageContent.style.display = 'none';
+          const fullContent = document.getElementById('full-page-content');
+          const limitedAccessPage = document.querySelector('.limited-access-page');
+          if (fullContent) fullContent.style.display = 'none';
           if (limitedAccessPage) limitedAccessPage.style.display = 'flex';
           document.body.style.overflow = '';
           const passwordEntry = document.getElementById('password-entry');
