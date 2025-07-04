@@ -1354,16 +1354,11 @@
       
       if (accessGate) accessGate.style.display = 'none';
       if (fullContent) {
-        // Move element to body to escape any container constraints
-        document.body.appendChild(fullContent);
-        
         fullContent.style.display = 'block';
-        fullContent.style.position = 'fixed';
-        fullContent.style.top = '0';
-        fullContent.style.left = '0';
-        fullContent.style.width = '100vw';
-        fullContent.style.height = '100vh';
-        fullContent.style.zIndex = '999999';
+        fullContent.style.position = 'static';
+        fullContent.style.width = '100%';
+        fullContent.style.height = 'auto';
+        fullContent.style.zIndex = 'auto';
         fullContent.style.background = 'var(--color-background)';
         fullContent.style.padding = '2rem';
         fullContent.style.color = 'var(--color-foreground)';
@@ -1416,16 +1411,11 @@
           
           if (accessGate) accessGate.style.display = 'none';
           if (fullContent) {
-            // Move element to body to escape any container constraints
-            document.body.appendChild(fullContent);
-            
             fullContent.style.display = 'block';
-            fullContent.style.position = 'fixed';
-            fullContent.style.top = '0';
-            fullContent.style.left = '0';
-            fullContent.style.width = '100vw';
-            fullContent.style.height = '100vh';
-            fullContent.style.zIndex = '999999';
+            fullContent.style.position = 'static';
+            fullContent.style.width = '100%';
+            fullContent.style.height = 'auto';
+            fullContent.style.zIndex = 'auto';
             fullContent.style.background = 'var(--color-background)';
             fullContent.style.padding = '2rem';
             fullContent.style.color = 'var(--color-foreground)';
@@ -1537,15 +1527,13 @@
       if (fullPageContent) {
         console.log('Displaying full page content');
         fullPageContent.style.display = 'block';
-        fullPageContent.style.position = 'fixed';
-        fullPageContent.style.top = '0';
-        fullPageContent.style.left = '0';
+        fullPageContent.style.position = 'static';
         fullPageContent.style.width = '100%';
-        fullPageContent.style.height = '100vh';
-        fullPageContent.style.background = 'white';
-        fullPageContent.style.zIndex = '99999';
+        fullPageContent.style.height = 'auto';
+        fullPageContent.style.background = 'var(--color-background)';
+        fullPageContent.style.zIndex = 'auto';
         fullPageContent.style.overflowY = 'auto';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = '';
       } else {
         console.log('fullPageContent element not found!');
       }
