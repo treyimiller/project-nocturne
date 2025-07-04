@@ -253,11 +253,28 @@
           </div>
           
           <!-- Inner Circle Collection -->
-          {% if section.settings.exclusive_collection != blank %}
-            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-          {% else %}
-            {% assign exclusive_collection = collections['inner-circle'] %}
-          {% endif %}
+          <!-- Debug: Collection Settings -->
+          <div style="background: #333; color: #fff; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
+            <h4>Debug: Collection Info</h4>
+            <p>Exclusive Collection Setting: {{ section.settings.exclusive_collection }}</p>
+            {% if section.settings.exclusive_collection != blank %}
+              {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+              <p>Found Collection: {{ exclusive_collection.title | default: 'Collection not found' }}</p>
+              <p>Collection Handle: {{ exclusive_collection.handle | default: 'No handle' }}</p>
+              <p>Products Count: {{ exclusive_collection.products.size | default: 0 }}</p>
+            {% else %}
+              {% assign exclusive_collection = collections['inner-circle'] %}
+              <p>Using fallback 'inner-circle' collection</p>
+              <p>Found Collection: {{ exclusive_collection.title | default: 'Collection not found' }}</p>
+              <p>Products Count: {{ exclusive_collection.products.size | default: 0 }}</p>
+            {% endif %}
+            <h5>Available Collections:</h5>
+            <ul>
+              {% for collection in collections %}
+                <li>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</li>
+              {% endfor %}
+            </ul>
+          </div>
           
           {% if exclusive_collection and exclusive_collection.products.size > 0 %}
             <div class="exclusive-products-section">
@@ -290,6 +307,15 @@
                     View All Inner Circle Items
                   {% endif %}
                 </a>
+              {% endif %}
+            </div>
+          {% else %}
+            <div style="background: #444; color: #fff; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
+              <h4>No Products Found</h4>
+              {% if exclusive_collection %}
+                <p>Collection "{{ exclusive_collection.title }}" exists but has no products.</p>
+              {% else %}
+                <p>Collection "{{ section.settings.exclusive_collection }}" was not found.</p>
               {% endif %}
             </div>
           {% endif %}
