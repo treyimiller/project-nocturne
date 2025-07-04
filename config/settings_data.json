@@ -13,6 +13,13 @@
     "background_muted": "#1A1A1C",
     "background_ui": "#1C1C1F",
     "foreground_color": "#E1E1E6",
-    "accent_red": "#D72638"
+    "accent_red": "#D72638",
+    "blocks": {
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   }
 }
