@@ -106,7 +106,8 @@
   "locksmith": {
     "forms": {
       "submit_button_text": "Continue",
-      "loading_text": "One moment..."
+      "loading_text": "One moment...",
+      "confirmation_button_text": "Confirm"
     }
   }
 }
