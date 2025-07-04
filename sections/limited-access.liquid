@@ -244,78 +244,78 @@
       </div>
     </div>
     </div>
+  </div>
+
+  <!-- Full Page Content Area (shown when access is granted) -->
+  <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
+    <div class="page-content">
+      {% if page.content != blank %}
+        {{ page.content }}
+      {% endif %}
+    </div>
     
-    <!-- Full Page Content Area (shown when access is granted) -->
-    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
-      <div class="page-content">
-        {% if page.content != blank %}
-          {{ page.content }}
-        {% endif %}
-      </div>
-      
-      <div class="exclusive-content-section">
-        {% if section.settings.password_protected_content != blank %}
-          {{ section.settings.password_protected_content }}
-        {% else %}
-          <div class="default-exclusive-content">
-            <h2>Exclusive Access Content</h2>
-            <p>Welcome to our exclusive content area with special access benefits and premium products.</p>
-            
-            <div class="exclusive-benefits">
-              <div class="benefit-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <span>Access to exclusive products</span>
-              </div>
-              <div class="benefit-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12,6 12,12 16,14"/>
-                </svg>
-                <span>Early release notifications</span>
-              </div>
-              <div class="benefit-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <span>Special member pricing</span>
-              </div>
+    <div class="exclusive-content-section">
+      {% if section.settings.password_protected_content != blank %}
+        {{ section.settings.password_protected_content }}
+      {% else %}
+        <div class="default-exclusive-content">
+          <h2>Exclusive Access Content</h2>
+          <p>Welcome to our exclusive content area with special access benefits and premium products.</p>
+          
+          <div class="exclusive-benefits">
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span>Access to exclusive products</span>
             </div>
-            
-            {% if section.settings.exclusive_collection != blank %}
-              <div class="exclusive-products-section">
-                <h3>Exclusive Products</h3>
-                <div class="products-grid">
-                  {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-                  {% for product in exclusive_collection.products limit: 12 %}
-                    <div class="product-card">
-                      <a href="{{ product.url }}">
-                        {% if product.featured_image %}
-                          <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
-                        {% endif %}
-                        <h4>{{ product.title }}</h4>
-                        <span class="price">{{ product.price | money }}</span>
-                      </a>
-                    </div>
-                  {% endfor %}
-                </div>
-                {% if exclusive_collection.products.size > 12 %}
-                  <a href="{{ exclusive_collection.url }}" class="view-all-products">View All Exclusive Items</a>
-                {% endif %}
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+              <span>Early release notifications</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Special member pricing</span>
+            </div>
+          </div>
+          
+          {% if section.settings.exclusive_collection != blank %}
+            <div class="exclusive-products-section">
+              <h3>Exclusive Products</h3>
+              <div class="products-grid">
+                {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+                {% for product in exclusive_collection.products limit: 12 %}
+                  <div class="product-card">
+                    <a href="{{ product.url }}">
+                      {% if product.featured_image %}
+                        <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+                      {% endif %}
+                      <h4>{{ product.title }}</h4>
+                      <span class="price">{{ product.price | money }}</span>
+                    </a>
+                  </div>
+                {% endfor %}
               </div>
-            {% endif %}
-          </div>
-        {% endif %}
-        
-        <div class="session-controls">
-          <div class="session-info">
-            <p>Session expires in <span id="session-timer">30:00</span></p>
-            <button id="reset-access" class="reset-btn">Reset Access</button>
-          </div>
+              {% if exclusive_collection.products.size > 12 %}
+                <a href="{{ exclusive_collection.url }}" class="view-all-products">View All Exclusive Items</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      <div class="session-controls">
+        <div class="session-info">
+          <p>Session expires in <span id="session-timer">30:00</span></p>
+          <button id="reset-access" class="reset-btn">Reset Access</button>
         </div>
       </div>
     </div>
