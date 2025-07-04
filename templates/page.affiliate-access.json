@@ -17,7 +17,7 @@
     "affiliate-content": {
       "type": "affiliate-access",
       "settings": {
-        "display_mode": "access_gate",
+        "display_mode": "full_page",
         "affiliate_tags": "TIER1, TIER2, TIER3",
         "exclusive_collection": "saints-vs-sinners",
         "collection_title": "Exclusive Partner Products",
