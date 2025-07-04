@@ -1,4 +1,9 @@
 <!-- Inner Circle Access Page Section -->
+<!-- SECTION LOADING TEST - SHOULD ALWAYS BE VISIBLE -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; background: red; color: white; text-align: center; padding: 10px; z-index: 99999; font-size: 20px;">
+  SECTION LOADED - MODE: {{ section.settings.display_mode }}
+</div>
+
 {% if section.settings.display_mode == 'full_page' %}
   <!-- Full Page Content Display -->
   <div class="inner-circle-full-page">
