@@ -18,7 +18,7 @@
       "type": "inner-circle-access",
       "settings": {
         "display_mode": "access_gate",
-        "access_password": "innercircle2025",
+        "access_password": "INNER",
         "exclusive_collection": "saints-vs-sinners",
         "collection_title": "Your Exclusive Collection",
         "products_display_count": 4,
