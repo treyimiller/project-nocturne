@@ -1460,9 +1460,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // After 1.5 seconds, show full page content
         setTimeout(() => {
-          accessGrantedMessage.style.display = 'none';
-          fullPageContent.style.display = 'block';
-          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          const limitedAccessPage = document.querySelector('.limited-access-page');
+          if (limitedAccessPage) limitedAccessPage.style.display = 'none';
+          if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
+          if (fullPageContent) {
+            fullPageContent.style.display = 'block';
+            document.body.style.overflow = 'auto';
+          }
         }, 1500);
         
         // Start session timer
@@ -1488,10 +1492,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (accessTime && currentTime - accessTime < sessionDuration) {
       // Still within session time - show full page content directly
+      const limitedAccessPage = document.querySelector('.limited-access-page');
+      if (limitedAccessPage) limitedAccessPage.style.display = 'none';
       if (passwordEntry) passwordEntry.style.display = 'none';
       if (fullPageContent) {
         fullPageContent.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'auto';
       }
       
       // Start timer with remaining time
@@ -1546,6 +1552,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Reset UI
+    const limitedAccessPage = document.querySelector('.limited-access-page');
+    if (limitedAccessPage) limitedAccessPage.style.display = 'flex';
     if (fullPageContent) fullPageContent.style.display = 'none';
     if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
     if (passwordEntry) passwordEntry.style.display = 'block';

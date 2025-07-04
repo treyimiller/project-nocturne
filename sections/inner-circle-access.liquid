@@ -309,14 +309,9 @@
 {% stylesheet %}
   /* Full Page Exclusive Content Styles */
   .full-page-exclusive-content {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--color-background);
-    z-index: 1000;
-    overflow-y: auto;
     padding: 2rem 0;
   }
   
@@ -334,25 +329,24 @@
   }
   
   .session-controls {
-    position: fixed;
+    position: sticky;
     top: 2rem;
-    right: 2rem;
+    float: right;
     background: var(--color-background-ui);
     padding: 1rem;
     border-radius: 8px;
     border: 2px solid rgba(215, 38, 56, 0.1);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
+    margin-bottom: 2rem;
   }
   
   @media (max-width: 768px) {
     .session-controls {
-      bottom: 2rem;
-      top: auto;
-      right: 1rem;
-      left: 1rem;
+      position: static;
+      float: none;
       width: auto;
       padding: 0.75rem;
+      margin: 0 0 2rem 0;
     }
   }
   
@@ -1396,11 +1390,13 @@
     function showFullPageContent() {
       const accessGrantedMessage = document.getElementById('access-granted-message');
       const fullPageContent = document.getElementById('full-page-content');
+      const limitedAccessPage = document.querySelector('.limited-access-page');
       
       if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
+      if (limitedAccessPage) limitedAccessPage.style.display = 'none';
       if (fullPageContent) {
         fullPageContent.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'auto';
       }
       
       // Add reset functionality
@@ -1408,10 +1404,13 @@
       if (resetButton) {
         resetButton.addEventListener('click', function() {
           sessionStorage.removeItem(pageAccessKey);
-          fullPageContent.style.display = 'none';
+          if (fullPageContent) fullPageContent.style.display = 'none';
+          if (limitedAccessPage) limitedAccessPage.style.display = 'flex';
           document.body.style.overflow = '';
-          document.getElementById('password-entry').style.display = 'block';
-          document.getElementById('access-password').value = '';
+          const passwordEntry = document.getElementById('password-entry');
+          if (passwordEntry) passwordEntry.style.display = 'block';
+          const passwordInput = document.getElementById('access-password');
+          if (passwordInput) passwordInput.value = '';
         });
       }
     }
