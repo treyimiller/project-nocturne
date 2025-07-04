@@ -1463,7 +1463,13 @@
         fullContent.style.display = 'block';
         fullContent.style.position = 'relative';
         fullContent.style.zIndex = '1';
+        fullContent.style.background = 'red';
+        fullContent.style.padding = '50px';
+        fullContent.style.minHeight = '100vh';
+        fullContent.style.color = 'white';
+        fullContent.innerHTML = '<h1 style="font-size: 48px;">CONTENT IS NOW VISIBLE!</h1><p style="font-size: 24px;">If you can see this, the content display is working.</p>' + fullContent.innerHTML;
         console.log('Existing access - content should now be visible');
+        console.log('Full content element:', fullContent);
       }
     } else {
       console.log('No existing access found');
@@ -1503,7 +1509,13 @@
             fullContent.style.display = 'block';
             fullContent.style.position = 'relative';
             fullContent.style.zIndex = '1';
+            fullContent.style.background = 'red';
+            fullContent.style.padding = '50px';
+            fullContent.style.minHeight = '100vh';
+            fullContent.style.color = 'white';
+            fullContent.innerHTML = '<h1 style="font-size: 48px;">CONTENT IS NOW VISIBLE!</h1><p style="font-size: 24px;">If you can see this, the content display is working.</p>' + fullContent.innerHTML;
             console.log('Content should now be visible');
+            console.log('Full content element:', fullContent);
           }
           
           if (errorDiv) errorDiv.style.display = 'none';
