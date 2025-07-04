@@ -213,7 +213,7 @@
     </div>
     
     <!-- Full Page Content Area (shown when access is granted) -->
-    <div id="full-page-content" class="full-page-exclusive-content" style="display: block !important; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 50000;">
+    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
       <h1 style="color: red; font-size: 48px; text-align: center; background: yellow; padding: 20px; margin: 0;">FULL PAGE CONTENT IS WORKING</h1>
       <div style="background: blue; color: white; padding: 40px; text-align: center; font-size: 24px;">
         If you can see this, the content is displaying correctly.
@@ -1448,8 +1448,15 @@
     console.log('Page loaded, correctPassword:', correctPassword);
     
     // Check if user already has access
-    if (sessionStorage.getItem(pageAccessKey) === 'granted') {
+    console.log('Checking existing access for key:', pageAccessKey);
+    const existingAccess = sessionStorage.getItem(pageAccessKey);
+    console.log('Existing access value:', existingAccess);
+    
+    if (existingAccess === 'granted') {
+      console.log('User already has access, showing full content');
       showFullPageContent();
+    } else {
+      console.log('No existing access found');
     }
     
     // Password form handling
@@ -1564,12 +1571,27 @@
       console.log('fullPageContent:', fullPageContent);
       console.log('limitedAccessPage:', limitedAccessPage);
       
+      // Hide all access gate elements
+      const accessGateContainer = document.querySelector('.limited-access-container');
+      const accessGateAtmosphere = document.querySelector('.limited-access-atmosphere');
+      
       if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
       if (limitedAccessPage) limitedAccessPage.style.display = 'none';
+      if (accessGateContainer) accessGateContainer.style.display = 'none';
+      if (accessGateAtmosphere) accessGateAtmosphere.style.display = 'none';
+      
       if (fullPageContent) {
         console.log('Displaying full page content');
         fullPageContent.style.display = 'block';
-        document.body.style.overflow = 'auto';
+        fullPageContent.style.position = 'fixed';
+        fullPageContent.style.top = '0';
+        fullPageContent.style.left = '0';
+        fullPageContent.style.width = '100%';
+        fullPageContent.style.height = '100vh';
+        fullPageContent.style.background = 'white';
+        fullPageContent.style.zIndex = '99999';
+        fullPageContent.style.overflowY = 'auto';
+        document.body.style.overflow = 'hidden';
       } else {
         console.log('fullPageContent element not found!');
       }
