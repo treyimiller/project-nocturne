@@ -25,7 +25,7 @@
         "access_message": "This content is restricted to inner circle members only. Please enter the password below.",
         "enable_password_access": true,
         "access_password": "AUDENTIA2025",
-        "password_protected_content": "<p>YOUR PRIVATE VAULT</p>",
+        "password_protected_content": "",
         "exclusive_collection": "saints-vs-sinners",
         "enable_email_verification": false,
         "footer_message": "For assistance accessing this content, please contact our support team.",
