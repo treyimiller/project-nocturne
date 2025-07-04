@@ -1454,7 +1454,17 @@
     
     if (existingAccess === 'granted') {
       console.log('User already has access, showing full content');
-      showFullPageContent();
+      // Immediately show content
+      const accessGate = document.querySelector('.limited-access-page');
+      const fullContent = document.getElementById('full-page-content');
+      
+      if (accessGate) accessGate.style.display = 'none';
+      if (fullContent) {
+        fullContent.style.display = 'block';
+        fullContent.style.position = 'relative';
+        fullContent.style.zIndex = '1';
+        console.log('Existing access - content should now be visible');
+      }
     } else {
       console.log('No existing access found');
     }
@@ -1483,7 +1493,19 @@
           // Correct password
           console.log('Password correct, granting access');
           sessionStorage.setItem(pageAccessKey, 'granted');
-          showAccessGrantedMessage();
+          
+          // Immediately show content without animation
+          const accessGate = document.querySelector('.limited-access-page');
+          const fullContent = document.getElementById('full-page-content');
+          
+          if (accessGate) accessGate.style.display = 'none';
+          if (fullContent) {
+            fullContent.style.display = 'block';
+            fullContent.style.position = 'relative';
+            fullContent.style.zIndex = '1';
+            console.log('Content should now be visible');
+          }
+          
           if (errorDiv) errorDiv.style.display = 'none';
         } else {
           // Incorrect password
