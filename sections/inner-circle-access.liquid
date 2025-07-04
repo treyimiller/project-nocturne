@@ -1355,12 +1355,14 @@
         
         if (enteredPassword === correctPassword) {
           // Correct password
+          console.log('Password correct, granting access');
           sessionStorage.setItem(pageAccessKey, 'granted');
           showAccessGrantedMessage();
-          errorDiv.style.display = 'none';
+          if (errorDiv) errorDiv.style.display = 'none';
         } else {
           // Incorrect password
-          errorDiv.style.display = 'block';
+          console.log('Password incorrect:', enteredPassword, 'Expected:', correctPassword);
+          if (errorDiv) errorDiv.style.display = 'block';
           passwordInput.value = '';
           
           // Add shake animation
@@ -1376,14 +1378,24 @@
       const passwordEntry = document.getElementById('password-entry');
       const accessGrantedMessage = document.getElementById('access-granted-message');
       
+      console.log('showAccessGrantedMessage called');
+      console.log('passwordEntry:', passwordEntry);
+      console.log('accessGrantedMessage:', accessGrantedMessage);
+      
       if (passwordEntry && accessGrantedMessage) {
+        console.log('Showing access granted message');
         passwordEntry.style.display = 'none';
         accessGrantedMessage.style.display = 'block';
         
         // After 1.5 seconds, show full page content
         setTimeout(() => {
+          console.log('Showing full page content');
           showFullPageContent();
         }, 1500);
+      } else {
+        console.log('Missing elements for access granted message');
+        // Fallback: directly show full page content
+        showFullPageContent();
       }
     }
     
@@ -1392,11 +1404,19 @@
       const fullPageContent = document.getElementById('full-page-content');
       const limitedAccessPage = document.querySelector('.limited-access-page');
       
+      console.log('showFullPageContent called');
+      console.log('accessGrantedMessage:', accessGrantedMessage);
+      console.log('fullPageContent:', fullPageContent);
+      console.log('limitedAccessPage:', limitedAccessPage);
+      
       if (accessGrantedMessage) accessGrantedMessage.style.display = 'none';
       if (limitedAccessPage) limitedAccessPage.style.display = 'none';
       if (fullPageContent) {
+        console.log('Displaying full page content');
         fullPageContent.style.display = 'block';
         document.body.style.overflow = 'auto';
+      } else {
+        console.log('fullPageContent element not found!');
       }
       
       // Add reset functionality
