@@ -340,7 +340,7 @@
             <h4>🔧 PRODUCTS DISPLAY DEBUG</h4>
             <p>exclusive_collection variable: {{ exclusive_collection.title | default: 'NULL/UNDEFINED' }}</p>
             <p>products.size: {{ exclusive_collection.products.size | default: 'NULL' }}</p>
-            <p>Condition check: exclusive_collection = {{ exclusive_collection != null }}, products > 0 = {{ exclusive_collection.products.size > 0 }}</p>
+            <p>Condition check: exclusive_collection exists = {% if exclusive_collection %}true{% else %}false{% endif %}, products > 0 = {% if exclusive_collection.products.size > 0 %}true{% else %}false{% endif %}</p>
             <p>products_limit setting: {{ section.settings.products_display_count | default: 12 }}</p>
           </div>
           
