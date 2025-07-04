@@ -197,85 +197,85 @@
       </div>
     </div>
     </div>
+  </div>
+
+  <!-- Full Page Content Area (shown when access is granted) -->
+  <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
     
-    <!-- Full Page Content Area (shown when access is granted) -->
-    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
-      
-      <div class="page-content">
-        {% if page.content != blank %}
-          {{ page.content }}
+    <div class="page-content">
+      {% if page.content != blank %}
+        {{ page.content }}
+      {% endif %}
+    </div>
+    
+    <div class="exclusive-content-section">
+
+      <div class="inner-circle-content">
+        <h2>Welcome to The Inner Circle</h2>
+        <p>You are now part of our most exclusive membership tier. Enjoy unlimited access to our premium collection, early releases, and member-only benefits.</p>
+        
+        <div class="member-benefits">
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>Unlimited access to exclusive products</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+            <span>48-hour early access to new releases</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>Dedicated Inner Circle support</span>
+          </div>
+        </div>
+        
+        <!-- Inner Circle Collection -->
+        {% if section.settings.exclusive_collection != blank %}
+          {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+        {% else %}
+          {% assign exclusive_collection = collections['inner-circle'] %}
+        {% endif %}
+        
+        {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+          <div class="exclusive-products-section">
+            <h3>
+              {% if section.settings.collection_title != blank %}
+                {{ section.settings.collection_title }}
+              {% else %}
+                Your Exclusive Collection
+              {% endif %}
+            </h3>
+            <div class="products-grid">
+              {% for product in exclusive_collection.products %}
+                <div class="product-card">
+                  <a href="{{ product.url }}">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+                    {% endif %}
+                    <h4>{{ product.title }}</h4>
+                    <span class="price">{{ product.price | money }}</span>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         {% endif %}
       </div>
       
-      <div class="exclusive-content-section">
-
-        <div class="inner-circle-content">
-          <h2>Welcome to The Inner Circle</h2>
-          <p>You are now part of our most exclusive membership tier. Enjoy unlimited access to our premium collection, early releases, and member-only benefits.</p>
-          
-          <div class="member-benefits">
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              <span>Unlimited access to exclusive products</span>
-            </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12,6 12,12 16,14"/>
-              </svg>
-              <span>48-hour early access to new releases</span>
-            </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              <span>Dedicated Inner Circle support</span>
-            </div>
-          </div>
-          
-          <!-- Inner Circle Collection -->
-          {% if section.settings.exclusive_collection != blank %}
-            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-          {% else %}
-            {% assign exclusive_collection = collections['inner-circle'] %}
-          {% endif %}
-          
-          {% if exclusive_collection and exclusive_collection.products.size > 0 %}
-            <div class="exclusive-products-section">
-              <h3>
-                {% if section.settings.collection_title != blank %}
-                  {{ section.settings.collection_title }}
-                {% else %}
-                  Your Exclusive Collection
-                {% endif %}
-              </h3>
-              <div class="products-grid">
-                {% for product in exclusive_collection.products %}
-                  <div class="product-card">
-                    <a href="{{ product.url }}">
-                      {% if product.featured_image %}
-                        <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
-                      {% endif %}
-                      <h4>{{ product.title }}</h4>
-                      <span class="price">{{ product.price | money }}</span>
-                    </a>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-        </div>
-        
-        <div class="session-controls">
-          <div class="session-info">
-            <p>Session expires in <span id="session-timer">30:00</span></p>
-            <button id="reset-access" class="reset-btn">Reset Access</button>
-          </div>
+      <div class="session-controls">
+        <div class="session-info">
+          <p>Session expires in <span id="session-timer">30:00</span></p>
+          <button id="reset-access" class="reset-btn">Reset Access</button>
         </div>
       </div>
     </div>
