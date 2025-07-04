@@ -216,6 +216,23 @@
       </div>
       
       <div class="exclusive-content-section">
+        <!-- PROMINENT DEBUG INFO - SHOULD BE VISIBLE -->
+        <div style="background: red; color: white; padding: 2rem; margin: 2rem 0; border: 5px solid yellow; border-radius: 8px; position: relative; z-index: 9999;">
+          <h2 style="color: white; margin: 0 0 1rem 0;">🔍 DEBUG: Collection Status</h2>
+          <p style="color: white; font-size: 18px; margin: 0.5rem 0;">Collection Setting: {{ section.settings.exclusive_collection }}</p>
+          {% if section.settings.exclusive_collection != blank %}
+            {% assign test_collection = collections[section.settings.exclusive_collection] %}
+            {% if test_collection %}
+              <p style="color: lime; font-size: 18px;">✅ Collection Found: {{ test_collection.title }}</p>
+              <p style="color: white; font-size: 18px;">📦 Products: {{ test_collection.products.size }}</p>
+            {% else %}
+              <p style="color: orange; font-size: 18px;">❌ Collection NOT Found</p>
+            {% endif %}
+          {% else %}
+            <p style="color: orange; font-size: 18px;">⚠️ No collection configured</p>
+          {% endif %}
+        </div>
+
         <div class="inner-circle-content">
           <h2>Welcome to The Inner Circle</h2>
           <p>You are now part of our most exclusive membership tier. Enjoy unlimited access to our premium collection, early releases, and member-only benefits.</p>
