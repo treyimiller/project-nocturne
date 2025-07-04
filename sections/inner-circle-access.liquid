@@ -1352,7 +1352,10 @@
       const accessGate = document.querySelector('.limited-access-page');
       const fullContent = document.getElementById('full-page-content');
       
-      if (accessGate) accessGate.style.display = 'none';
+      if (accessGate) {
+        accessGate.style.display = 'none';
+        console.log('Access gate hidden (existing access)');
+      }
       if (fullContent) {
         fullContent.style.display = 'block';
         fullContent.style.position = 'static';
@@ -1363,8 +1366,12 @@
         fullContent.style.padding = '2rem';
         fullContent.style.color = 'var(--color-foreground)';
         fullContent.style.overflow = 'auto';
-        console.log('Existing access - content should now be visible');
+        fullContent.style.visibility = 'visible';
+        fullContent.style.opacity = '1';
+        console.log('✅ Existing access - content should now be visible');
         console.log('Full content element:', fullContent);
+        console.log('Content display:', fullContent.style.display);
+        console.log('Content visibility:', fullContent.style.visibility);
         
         // Scroll to top to ensure visibility
         window.scrollTo(0, 0);
@@ -1409,7 +1416,10 @@
           const accessGate = document.querySelector('.limited-access-page');
           const fullContent = document.getElementById('full-page-content');
           
-          if (accessGate) accessGate.style.display = 'none';
+          if (accessGate) {
+            accessGate.style.display = 'none';
+            console.log('Access gate hidden');
+          }
           if (fullContent) {
             fullContent.style.display = 'block';
             fullContent.style.position = 'static';
@@ -1420,12 +1430,17 @@
             fullContent.style.padding = '2rem';
             fullContent.style.color = 'var(--color-foreground)';
             fullContent.style.overflow = 'auto';
-            console.log('Content should now be visible');
+            fullContent.style.visibility = 'visible';
+            fullContent.style.opacity = '1';
+            console.log('✅ Content should now be visible');
             console.log('Full content element:', fullContent);
-            console.log('Content moved to body and styled');
+            console.log('Content display:', fullContent.style.display);
+            console.log('Content visibility:', fullContent.style.visibility);
             
             // Scroll to top to ensure visibility
             window.scrollTo(0, 0);
+          } else {
+            console.log('❌ Full content element not found!');
           }
           
           if (errorDiv) errorDiv.style.display = 'none';
