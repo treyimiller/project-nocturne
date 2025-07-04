@@ -173,7 +173,7 @@
   </div>
 {% else %}
   <!-- Original Access Gate Display -->
-  <div class="limited-access-page full-width">
+  <div class="limited-access-page">
     <!-- Atmospheric Background -->
     <div class="limited-access-atmosphere">
       <div class="atmosphere-texture"></div>
@@ -339,180 +339,180 @@
       </div>
     </div>
     </div>
+  </div>
+
+  <!-- Full Page Content Area (shown when affiliate access is granted) -->
+  <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
+    <div class="page-content">
+      {% if page.content != blank %}
+        {{ page.content }}
+      {% endif %}
+    </div>
     
-    <!-- Full Page Content Area (shown when affiliate access is granted) -->
-    <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
-      <div class="page-content">
-        {% if page.content != blank %}
-          {{ page.content }}
+    <div class="exclusive-content-section">
+      <div class="affiliate-content">
+        <h2>Affiliate Resource Center</h2>
+        <p>Welcome to your exclusive affiliate portal. Access marketing materials, track commissions, and manage your partnership with us.</p>
+        
+        <div class="member-benefits">
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>Competitive commission structure</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>Marketing materials & assets</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+            </svg>
+            <span>Real-time performance tracking</span>
+          </div>
+          <div class="benefit-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>Dedicated partner support</span>
+          </div>
+        </div>
+        
+        <!-- Affiliate Resources -->
+        <div class="affiliate-resources">
+          <h3>Partner Resources</h3>
+          <div class="resources-grid">
+            <div class="resource-item">
+              <div class="resource-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
+              </div>
+              <h4>Marketing Kit</h4>
+              <p>Download logos, banners, and promotional materials</p>
+              <a href="https://drive.google.com/drive/folders/13ZHS_PDhkOFEtuU4GGysPD-ns4DbMXFl?usp=drive_link" class="resource-link" target="_blank" rel="noopener noreferrer">Access Kit</a>
+            </div>
+            
+            <div class="resource-item">
+              <div class="resource-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3v18h18"/>
+                  <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                </svg>
+              </div>
+              <h4>Commission Tracker</h4>
+              <p>View earnings, clicks, and conversion rates</p>
+              <a href="https://affiliates.audentia.shop" class="resource-link" target="_blank" rel="noopener noreferrer">View Stats</a>
+            </div>
+            
+            <div class="resource-item">
+              <div class="resource-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <h4>Partner Support</h4>
+              <p>Get help with your affiliate account</p>
+              <a href="https://www.audentia.shop/pages/contact-us" class="resource-link">Contact Us</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Affiliate Exclusive Collection -->
+        {% if section.settings.exclusive_collection != blank %}
+          {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+        {% else %}
+          {% assign exclusive_collection = collections['affiliate-products'] %}
+        {% endif %}
+        
+        {% if exclusive_collection and exclusive_collection.products.size > 0 %}
+          <div class="exclusive-products-section">
+            <h3>
+              {% if section.settings.collection_title != blank %}
+                {{ section.settings.collection_title }}
+              {% else %}
+                Exclusive Partner Products
+              {% endif %}
+            </h3>
+            <div class="exclusive-products-grid">
+              {% assign products_limit = section.settings.products_display_count | default: 12 %}
+              {% for product in exclusive_collection.products limit: products_limit %}
+                <div class="exclusive-product-card">
+                  <div class="product-image-container">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" class="product-image">
+                    {% else %}
+                      <div class="product-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                          <circle cx="9" cy="9" r="2"/>
+                          <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                        </svg>
+                      </div>
+                    {% endif %}
+                    <div class="product-badge">AFFILIATE</div>
+                    <div class="product-overlay">
+                      <div class="product-actions">
+                        <a href="{{ product.url }}" class="view-product-btn">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                          </svg>
+                          View Details
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-info">
+                    <h4 class="product-title">{{ product.title }}</h4>
+                    <div class="product-pricing">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="original-price">{{ product.compare_at_price | money }}</span>
+                        <span class="sale-price">{{ product.price | money }}</span>
+                        <span class="discount-badge">
+                          {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% OFF
+                        </span>
+                      {% else %}
+                        <span class="price">{{ product.price | money }}</span>
+                      {% endif %}
+                    </div>
+                    {% if product.variants.size > 1 %}
+                      <div class="product-variants">
+                        <span class="variant-count">{{ product.variants.size }} variants available</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            {% if exclusive_collection.products.size > products_limit %}
+              <a href="{{ exclusive_collection.url }}" class="view-all-products">
+                {% if section.settings.view_all_text != blank %}
+                  {{ section.settings.view_all_text }}
+                {% else %}
+                  View All Partner Products
+                {% endif %}
+              </a>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
       
-      <div class="exclusive-content-section">
-        <div class="affiliate-content">
-          <h2>Affiliate Resource Center</h2>
-          <p>Welcome to your exclusive affiliate portal. Access marketing materials, track commissions, and manage your partnership with us.</p>
-          
-          <div class="member-benefits">
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-              <span>Competitive commission structure</span>
-            </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
-              <span>Marketing materials & assets</span>
-            </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 3v18h18"/>
-                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-              </svg>
-              <span>Real-time performance tracking</span>
-            </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              <span>Dedicated partner support</span>
-            </div>
-          </div>
-          
-          <!-- Affiliate Resources -->
-          <div class="affiliate-resources">
-            <h3>Partner Resources</h3>
-            <div class="resources-grid">
-              <div class="resource-item">
-                <div class="resource-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                    <polyline points="14,2 14,8 20,8"/>
-                  </svg>
-                </div>
-                <h4>Marketing Kit</h4>
-                <p>Download logos, banners, and promotional materials</p>
-                <a href="https://drive.google.com/drive/folders/13ZHS_PDhkOFEtuU4GGysPD-ns4DbMXFl?usp=drive_link" class="resource-link" target="_blank" rel="noopener noreferrer">Access Kit</a>
-              </div>
-              
-              <div class="resource-item">
-                <div class="resource-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 3v18h18"/>
-                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                  </svg>
-                </div>
-                <h4>Commission Tracker</h4>
-                <p>View earnings, clicks, and conversion rates</p>
-                <a href="https://affiliates.audentia.shop" class="resource-link" target="_blank" rel="noopener noreferrer">View Stats</a>
-              </div>
-              
-              <div class="resource-item">
-                <div class="resource-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                  </svg>
-                </div>
-                <h4>Partner Support</h4>
-                <p>Get help with your affiliate account</p>
-                <a href="https://www.audentia.shop/pages/contact-us" class="resource-link">Contact Us</a>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Affiliate Exclusive Collection -->
-          {% if section.settings.exclusive_collection != blank %}
-            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-          {% else %}
-            {% assign exclusive_collection = collections['affiliate-products'] %}
-          {% endif %}
-          
-          {% if exclusive_collection and exclusive_collection.products.size > 0 %}
-            <div class="exclusive-products-section">
-              <h3>
-                {% if section.settings.collection_title != blank %}
-                  {{ section.settings.collection_title }}
-                {% else %}
-                  Exclusive Partner Products
-                {% endif %}
-              </h3>
-              <div class="exclusive-products-grid">
-                {% assign products_limit = section.settings.products_display_count | default: 12 %}
-                {% for product in exclusive_collection.products limit: products_limit %}
-                  <div class="exclusive-product-card">
-                    <div class="product-image-container">
-                      {% if product.featured_image %}
-                        <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" class="product-image">
-                      {% else %}
-                        <div class="product-placeholder">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <circle cx="9" cy="9" r="2"/>
-                            <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                          </svg>
-                        </div>
-                      {% endif %}
-                      <div class="product-badge">AFFILIATE</div>
-                      <div class="product-overlay">
-                        <div class="product-actions">
-                          <a href="{{ product.url }}" class="view-product-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                              <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                            View Details
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-info">
-                      <h4 class="product-title">{{ product.title }}</h4>
-                      <div class="product-pricing">
-                        {% if product.compare_at_price > product.price %}
-                          <span class="original-price">{{ product.compare_at_price | money }}</span>
-                          <span class="sale-price">{{ product.price | money }}</span>
-                          <span class="discount-badge">
-                            {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% OFF
-                          </span>
-                        {% else %}
-                          <span class="price">{{ product.price | money }}</span>
-                        {% endif %}
-                      </div>
-                      {% if product.variants.size > 1 %}
-                        <div class="product-variants">
-                          <span class="variant-count">{{ product.variants.size }} variants available</span>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-              {% if exclusive_collection.products.size > products_limit %}
-                <a href="{{ exclusive_collection.url }}" class="view-all-products">
-                  {% if section.settings.view_all_text != blank %}
-                    {{ section.settings.view_all_text }}
-                  {% else %}
-                    View All Partner Products
-                  {% endif %}
-                </a>
-              {% endif %}
-            </div>
-          {% endif %}
-        </div>
-        
-        <div class="session-controls">
-          <div class="session-info">
-            <p>Affiliate portal access</p>
-            <button id="reset-access" class="reset-btn">Exit Portal</button>
-          </div>
+      <div class="session-controls">
+        <div class="session-info">
+          <p>Affiliate portal access</p>
+          <button id="reset-access" class="reset-btn">Exit Portal</button>
         </div>
       </div>
     </div>
