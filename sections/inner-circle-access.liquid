@@ -65,8 +65,7 @@
               {% endif %}
             </h3>
             <div class="products-grid">
-              {% assign products_limit = section.settings.products_display_count | default: 8 %}
-              {% for product in exclusive_collection.products limit: products_limit %}
+              {% for product in exclusive_collection.products %}
                 <div class="product-card">
                   <a href="{{ product.url }}">
                     {% if product.featured_image %}
@@ -78,15 +77,6 @@
                 </div>
               {% endfor %}
             </div>
-            {% if exclusive_collection.products.size > products_limit %}
-              <a href="{{ exclusive_collection.url }}" class="view-all-products">
-                {% if section.settings.view_all_text != blank %}
-                  {{ section.settings.view_all_text }}
-                {% else %}
-                  View All Inner Circle Items
-                {% endif %}
-              </a>
-            {% endif %}
           </div>
         {% endif %}
       </div>
@@ -94,7 +84,7 @@
   </div>
 {% else %}
   <!-- Original Access Gate Display -->
-  <div class="limited-access-page full-width">
+  <div class="limited-access-page">
     <!-- Atmospheric Background -->
     <div class="limited-access-atmosphere">
       <div class="atmosphere-texture"></div>
@@ -246,13 +236,6 @@
               </svg>
               <span>Dedicated Inner Circle support</span>
             </div>
-            <div class="benefit-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-              <span>Exclusive member pricing & discounts</span>
-            </div>
           </div>
           
           <!-- Inner Circle Collection -->
@@ -272,8 +255,7 @@
                 {% endif %}
               </h3>
               <div class="products-grid">
-                {% assign products_limit = section.settings.products_display_count | default: 12 %}
-                {% for product in exclusive_collection.products limit: products_limit %}
+                {% for product in exclusive_collection.products %}
                   <div class="product-card">
                     <a href="{{ product.url }}">
                       {% if product.featured_image %}
@@ -285,15 +267,6 @@
                   </div>
                 {% endfor %}
               </div>
-              {% if exclusive_collection.products.size > products_limit %}
-                <a href="{{ exclusive_collection.url }}" class="view-all-products">
-                  {% if section.settings.view_all_text != blank %}
-                    {{ section.settings.view_all_text }}
-                  {% else %}
-                    View All Inner Circle Items
-                  {% endif %}
-                </a>
-              {% endif %}
             </div>
           {% endif %}
         </div>
