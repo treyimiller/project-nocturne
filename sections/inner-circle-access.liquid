@@ -1332,11 +1332,13 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
+{% assign access_password = section.settings.access_password | default: 'innercircle2024' %}
+
+<script>
   document.addEventListener('DOMContentLoaded', function() {
     const pageHandle = window.location.pathname.split('/').pop() || 'default';
     const pageAccessKey = 'innerCircleAccess_' + pageHandle;
-    const correctPassword = '{{ section.settings.access_password | escape }}';
+    const correctPassword = {{ access_password | json }};
     
     console.log('Page loaded, correctPassword:', correctPassword);
     
@@ -1483,7 +1485,7 @@
       }
     }
   });
-{% endjavascript %}
+</script>
 
 {% schema %}
 {
