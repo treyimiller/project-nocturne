@@ -257,21 +257,46 @@
           <div style="background: #333; color: #fff; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
             <h4>Debug: Collection Info</h4>
             <p>Exclusive Collection Setting: {{ section.settings.exclusive_collection }}</p>
+            
+            {% comment %} Try multiple possible collection handles {% endcomment %}
+            {% assign exclusive_collection = null %}
             {% if section.settings.exclusive_collection != blank %}
               {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-              <p>Found Collection: {{ exclusive_collection.title | default: 'Collection not found' }}</p>
-              <p>Collection Handle: {{ exclusive_collection.handle | default: 'No handle' }}</p>
-              <p>Products Count: {{ exclusive_collection.products.size | default: 0 }}</p>
+              <p>Trying: {{ section.settings.exclusive_collection }} - {{ exclusive_collection.title | default: 'Not found' }}</p>
+              
+              {% if exclusive_collection == null or exclusive_collection.products.size == 0 %}
+                {% comment %} Try variations for Saints vs Sinners - Athletes {% endcomment %}
+                {% assign test_handles = 'saints-vs-sinners-athletes,saints-vs-sinners,saints-sinners-athletes,saints-sinners,athletes' | split: ',' %}
+                {% for handle in test_handles %}
+                  {% assign test_collection = collections[handle] %}
+                  {% if test_collection and test_collection.products.size > 0 %}
+                    <p>Found alternative: {{ handle }} - {{ test_collection.title }} ({{ test_collection.products.size }} products)</p>
+                    {% assign exclusive_collection = test_collection %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
             {% else %}
               {% assign exclusive_collection = collections['inner-circle'] %}
               <p>Using fallback 'inner-circle' collection</p>
-              <p>Found Collection: {{ exclusive_collection.title | default: 'Collection not found' }}</p>
-              <p>Products Count: {{ exclusive_collection.products.size | default: 0 }}</p>
             {% endif %}
-            <h5>Available Collections:</h5>
+            
+            {% if exclusive_collection %}
+              <p><strong>Using Collection:</strong> {{ exclusive_collection.title }} ({{ exclusive_collection.handle }})</p>
+              <p><strong>Products Count:</strong> {{ exclusive_collection.products.size }}</p>
+            {% else %}
+              <p><strong>No suitable collection found</strong></p>
+            {% endif %}
+            
+            <h5>Available Collections (looking for Saints vs Sinners):</h5>
             <ul>
               {% for collection in collections %}
-                <li>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</li>
+                {% assign lower_title = collection.title | downcase %}
+                {% if lower_title contains 'saints' or lower_title contains 'sinners' or lower_title contains 'athlete' %}
+                  <li style="color: #ffff00;"><strong>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</strong></li>
+                {% else %}
+                  <li>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</li>
+                {% endif %}
               {% endfor %}
             </ul>
           </div>
