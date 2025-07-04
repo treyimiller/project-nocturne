@@ -1314,7 +1314,10 @@
   document.addEventListener('DOMContentLoaded', function() {
     const pageHandle = window.location.pathname.split('/').pop() || 'default';
     const pageAccessKey = 'innerCircleAccess_' + pageHandle;
+    const pageTimeKey = 'accessTime_' + pageHandle;
     const correctPassword = {{ access_password | json }};
+    const sessionTimer = document.getElementById('session-timer');
+    const resetButton = document.getElementById('reset-access');
     
     console.log('Page loaded, correctPassword:', correctPassword);
     
@@ -1325,6 +1328,26 @@
     
     if (existingAccess === 'granted') {
       console.log('User already has access, showing full content');
+      
+      // Check if session is still valid (within 30 minutes)
+      const accessTime = sessionStorage.getItem(pageTimeKey);
+      const now = Date.now();
+      const sessionDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
+      
+      if (accessTime && (now - parseInt(accessTime)) < sessionDuration) {
+        // Session still valid, calculate remaining time
+        const remainingTime = sessionDuration - (now - parseInt(accessTime));
+        console.log('Session still valid, remaining time:', remainingTime / 1000, 'seconds');
+        
+        // Start timer with remaining time
+        startSessionTimer(remainingTime);
+      } else {
+        // Session expired, reset access
+        console.log('Session expired, resetting access');
+        resetAccess();
+        return;
+      }
+      
       // Immediately show content
       const accessGate = document.querySelector('.limited-access-page');
       const fullContent = document.getElementById('full-page-content');
@@ -1379,6 +1402,13 @@
           // Correct password
           console.log('Password correct, granting access');
           sessionStorage.setItem(pageAccessKey, 'granted');
+          
+          // Store access time for session persistence
+          const accessTime = Date.now();
+          sessionStorage.setItem(pageTimeKey, accessTime.toString());
+          
+          // Start the session timer
+          startSessionTimer();
           
           // Immediately show content without animation
           const accessGate = document.querySelector('.limited-access-page');
@@ -1520,22 +1550,69 @@
         console.log('fullPageContent element not found!');
       }
       
-      // Add reset functionality
-      const resetButton = document.getElementById('reset-access');
-      if (resetButton) {
-        resetButton.addEventListener('click', function() {
-          sessionStorage.removeItem(pageAccessKey);
-          const fullContent = document.getElementById('full-page-content');
-          const limitedAccessPage = document.querySelector('.limited-access-page');
-          if (fullContent) fullContent.style.display = 'none';
-          if (limitedAccessPage) limitedAccessPage.style.display = 'flex';
-          document.body.style.overflow = '';
-          const passwordEntry = document.getElementById('password-entry');
-          if (passwordEntry) passwordEntry.style.display = 'block';
-          const passwordInput = document.getElementById('access-password');
-          if (passwordInput) passwordInput.value = '';
-        });
+    }
+    
+    // Timer Functions
+    function startSessionTimer(initialTime = 30 * 60 * 1000) {
+      let timeRemaining = initialTime;
+      
+      const timer = setInterval(() => {
+        timeRemaining -= 1000;
+        
+        if (timeRemaining <= 0) {
+          clearInterval(timer);
+          resetAccess();
+          return;
+        }
+        
+        // Update timer display
+        const minutes = Math.floor(timeRemaining / 60000);
+        const seconds = Math.floor((timeRemaining % 60000) / 1000);
+        
+        if (sessionTimer) {
+          sessionTimer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+      }, 1000);
+      
+      // Store timer reference for cleanup
+      if (window.accessTimer) {
+        clearInterval(window.accessTimer);
       }
+      window.accessTimer = timer;
+    }
+    
+    function resetAccess() {
+      // Clear session storage for this specific page
+      sessionStorage.removeItem(pageAccessKey);
+      sessionStorage.removeItem(pageTimeKey);
+      
+      // Clear any timers
+      if (window.accessTimer) {
+        clearInterval(window.accessTimer);
+      }
+      
+      // Reset UI elements
+      const limitedAccessPage = document.querySelector('.limited-access-page');
+      const fullContent = document.getElementById('full-page-content');
+      const passwordEntry = document.getElementById('password-entry');
+      const passwordInput = document.getElementById('access-password');
+      
+      if (limitedAccessPage) limitedAccessPage.style.display = 'flex';
+      if (fullContent) fullContent.style.display = 'none';
+      if (passwordEntry) passwordEntry.style.display = 'block';
+      if (passwordInput) passwordInput.value = '';
+      
+      document.body.style.overflow = '';
+      
+      // Reset timer display
+      if (sessionTimer) {
+        sessionTimer.textContent = '30:00';
+      }
+    }
+    
+    // Add reset button event listener
+    if (resetButton) {
+      resetButton.addEventListener('click', resetAccess);
     }
   });
 </script>
