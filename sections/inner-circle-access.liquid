@@ -1,8 +1,4 @@
 <!-- Inner Circle Access Page Section -->
-<!-- SECTION LOADING TEST - SHOULD ALWAYS BE VISIBLE -->
-<div style="position: fixed; top: 0; left: 0; width: 100%; background: red; color: white; text-align: center; padding: 10px; z-index: 99999; font-size: 20px;">
-  SECTION LOADED - MODE: {{ section.settings.display_mode }}
-</div>
 
 {% if section.settings.display_mode == 'full_page' %}
   <!-- Full Page Content Display -->
@@ -214,17 +210,6 @@
     
     <!-- Full Page Content Area (shown when access is granted) -->
     <div id="full-page-content" class="full-page-exclusive-content" style="display: none;">
-      <h1 style="color: red; font-size: 48px; text-align: center; background: yellow; padding: 20px; margin: 0;">FULL PAGE CONTENT IS WORKING</h1>
-      <div style="background: blue; color: white; padding: 40px; text-align: center; font-size: 24px;">
-        If you can see this, the content is displaying correctly.
-        <br><br>
-        <button onclick="
-          sessionStorage.clear(); 
-          window.location.reload();
-        " style="background: red; color: white; padding: 15px 30px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer;">
-          RESET ACCESS & RELOAD PAGE
-        </button>
-      </div>
       
       <div class="page-content">
         {% if page.content != blank %}
@@ -233,22 +218,6 @@
       </div>
       
       <div class="exclusive-content-section">
-        <!-- PROMINENT DEBUG INFO - SHOULD BE VISIBLE -->
-        <div style="background: red; color: white; padding: 2rem; margin: 2rem 0; border: 5px solid yellow; border-radius: 8px; position: relative; z-index: 9999;">
-          <h2 style="color: white; margin: 0 0 1rem 0;">🔍 DEBUG: Collection Status</h2>
-          <p style="color: white; font-size: 18px; margin: 0.5rem 0;">Collection Setting: {{ section.settings.exclusive_collection }}</p>
-          {% if section.settings.exclusive_collection != blank %}
-            {% assign test_collection = collections[section.settings.exclusive_collection] %}
-            {% if test_collection %}
-              <p style="color: lime; font-size: 18px;">✅ Collection Found: {{ test_collection.title }}</p>
-              <p style="color: white; font-size: 18px;">📦 Products: {{ test_collection.products.size }}</p>
-            {% else %}
-              <p style="color: orange; font-size: 18px;">❌ Collection NOT Found</p>
-            {% endif %}
-          {% else %}
-            <p style="color: orange; font-size: 18px;">⚠️ No collection configured</p>
-          {% endif %}
-        </div>
 
         <div class="inner-circle-content">
           <h2>Welcome to The Inner Circle</h2>
@@ -287,67 +256,13 @@
           </div>
           
           <!-- Inner Circle Collection -->
-          <!-- Debug: Collection Settings -->
-          <div style="background: #333; color: #fff; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
-            <h4>Debug: Collection Info</h4>
-            <p>Exclusive Collection Setting: {{ section.settings.exclusive_collection }}</p>
-            
-            {% comment %} Try multiple possible collection handles {% endcomment %}
-            {% assign exclusive_collection = null %}
-            {% if section.settings.exclusive_collection != blank %}
-              {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
-              <p>Trying: {{ section.settings.exclusive_collection }} - {{ exclusive_collection.title | default: 'Not found' }}</p>
-              
-              {% if exclusive_collection == null or exclusive_collection.products.size == 0 %}
-                {% comment %} Try variations for Saints vs Sinners - Athletes {% endcomment %}
-                {% assign test_handles = 'saints-vs-sinners-athletes,saints-vs-sinners,saints-sinners-athletes,saints-sinners,athletes' | split: ',' %}
-                {% for handle in test_handles %}
-                  {% assign test_collection = collections[handle] %}
-                  {% if test_collection and test_collection.products.size > 0 %}
-                    <p>Found alternative: {{ handle }} - {{ test_collection.title }} ({{ test_collection.products.size }} products)</p>
-                    {% assign exclusive_collection = test_collection %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-            {% else %}
-              {% assign exclusive_collection = collections['inner-circle'] %}
-              <p>Using fallback 'inner-circle' collection</p>
-            {% endif %}
-            
-            {% if exclusive_collection %}
-              <p><strong>Using Collection:</strong> {{ exclusive_collection.title }} ({{ exclusive_collection.handle }})</p>
-              <p><strong>Products Count:</strong> {{ exclusive_collection.products.size }}</p>
-            {% else %}
-              <p><strong>No suitable collection found</strong></p>
-            {% endif %}
-            
-            <h5>Available Collections (looking for Saints vs Sinners):</h5>
-            <ul>
-              {% for collection in collections %}
-                {% assign lower_title = collection.title | downcase %}
-                {% if lower_title contains 'saints' or lower_title contains 'sinners' or lower_title contains 'athlete' %}
-                  <li style="color: #ffff00;"><strong>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</strong></li>
-                {% else %}
-                  <li>{{ collection.handle }} - {{ collection.title }} ({{ collection.products.size }} products)</li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          </div>
-          
-          <!-- DEBUG: Check collection before display -->
-          <div style="background: orange; color: black; padding: 1rem; margin: 1rem 0; border: 3px solid purple;">
-            <h4>🔧 PRODUCTS DISPLAY DEBUG</h4>
-            <p>exclusive_collection variable: {{ exclusive_collection.title | default: 'NULL/UNDEFINED' }}</p>
-            <p>products.size: {{ exclusive_collection.products.size | default: 'NULL' }}</p>
-            <p>Condition check: exclusive_collection exists = {% if exclusive_collection %}true{% else %}false{% endif %}, products > 0 = {% if exclusive_collection.products.size > 0 %}true{% else %}false{% endif %}</p>
-            <p>products_limit setting: {{ section.settings.products_display_count | default: 12 }}</p>
-          </div>
+          {% if section.settings.exclusive_collection != blank %}
+            {% assign exclusive_collection = collections[section.settings.exclusive_collection] %}
+          {% else %}
+            {% assign exclusive_collection = collections['inner-circle'] %}
+          {% endif %}
           
           {% if exclusive_collection and exclusive_collection.products.size > 0 %}
-            <div style="background: green; color: white; padding: 1rem; margin: 1rem 0;">
-              <h4>✅ ENTERING PRODUCTS SECTION</h4>
-            </div>
             <div class="exclusive-products-section">
               <h3>
                 {% if section.settings.collection_title != blank %}
@@ -358,15 +273,7 @@
               </h3>
               <div class="products-grid">
                 {% assign products_limit = section.settings.products_display_count | default: 12 %}
-                <div style="background: yellow; color: black; padding: 1rem; margin: 1rem 0;">
-                  <h5>🔄 STARTING PRODUCT LOOP</h5>
-                  <p>Loop limit: {{ products_limit }}</p>
-                  <p>Total products available: {{ exclusive_collection.products.size }}</p>
-                </div>
                 {% for product in exclusive_collection.products limit: products_limit %}
-                  <div style="background: lime; color: black; padding: 0.5rem; margin: 0.5rem;">
-                    <strong>Product {{ forloop.index }}: {{ product.title }}</strong>
-                  </div>
                   <div class="product-card">
                     <a href="{{ product.url }}">
                       {% if product.featured_image %}
@@ -386,15 +293,6 @@
                     View All Inner Circle Items
                   {% endif %}
                 </a>
-              {% endif %}
-            </div>
-          {% else %}
-            <div style="background: #444; color: #fff; padding: 1rem; margin: 1rem 0; border-radius: 8px;">
-              <h4>No Products Found</h4>
-              {% if exclusive_collection %}
-                <p>Collection "{{ exclusive_collection.title }}" exists but has no products.</p>
-              {% else %}
-                <p>Collection "{{ section.settings.exclusive_collection }}" was not found.</p>
               {% endif %}
             </div>
           {% endif %}
@@ -1470,11 +1368,10 @@
         fullContent.style.width = '100vw';
         fullContent.style.height = '100vh';
         fullContent.style.zIndex = '999999';
-        fullContent.style.background = 'red';
-        fullContent.style.padding = '50px';
-        fullContent.style.color = 'white';
+        fullContent.style.background = 'var(--color-background)';
+        fullContent.style.padding = '2rem';
+        fullContent.style.color = 'var(--color-foreground)';
         fullContent.style.overflow = 'auto';
-        fullContent.innerHTML = '<h1 style="font-size: 48px;">CONTENT IS NOW VISIBLE!</h1><p style="font-size: 24px;">If you can see this, the content display is working.</p>' + fullContent.innerHTML;
         console.log('Existing access - content should now be visible');
         console.log('Full content element:', fullContent);
         
@@ -1526,11 +1423,10 @@
             fullContent.style.width = '100vw';
             fullContent.style.height = '100vh';
             fullContent.style.zIndex = '999999';
-            fullContent.style.background = 'red';
-            fullContent.style.padding = '50px';
-            fullContent.style.color = 'white';
+            fullContent.style.background = 'var(--color-background)';
+            fullContent.style.padding = '2rem';
+            fullContent.style.color = 'var(--color-foreground)';
             fullContent.style.overflow = 'auto';
-            fullContent.innerHTML = '<h1 style="font-size: 48px;">CONTENT IS NOW VISIBLE!</h1><p style="font-size: 24px;">If you can see this, the content display is working.</p>' + fullContent.innerHTML;
             console.log('Content should now be visible');
             console.log('Full content element:', fullContent);
             console.log('Content moved to body and styled');
