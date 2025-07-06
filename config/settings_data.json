@@ -14,9 +14,15 @@
     "background_ui": "#1C1C1F",
     "foreground_color": "#E1E1E6",
     "accent_red": "#D72638",
+    "content_for_index": [],
     "blocks": {
       "pagefly-page-builder": {
         "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      },
+      "3138269044488530766": {
+        "type": "shopify://apps/uppromote-affiliate/blocks/core-script/64c32457-930d-4cb9-9641-e24c0d9cf1f4",
         "disabled": false,
         "settings": {}
       }
