@@ -1,37 +1,35 @@
 <!-- Timer Section -->
 <section class="timer-section full-width">
-  {% if section.settings.show_timer and section.settings.launch_date != blank %}
-    <div class="timer-background">
-      <div class="timer-particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-      </div>
-      <div class="timer-content">
-        <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
-        <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date }}">
-          <div class="timer-unit">
-            <span class="timer-number" id="days">00</span>
-            <span class="timer-label">Days</span>
-          </div>
-          <div class="timer-unit">
-            <span class="timer-number" id="hours">00</span>
-            <span class="timer-label">Hours</span>
-          </div>
-          <div class="timer-unit">
-            <span class="timer-number" id="minutes">00</span>
-            <span class="timer-label">Minutes</span>
-          </div>
-          <div class="timer-unit">
-            <span class="timer-number" id="seconds">00</span>
-            <span class="timer-label">Seconds</span>
-          </div>
+  <div class="timer-background">
+    <div class="timer-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    <div class="timer-content">
+      <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
+      <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+        <div class="timer-unit">
+          <span class="timer-number" id="days">00</span>
+          <span class="timer-label">Days</span>
+        </div>
+        <div class="timer-unit">
+          <span class="timer-number" id="hours">00</span>
+          <span class="timer-label">Hours</span>
+        </div>
+        <div class="timer-unit">
+          <span class="timer-number" id="minutes">00</span>
+          <span class="timer-label">Minutes</span>
+        </div>
+        <div class="timer-unit">
+          <span class="timer-number" id="seconds">00</span>
+          <span class="timer-label">Seconds</span>
         </div>
       </div>
     </div>
-  {% endif %}
+  </div>
 </section>
 
 <!-- Hero Section -->
@@ -408,18 +406,17 @@
     overflow: hidden;
   }
   
-  /* Timer Section (25% of viewport) */
+  /* Timer Section */
   .timer-section {
-    height: 25vh;
-    width: 100vw;
+    min-height: 25vh;
     background: linear-gradient(180deg, 
       var(--color-background) 0%,
       var(--color-background-ui) 60%,
       rgba(14, 14, 16, 0.98) 90%,
       rgba(14, 14, 16, 0.95) 100%);
-    position: relative;
     z-index: 10;
     border-bottom: 1px solid rgba(215, 38, 56, 0.1);
+    order: -1 !important;
   }
   
   .timer-background {
