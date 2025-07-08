@@ -69,6 +69,19 @@
     object-position: center 5%;
   }
   
+  /* Desktop specific styles */
+  @media (min-width: 769px) {
+    .hero-timer-section .hero-background .hero-bg-image,
+    .hero-timer-section .hero-background img.hero-bg-image,
+    section.hero-timer-section .hero-background .hero-bg-image {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center 5% !important;
+      transform: none !important;
+    }
+  }
+  
   .timer-overlay {
     position: absolute;
     top: 2%;
