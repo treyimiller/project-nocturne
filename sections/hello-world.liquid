@@ -61,6 +61,61 @@
     opacity: 0.8;
   }
   
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .timer-section {
+      min-height: 20vh;
+      padding: 1.5rem 0;
+    }
+    
+    .countdown-timer {
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .timer-number {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .timer-label {
+      font-size: 0.75rem;
+    }
+    
+    .hero-background {
+      margin-top: -20%;
+      margin-bottom: -20%;
+    }
+    
+    .featured-products {
+      margin-top: 2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .timer-section {
+      min-height: 15vh;
+      padding: 1rem 0;
+    }
+    
+    .countdown-timer {
+      gap: 0.75rem;
+    }
+    
+    .timer-number {
+      font-size: 1.5rem;
+    }
+    
+    .timer-label {
+      font-size: 0.7rem;
+    }
+    
+    .featured-products {
+      margin-top: 1.5rem;
+    }
+  }
+  
   .hero-section {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
