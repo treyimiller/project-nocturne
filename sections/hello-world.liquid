@@ -1,64 +1,140 @@
-<!-- Hero Section -->
-<section class="hero-section full-width">
-  {% if section.settings.hero_background_image %}
-    <!-- Hero Background Image -->
-    <div class="hero-background">
-      <img 
-        src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
-        alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
-        class="hero-bg-image"
-        loading="eager"
-      >
+<!-- New Viewport Layout -->
+<div class="viewport-container">
+  
+  <!-- Timer Section (25% of viewport) -->
+  <section class="timer-section viewport-section">
+    {% if section.settings.show_timer and section.settings.launch_date != blank %}
+      <div class="timer-background">
+        <div class="timer-particles">
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+          <div class="particle"></div>
+        </div>
+        <div class="timer-content">
+          <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
+          <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date }}">
+            <div class="timer-unit">
+              <span class="timer-number" id="days">00</span>
+              <span class="timer-label">Days</span>
+            </div>
+            <div class="timer-unit">
+              <span class="timer-number" id="hours">00</span>
+              <span class="timer-label">Hours</span>
+            </div>
+            <div class="timer-unit">
+              <span class="timer-number" id="minutes">00</span>
+              <span class="timer-label">Minutes</span>
+            </div>
+            <div class="timer-unit">
+              <span class="timer-number" id="seconds">00</span>
+              <span class="timer-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+  
+  <!-- Teaser Section (50% of viewport) -->
+  <section class="teaser-section viewport-section">
+    {% if section.settings.hero_background_image %}
+      <div class="teaser-background">
+        <img 
+          src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
+          alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
+          class="teaser-bg-image"
+          loading="eager"
+        >
+      </div>
+    {% endif %}
+    
+    <!-- Background Elements -->
+    <div class="teaser-texture">
+      <div class="teaser-noise"></div>
+      <div class="teaser-gradient"></div>
     </div>
-  {% endif %}
+    
+    <!-- Floating Particles -->
+    <div class="teaser-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    
+    <!-- Teaser Content -->
+    <div class="teaser-content">
+      <div class="teaser-collection-name">
+        {% if section.settings.collection_name %}
+          {{ section.settings.collection_name }}
+        {% else %}
+          Saints & Sinners
+        {% endif %}
+      </div>
+      
+      {% if section.settings.teaser_description %}
+        <div class="teaser-description">
+          {{ section.settings.teaser_description }}
+        </div>
+      {% endif %}
+      
+      {% if section.settings.primary_cta_text %}
+        <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="teaser-cta-button">
+          {{ section.settings.primary_cta_text }}
+        </a>
+      {% endif %}
+    </div>
+  </section>
   
-  <!-- Background Elements -->
-  <div class="hero-texture">
-    <div class="hero-noise"></div>
-    <div class="hero-gradient"></div>
-  </div>
+  <!-- Collection Header Preview (25% of viewport) -->
+  <section class="collection-preview-section viewport-section">
+    <div class="collection-preview-content">
+      <div class="collection-preview-header">
+        <h2 class="collection-preview-title">
+          {% if section.settings.featured_title %}
+            {{ section.settings.featured_title }}
+          {% else %}
+            SILENT
+          {% endif %}
+        </h2>
+        {% if section.settings.featured_description %}
+          <p class="collection-preview-description">{{ section.settings.featured_description }}</p>
+        {% endif %}
+      </div>
+      
+      <!-- Gothic Frame Top -->
+      <div class="gothic-frame gothic-frame-top">
+        <div class="frame-corner frame-corner-left">
+          <div class="corner-ornament"></div>
+          <div class="corner-lines"></div>
+        </div>
+        <div class="frame-border frame-border-top">
+          <div class="border-center-ornament">
+            <div class="ornament-diamond"></div>
+            <div class="ornament-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="frame-corner frame-corner-right">
+          <div class="corner-ornament"></div>
+          <div class="corner-lines"></div>
+        </div>
+      </div>
+    </div>
+  </section>
   
-  <!-- Bottom Blend Overlay -->
-  <div class="hero-blend-overlay"></div>
-  
-  <!-- Floating Particles -->
-  <div class="hero-particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-  
-  <!-- Hero Collection Name -->
-  <div class="hero-collection-name">
-    {% if section.settings.collection_name %}
-      {{ section.settings.collection_name }}
-    {% else %}
-      Saints & Sinners
-    {% endif %}
-  </div>
-  
-  <!-- Hero CTA -->
-  <div class="hero-cta-container">
-    {% if section.settings.primary_cta_text %}
-      <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="hero-cta-button">
-        {{ section.settings.primary_cta_text }}
-      </a>
-    {% endif %}
-  </div>
-</section>
-
+</div>
 
 <!-- Section Transition -->
 <div class="section-transition full-width"></div>
@@ -352,21 +428,155 @@
     animation: atmosphericShift 150s ease-in-out infinite reverse !important;
   }
 
-  /* Hero Section */
-  .hero-section {
+  /* New Viewport Layout */
+  .viewport-container {
     position: relative;
     width: 100%;
-    min-height: 80vh;
+    height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     background-color: var(--color-background);
     overflow: hidden;
     z-index: 10;
   }
   
-  /* Hero Background Image */
-  .hero-background {
+  .viewport-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* Timer Section (25% of viewport) */
+  .timer-section {
+    height: 25vh;
+    background: linear-gradient(135deg, 
+      var(--color-background) 0%, 
+      var(--color-background-ui) 100%);
+    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
+  }
+  
+  .timer-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .timer-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  .timer-particles .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(215, 38, 56, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(215, 38, 56, 0.6);
+  }
+  
+  .timer-particles .particle:nth-child(1) {
+    top: 20%;
+    left: 15%;
+    animation: timerFloat 12s ease-in-out infinite;
+  }
+  
+  .timer-particles .particle:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation: timerFloat 15s ease-in-out infinite 2s;
+  }
+  
+  .timer-particles .particle:nth-child(3) {
+    top: 40%;
+    left: 25%;
+    animation: timerFloat 18s ease-in-out infinite 4s;
+  }
+  
+  .timer-particles .particle:nth-child(4) {
+    top: 70%;
+    left: 70%;
+    animation: timerFloat 14s ease-in-out infinite 1s;
+  }
+  
+  .timer-particles .particle:nth-child(5) {
+    top: 30%;
+    left: 90%;
+    animation: timerFloat 16s ease-in-out infinite 3s;
+  }
+  
+  .timer-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .timer-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(215, 38, 56, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .countdown-timer {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .timer-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+  }
+  
+  .timer-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-foreground);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    font-family: monospace;
+    text-shadow: 0 0 10px rgba(215, 38, 56, 0.4);
+  }
+  
+  .timer-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    font-weight: 400;
+  }
+  
+  /* Teaser Section (50% of viewport) */
+  .teaser-section {
+    height: 50vh;
+    background-color: var(--color-background);
+  }
+  
+  /* Teaser Background Image */
+  .teaser-background {
     position: absolute;
     top: 0;
     left: 0;
@@ -375,7 +585,7 @@
     z-index: 0;
   }
   
-  .hero-bg-image {
+  .teaser-bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -385,7 +595,7 @@
     filter: brightness(0.8) contrast(1.2);
   }
   
-  .hero-texture {
+  .teaser-texture {
     position: absolute;
     top: 0;
     left: 0;
@@ -395,7 +605,7 @@
     z-index: 1;
   }
   
-  .hero-noise {
+  .teaser-noise {
     position: absolute;
     top: 0;
     left: 0;
@@ -410,7 +620,7 @@
     opacity: 0.6;
   }
   
-  .hero-gradient {
+  .teaser-gradient {
     position: absolute;
     top: 0;
     left: 0;
@@ -423,28 +633,23 @@
     z-index: 2;
   }
   
-  /* Bottom Blend Overlay - Enhanced for Gothic Frame */
-  .hero-blend-overlay {
+  /* Teaser Blend Overlay */
+  .teaser-blend-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 45%;
+    height: 30%;
     background: linear-gradient(180deg, 
       transparent 0%, 
-      rgba(14, 14, 16, 0.02) 10%,
-      rgba(14, 14, 16, 0.08) 20%,
-      rgba(14, 14, 16, 0.18) 30%,
-      rgba(14, 14, 16, 0.35) 45%,
-      rgba(14, 14, 16, 0.55) 60%,
-      rgba(14, 14, 16, 0.75) 75%,
-      rgba(14, 14, 16, 0.92) 90%,
-      rgba(14, 14, 16, 1) 100%);
+      rgba(14, 14, 16, 0.1) 30%,
+      rgba(14, 14, 16, 0.4) 70%,
+      rgba(14, 14, 16, 0.8) 100%);
     z-index: 2;
     pointer-events: none;
   }
   
-  .hero-particles {
+  .teaser-particles {
     position: absolute;
     top: 0;
     left: 0;
@@ -454,7 +659,7 @@
     z-index: 2;
   }
   
-  .hero-particles .particle {
+  .teaser-particles .particle {
     position: absolute;
     width: 3px;
     height: 3px;
@@ -463,123 +668,106 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   }
   
-  .hero-particles .particle:nth-child(1) {
+  .teaser-particles .particle:nth-child(1) {
     top: 15%;
     left: 8%;
     animation: heroFloat 14s ease-in-out infinite;
   }
   
-  .hero-particles .particle:nth-child(2) {
+  .teaser-particles .particle:nth-child(2) {
     top: 65%;
     left: 85%;
     animation: heroFloat 18s ease-in-out infinite 2s;
   }
   
-  .hero-particles .particle:nth-child(3) {
+  .teaser-particles .particle:nth-child(3) {
     top: 85%;
     left: 15%;
     animation: heroFloat 22s ease-in-out infinite 4s;
   }
   
-  .hero-particles .particle:nth-child(4) {
+  .teaser-particles .particle:nth-child(4) {
     top: 25%;
     left: 75%;
     animation: heroFloat 16s ease-in-out infinite 1s;
   }
   
-  .hero-particles .particle:nth-child(5) {
+  .teaser-particles .particle:nth-child(5) {
     top: 75%;
     left: 45%;
     animation: heroFloat 20s ease-in-out infinite 3s;
   }
   
-  .hero-particles .particle:nth-child(6) {
+  .teaser-particles .particle:nth-child(6) {
     top: 40%;
     left: 92%;
     animation: heroFloat 15s ease-in-out infinite 5s;
   }
   
-  .hero-particles .particle:nth-child(7) {
+  .teaser-particles .particle:nth-child(7) {
     top: 10%;
     left: 50%;
     animation: heroFloat 19s ease-in-out infinite 1.5s;
   }
   
-  .hero-particles .particle:nth-child(8) {
+  .teaser-particles .particle:nth-child(8) {
     top: 55%;
     left: 25%;
     animation: heroFloat 17s ease-in-out infinite 6s;
   }
   
-  .hero-particles .particle:nth-child(9) {
+  .teaser-particles .particle:nth-child(9) {
     top: 90%;
     left: 65%;
     animation: heroFloat 21s ease-in-out infinite 2.5s;
   }
   
-  .hero-particles .particle:nth-child(10) {
+  .teaser-particles .particle:nth-child(10) {
     top: 35%;
     left: 5%;
     animation: heroFloat 13s ease-in-out infinite 7s;
   }
   
-  .hero-particles .particle:nth-child(11) {
-    top: 20%;
-    left: 30%;
-    animation: heroFloat 16s ease-in-out infinite 3.5s;
+  .teaser-content {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
   
-  .hero-particles .particle:nth-child(12) {
-    top: 70%;
-    left: 10%;
-    animation: heroFloat 18s ease-in-out infinite 8s;
-  }
-  
-  .hero-particles .particle:nth-child(13) {
-    top: 50%;
-    left: 60%;
-    animation: heroFloat 14s ease-in-out infinite 4.5s;
-  }
-  
-  .hero-particles .particle:nth-child(14) {
-    top: 80%;
-    left: 90%;
-    animation: heroFloat 20s ease-in-out infinite 1.8s;
-  }
-  
-  .hero-particles .particle:nth-child(15) {
-    top: 5%;
-    left: 70%;
-    animation: heroFloat 23s ease-in-out infinite 6.5s;
-  }
-  
-  /* Hero Collection Name */
-  .hero-collection-name {
-    position: absolute;
-    top: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
+  /* Teaser Collection Name */
+  .teaser-collection-name {
     font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 700;
-    color: rgba(215, 38, 56, 0.3) !important;
+    color: var(--color-foreground);
     text-transform: uppercase;
-    letter-spacing: 0.3em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    z-index: 4;
+    letter-spacing: 0.1em;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    margin-bottom: 1rem;
     white-space: nowrap;
+    text-align: center;
   }
   
-  /* Hero CTA */
-  .hero-cta-container {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
+  .teaser-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.6;
   }
   
-  .hero-cta-button {
+  /* Teaser CTA */
+  .teaser-cta-button {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -604,7 +792,7 @@
     backdrop-filter: blur(15px);
   }
   
-  .hero-cta-button::before {
+  .teaser-cta-button::before {
     content: '';
     position: absolute;
     top: -3px;
@@ -622,7 +810,7 @@
     transition: opacity 0.4s ease;
   }
   
-  .hero-cta-button::after {
+  .teaser-cta-button::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -639,7 +827,7 @@
     transition: opacity 0.4s ease;
   }
   
-  .hero-cta-button:hover {
+  .teaser-cta-button:hover {
     transform: translateY(-4px);
     box-shadow: 
       0 0 0 1px rgba(215, 38, 56, 0.08),
@@ -650,12 +838,59 @@
     color: rgba(215, 38, 56, 0.5);
   }
   
-  .hero-cta-button:hover::before {
+  .teaser-cta-button:hover::before {
     opacity: 1;
   }
   
-  .hero-cta-button:hover::after {
+  .teaser-cta-button:hover::after {
     opacity: 1;
+  }
+  
+  /* Collection Preview Section (25% of viewport) */
+  .collection-preview-section {
+    height: 25vh;
+    background: linear-gradient(135deg, 
+      var(--color-background-ui) 0%, 
+      var(--color-background-muted) 100%);
+    border-top: 1px solid rgba(215, 38, 56, 0.1);
+    padding: 2rem;
+  }
+  
+  .collection-preview-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .collection-preview-header {
+    margin-bottom: 1rem;
+  }
+  
+  .collection-preview-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .collection-preview-description {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    max-width: 600px;
+    margin: 0 auto;
   }
   
   
@@ -1576,14 +1811,6 @@
       right: 0.25rem;
     }
     
-    .hero-cta-button {
-      padding: 1.2rem 2.5rem;
-      font-size: 1rem;
-    }
-    
-    .hero-collection-name {
-      font-size: 0.8rem;
-    }
   }
   
   /* Atmospheric Animation */
@@ -1635,23 +1862,89 @@
     }
   }
   
+  @keyframes timerFloat {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.6;
+    }
+    25% {
+      transform: translateY(-8px) translateX(4px);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-16px) translateX(-4px);
+      opacity: 0.8;
+    }
+    75% {
+      transform: translateY(-8px) translateX(6px);
+      opacity: 0.9;
+    }
+  }
+  
   
   /* Responsive Design */
   @media (max-width: 768px) {
-    .hero-collection-name {
-      top: 2rem;
+    .viewport-container {
+      height: 100vh;
+    }
+    
+    .timer-section {
+      height: 25vh;
+      padding: 1rem;
+    }
+    
+    .timer-title {
       font-size: 0.8rem;
-      letter-spacing: 0.25em;
+      margin-bottom: 0.75rem;
     }
     
-    .hero-cta-container {
-      bottom: 2rem;
+    .countdown-timer {
+      gap: 1rem;
     }
     
-    .hero-cta-button {
+    .timer-number {
+      font-size: 1.5rem;
+    }
+    
+    .timer-unit {
+      min-width: 50px;
+    }
+    
+    .timer-label {
+      font-size: 0.65rem;
+    }
+    
+    .teaser-section {
+      height: 50vh;
+    }
+    
+    .teaser-collection-name {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: 0.75rem;
+    }
+    
+    .teaser-description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .teaser-cta-button {
       padding: 1.2rem 2.5rem;
       font-size: 0.95rem;
       border-width: 2px;
+    }
+    
+    .collection-preview-section {
+      height: 25vh;
+      padding: 1rem;
+    }
+    
+    .collection-preview-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    
+    .collection-preview-description {
+      font-size: 0.9rem;
     }
     
     .gothic-frame {
@@ -1703,27 +1996,63 @@
   }
   
   @media (max-width: 480px) {
-    .hero-section {
-      min-height: 70vh;
-      padding: 2rem 0;
+    .timer-section {
+      padding: 0.75rem;
     }
     
-    .hero-collection-name {
-      top: 1.5rem;
+    .timer-title {
       font-size: 0.75rem;
-      letter-spacing: 0.2em;
+      margin-bottom: 0.5rem;
     }
     
-    .hero-cta-container {
-      bottom: 1.5rem;
+    .countdown-timer {
+      gap: 0.75rem;
     }
     
-    .hero-cta-button {
+    .timer-number {
+      font-size: 1.25rem;
+    }
+    
+    .timer-unit {
+      min-width: 45px;
+    }
+    
+    .timer-label {
+      font-size: 0.6rem;
+    }
+    
+    .teaser-content {
+      padding: 1rem;
+    }
+    
+    .teaser-collection-name {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.5rem;
+    }
+    
+    .teaser-description {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .teaser-cta-button {
       padding: 1rem 2rem;
       font-size: 0.9rem;
       gap: 0.5rem;
       border-width: 2px;
       letter-spacing: 0.15em;
+    }
+    
+    .collection-preview-section {
+      padding: 0.75rem;
+    }
+    
+    .collection-preview-title {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    }
+    
+    .collection-preview-description {
+      font-size: 0.8rem;
     }
     
     .featured-products {
@@ -1942,6 +2271,44 @@ document.addEventListener('DOMContentLoaded', function() {
       featuredIsDragging = false;
     });
   }
+  
+  // Countdown Timer Functionality
+  const countdownTimer = document.getElementById('countdown-timer');
+  
+  if (countdownTimer) {
+    const launchDateStr = countdownTimer.getAttribute('data-launch-date');
+    const launchDate = new Date(launchDateStr + 'T23:59:59').getTime();
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      
+      if (distance < 0) {
+        // Timer expired
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById('days').textContent = days.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    // Initial update
+    updateCountdown();
+    
+    // Update every second
+    setInterval(updateCountdown, 1000);
+  }
 });
 </script>
 
@@ -1958,13 +2325,48 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "collection_name",
       "label": "Collection Name",
       "default": "Saints & Sinners",
-      "info": "Small text displayed at top of hero"
+      "info": "Collection name displayed in teaser section"
+    },
+    {
+      "type": "header",
+      "content": "Timer Section"
+    },
+    {
+      "type": "text",
+      "id": "timer_title",
+      "label": "Timer Title",
+      "default": "NEXT DROP",
+      "info": "Title displayed above countdown timer"
+    },
+    {
+      "type": "text",
+      "id": "launch_date",
+      "label": "Launch Date (YYYY-MM-DD)",
+      "default": "2025-07-25",
+      "info": "Format: YYYY-MM-DD (e.g., 2025-07-25)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Show Countdown Timer",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Teaser Section"
+    },
+    {
+      "type": "textarea",
+      "id": "teaser_description",
+      "label": "Teaser Description",
+      "default": "Embrace the darkness. Join the legacy.",
+      "info": "Description text displayed in teaser section"
     },
     {
       "type": "image_picker",
       "id": "hero_background_image",
       "label": "Hero Background Image",
-      "info": "Full-width background image that will blend with the dark theme"
+      "info": "Background image for the teaser section (50% of viewport)"
     },
     {
       "type": "text",
