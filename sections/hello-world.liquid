@@ -82,28 +82,6 @@
       >
     </div>
   {% endif %}
-  
-  <div class="hero-content">
-    <div class="hero-collection-name">
-      {% if section.settings.collection_name %}
-        {{ section.settings.collection_name }}
-      {% else %}
-        Saints & Sinners
-      {% endif %}
-    </div>
-    
-    {% if section.settings.teaser_description %}
-      <div class="hero-description">
-        {{ section.settings.teaser_description }}
-      </div>
-    {% endif %}
-    
-    {% if section.settings.primary_cta_text %}
-      <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="hero-cta-button">
-        {{ section.settings.primary_cta_text }}
-      </a>
-    {% endif %}
-  </div>
 </section>
 
 <!-- Featured Products Section -->
