@@ -20,23 +20,39 @@
     margin-top: 3rem;
   }
   
-  .timer-section {
+  .hero-timer-section {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6rem 0 4rem 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%);
+    height: 80vh;
+    overflow: hidden;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
   
-  .hero-section {
-    position: relative;
-    height: 70vh;
-    overflow: hidden;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .timer-overlay {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
   }
   
   .countdown-timer {
@@ -68,9 +84,12 @@
   
   /* Mobile optimizations */
   @media (max-width: 768px) {
-    .timer-section {
-      padding: 4rem 0 3rem 0;
-      margin-top: 0;
+    .hero-timer-section {
+      height: 70vh;
+    }
+    
+    .timer-overlay {
+      top: 15%;
     }
     
     .countdown-timer {
@@ -88,31 +107,18 @@
       font-size: 0.75rem;
     }
     
-    .hero-section {
-      height: 60vh;
-      margin-top: 0;
-    }
-    
-    .hero-background {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    
-    .hero-bg-image {
-      transform: none;
-      width: 100%;
-      height: auto;
-    }
-    
     .featured-products {
       margin-top: 2rem;
     }
   }
   
   @media (max-width: 480px) {
-    .timer-section {
-      padding: 3rem 0 2rem 0;
-      margin-top: 0;
+    .hero-timer-section {
+      height: 60vh;
+    }
+    
+    .timer-overlay {
+      top: 10%;
     }
     
     .countdown-timer {
@@ -126,48 +132,6 @@
     .timer-label {
       font-size: 0.7rem;
     }
-    
-    .hero-section {
-      height: 50vh;
-      margin-top: 0;
-    }
-    
-    .hero-bg-image {
-      transform: none;
-      height: 400px;
-      min-height: 400px;
-      max-height: 400px;
-      width: 120%;
-      margin-left: -10%;
-      object-position: top center;
-    }
-    
-    .hero-background {
-      height: 400px;
-      min-height: 400px;
-      max-height: 400px;
-    }
-    
-    .featured-products {
-      margin-top: 1.5rem;
-    }
-  }
-  
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-  }
-  
-  .hero-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(2);
-    transform-origin: center center;
   }
 </style>
 
@@ -196,6 +160,40 @@
   window.addEventListener('scroll', preventResize);
 </script>
 
+<!-- Hero Timer Section -->
+<section class="hero-timer-section">
+  {% if section.settings.hero_background_image %}
+    <div class="hero-background">
+      <img 
+        src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
+        alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
+        class="hero-bg-image"
+        loading="eager"
+      >
+    </div>
+  {% endif %}
+  
+  <div class="timer-overlay">
+    <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+      <div class="timer-unit">
+        <span class="timer-number" id="days">00</span>
+        <span class="timer-label">Days</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="hours">00</span>
+        <span class="timer-label">Hours</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="minutes">00</span>
+        <span class="timer-label">Minutes</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="seconds">00</span>
+        <span class="timer-label">Seconds</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Featured Products Section -->
 <section class="featured-products">
