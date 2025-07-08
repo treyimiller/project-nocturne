@@ -1,4 +1,12 @@
 <style>
+  /* Ensure sections stack properly */
+  .timer-section,
+  .hero-section,
+  .featured-products {
+    position: relative;
+    display: block;
+  }
+  
   .timer-section {
     background: linear-gradient(to bottom, transparent, #000000);
     padding: 2rem 0;
@@ -8,14 +16,6 @@
     align-items: center;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    position: relative;
-    z-index: 10;
-  }
-  
-  .hero-section {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    z-index: 5;
   }
   
   .countdown-timer {
@@ -46,10 +46,9 @@
   }
   
   .hero-section {
-    position: relative;
-    z-index: 5;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
+    background: #000000;
   }
   
   .hero-background {
@@ -60,11 +59,6 @@
     width: 100%;
     height: auto;
     display: block;
-  }
-  
-  .featured-products {
-    position: relative;
-    z-index: 1;
   }
 </style>
 
