@@ -1496,7 +1496,7 @@
     height: auto;
     overflow: visible;
     padding: 0 3rem;
-    touch-action: pan-y;
+    touch-action: pan-y pan-x;
   }
   
   .featured-swiper-wrapper {
@@ -1518,7 +1518,7 @@
     max-width: 350px;
     margin: 0 auto;
     min-height: auto;
-    touch-action: pan-y;
+    touch-action: pan-y pan-x;
     display: flex;
     flex-direction: column;
   }
@@ -2447,21 +2447,40 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Touch/swipe functionality for featured products
     let featuredStartX = 0;
+    let featuredStartY = 0;
     let featuredCurrentX = 0;
+    let featuredCurrentY = 0;
     let featuredIsDragging = false;
     let featuredHasSwiped = false;
+    let featuredIsHorizontalSwipe = false;
     
     featuredSwiperContainer.addEventListener('touchstart', (e) => {
       featuredStartX = e.touches[0].clientX;
+      featuredStartY = e.touches[0].clientY;
       featuredCurrentX = featuredStartX;
+      featuredCurrentY = featuredStartY;
       featuredIsDragging = true;
       featuredHasSwiped = false;
+      featuredIsHorizontalSwipe = false;
     });
     
     featuredSwiperContainer.addEventListener('touchmove', (e) => {
       if (!featuredIsDragging) return;
-      e.preventDefault();
+      
       featuredCurrentX = e.touches[0].clientX;
+      featuredCurrentY = e.touches[0].clientY;
+      
+      const deltaX = Math.abs(featuredCurrentX - featuredStartX);
+      const deltaY = Math.abs(featuredCurrentY - featuredStartY);
+      
+      // Determine if this is a horizontal swipe
+      if (deltaX > deltaY && deltaX > 10) {
+        featuredIsHorizontalSwipe = true;
+        e.preventDefault(); // Only prevent default for horizontal swipes
+      } else if (deltaY > deltaX && deltaY > 10) {
+        featuredIsHorizontalSwipe = false;
+        // Allow vertical scrolling - don't prevent default
+      }
     });
     
     featuredSwiperContainer.addEventListener('touchend', (e) => {
@@ -2470,18 +2489,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      const diff = featuredStartX - featuredCurrentX;
-      const threshold = 50; // Minimum swipe distance
-      
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0) {
-          // Swiped left - go to next slide
-          nextFeaturedSlide();
-        } else {
-          // Swiped right - go to previous slide
-          prevFeaturedSlide();
+      // Only process horizontal swipes for navigation
+      if (featuredIsHorizontalSwipe) {
+        const diff = featuredStartX - featuredCurrentX;
+        const threshold = 50; // Minimum swipe distance
+        
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0) {
+            // Swiped left - go to next slide
+            nextFeaturedSlide();
+          } else {
+            // Swiped right - go to previous slide
+            prevFeaturedSlide();
+          }
+          featuredHasSwiped = true;
         }
-        featuredHasSwiped = true;
       }
       
       featuredIsDragging = false;
