@@ -1735,15 +1735,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: var(--color-background-ui);
-    border-top: 1px solid rgba(215, 38, 56, 0.1);
+    background: linear-gradient(135deg, rgba(215, 38, 56, 0.08) 0%, rgba(139, 30, 43, 0.05) 100%);
+    border-top: 2px solid rgba(215, 38, 56, 0.2);
+    transition: all 0.3s ease;
   }
   
   .product-title {
     font-family: 'Oswald', sans-serif;
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--color-foreground);
+    color: rgba(215, 38, 56, 0.9);
     margin-bottom: 0.75rem;
     line-height: 1.3;
     text-transform: uppercase;
@@ -1752,6 +1753,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 0 5px rgba(215, 38, 56, 0.3);
   }
   
   .product-price {
@@ -1787,14 +1789,19 @@
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    color: rgba(215, 38, 56, 0.9);
+    color: rgba(215, 38, 56, 1);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     transition: all 0.3s ease;
     opacity: 1;
-    padding: 0.75rem 0 1.5rem 0;
+    padding: 0.75rem 1rem 1.5rem 1rem;
     pointer-events: none;
     min-height: 3rem;
+    background: rgba(215, 38, 56, 0.1);
+    border: 1px solid rgba(215, 38, 56, 0.3);
+    border-radius: 4px;
+    margin: 0 1rem;
+    text-shadow: 0 0 3px rgba(215, 38, 56, 0.5);
   }
   
   .cta-text {
@@ -1814,8 +1821,21 @@
     transition: width 0.4s ease;
   }
   
+  .product-card:hover .product-info {
+    background: linear-gradient(135deg, rgba(215, 38, 56, 0.15) 0%, rgba(139, 30, 43, 0.1) 100%);
+    border-top-color: rgba(215, 38, 56, 0.4);
+  }
+  
+  .product-card:hover .product-title {
+    color: rgba(215, 38, 56, 1);
+    text-shadow: 0 0 8px rgba(215, 38, 56, 0.5);
+  }
+  
   .product-card:hover .product-cta {
     opacity: 1;
+    background: rgba(215, 38, 56, 0.2);
+    border-color: rgba(215, 38, 56, 0.5);
+    text-shadow: 0 0 5px rgba(215, 38, 56, 0.7);
   }
   
   .product-card:hover .cta-underline {
