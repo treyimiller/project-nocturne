@@ -163,6 +163,24 @@
     transform: scale(2) translateY(0);
     transform-origin: center center;
   }
+  
+  /* Mobile hero overrides */
+  @media (max-width: 768px) {
+    .hero-section {
+      width: 100%;
+      margin-left: 0;
+      overflow: visible;
+    }
+    
+    .hero-background {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    
+    .hero-bg-image {
+      transform: none;
+    }
+  }
 </style>
 
 <!-- Timer Section -->
