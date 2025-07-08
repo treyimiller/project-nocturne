@@ -393,9 +393,9 @@
   .viewport-container {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 75vh;
     display: grid;
-    grid-template-rows: 25vh 55vh;
+    grid-template-rows: 25vh 50vh;
     background-color: var(--color-background);
     overflow: hidden;
     z-index: 10;
@@ -417,13 +417,12 @@
     width: 100vw;
     background: linear-gradient(180deg, 
       var(--color-background) 0%,
-      var(--color-background-ui) 40%,
-      rgba(14, 14, 16, 0.95) 70%,
-      rgba(14, 14, 16, 0.8) 85%,
-      rgba(14, 14, 16, 0.6) 95%,
-      transparent 100%);
+      var(--color-background-ui) 60%,
+      rgba(14, 14, 16, 0.98) 90%,
+      rgba(14, 14, 16, 0.95) 100%);
     position: relative;
     z-index: 10;
+    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
   }
   
   .timer-background {
@@ -547,7 +546,6 @@
     height: 50vh;
     width: 100vw;
     background-color: var(--color-background);
-    margin-top: -5vh;
     position: relative;
     z-index: 5;
   }
@@ -555,10 +553,10 @@
   /* Teaser Background Image */
   .teaser-background {
     position: absolute;
-    top: -5vh;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 105%;
+    height: 100%;
     z-index: 0;
   }
   
@@ -574,10 +572,10 @@
   
   .teaser-texture {
     position: absolute;
-    top: -5vh;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 105%;
+    height: 100%;
     pointer-events: none;
     z-index: 1;
   }
@@ -628,10 +626,10 @@
   
   .teaser-particles {
     position: absolute;
-    top: -5vh;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 105%;
+    height: 100%;
     pointer-events: none;
     z-index: 2;
   }
