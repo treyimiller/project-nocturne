@@ -498,45 +498,53 @@
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    color: rgba(215, 38, 56, 0.8);
+    color: rgba(215, 38, 56, 0.8) !important;
     text-transform: uppercase;
     letter-spacing: 0.3em;
     margin-bottom: 1rem;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: block !important;
+    visibility: visible !important;
   }
   
   .countdown-timer {
-    display: flex;
+    display: flex !important;
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
+    visibility: visible !important;
   }
   
   .timer-unit {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     align-items: center;
     min-width: 60px;
+    visibility: visible !important;
   }
   
   .timer-number {
-    font-size: 2rem;
+    font-size: 2rem !important;
     font-weight: bold;
-    color: var(--color-foreground);
+    color: var(--color-foreground) !important;
     line-height: 1;
     margin-bottom: 0.25rem;
     font-family: monospace;
     text-shadow: 0 0 10px rgba(215, 38, 56, 0.4);
+    display: block !important;
+    visibility: visible !important;
   }
   
   .timer-label {
     font-family: 'Oswald', sans-serif;
     font-size: 0.7rem;
-    color: var(--color-foreground);
+    color: var(--color-foreground) !important;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     opacity: 0.6;
     font-weight: 400;
+    display: block !important;
+    visibility: visible !important;
   }
   
   /* Hero Section */
@@ -548,14 +556,6 @@
     margin-top: 0 !important;
   }
   
-  /* Debug: Make timer highly visible */
-  .timer-section {
-    background: red !important;
-    min-height: 200px !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
   
   /* Teaser Section (50% of viewport) */
   .teaser-section {
