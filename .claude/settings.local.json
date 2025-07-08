@@ -3,7 +3,8 @@
     "allow": [
       "Bash(grep:*)",
       "Bash(rg:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }
