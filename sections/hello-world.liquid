@@ -2,6 +2,8 @@
   /* Lock viewport height on mobile */
   :root {
     --vh: 1vh;
+    --safe-area-inset-top: env(safe-area-inset-top);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
   }
   
   /* Ensure sections stack properly */
@@ -190,7 +192,7 @@
       margin-left: 0;
       margin-top: -5rem;
       overflow: hidden;
-      height: 350px !important;
+      height: calc(350px + var(--safe-area-inset-bottom)) !important;
     }
     
     .hero-background {
