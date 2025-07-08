@@ -67,6 +67,36 @@
     padding: 2rem 0;
   }
   
+  .cta-overlay {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-cta {
+    background: rgba(215, 38, 56, 1);
+    color: white;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .hero-cta:hover {
+    background: transparent;
+    color: rgba(215, 38, 56, 1);
+    border-color: rgba(215, 38, 56, 1);
+  }
+  
   .countdown-timer {
     display: flex;
     gap: 2rem;
@@ -122,6 +152,15 @@
     .featured-products {
       margin-top: 2rem;
     }
+    
+    .cta-overlay {
+      bottom: 8%;
+    }
+    
+    .hero-cta {
+      padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+    }
   }
   
   @media (max-width: 480px) {
@@ -143,6 +182,15 @@
     
     .timer-label {
       font-size: 0.7rem;
+    }
+    
+    .cta-overlay {
+      bottom: 6%;
+    }
+    
+    .hero-cta {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.8rem;
     }
   }
 </style>
@@ -204,6 +252,12 @@
         <span class="timer-label">Seconds</span>
       </div>
     </div>
+  </div>
+  
+  <div class="cta-overlay">
+    <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="hero-cta">
+      {{ section.settings.cta_text | default: 'Shop Now' }}
+    </a>
   </div>
 </section>
 
