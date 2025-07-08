@@ -12,12 +12,10 @@
   .featured-products {
     position: relative;
     display: block;
-  }
-  
-  .featured-products {
     overflow: hidden;
     z-index: 1;
     margin-top: 3rem;
+    isolation: isolate;
   }
   
   .hero-timer-section {
@@ -26,12 +24,13 @@
     overflow: hidden;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
+    isolation: isolate;
   }
   
   .hero-timer-section::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 30%;
