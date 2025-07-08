@@ -392,18 +392,19 @@
   /* New Viewport Layout */
   .viewport-container {
     position: relative;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: var(--color-background);
     overflow: hidden;
     z-index: 10;
+    margin-left: calc(-50vw + 50%);
   }
   
   .viewport-section {
     position: relative;
-    width: 100%;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -413,6 +414,7 @@
   /* Timer Section (25% of viewport) */
   .timer-section {
     height: 25vh;
+    width: 100vw;
     background: linear-gradient(135deg, 
       var(--color-background) 0%, 
       var(--color-background-ui) 100%);
@@ -533,6 +535,7 @@
   /* Teaser Section (50% of viewport) */
   .teaser-section {
     height: 50vh;
+    width: 100vw;
     background-color: var(--color-background);
   }
   
