@@ -1525,8 +1525,9 @@
   
   /* Mobile product card specific styling */
   .mobile-product-card .product-image {
-    aspect-ratio: 3/4;
-    max-height: 420px;
+    aspect-ratio: 4/3;
+    max-height: 280px;
+    flex-shrink: 0;
   }
   
   .mobile-product-card .product-info {
@@ -2543,6 +2544,12 @@ document.addEventListener('DOMContentLoaded', function() {
         maxHeight = cardHeight;
       }
     });
+    
+    // Set a reasonable maximum height limit (about 520px)
+    const maxAllowedHeight = 520;
+    if (maxHeight > maxAllowedHeight) {
+      maxHeight = maxAllowedHeight;
+    }
     
     // Apply the maximum height to all cards
     mobileCards.forEach(card => {
