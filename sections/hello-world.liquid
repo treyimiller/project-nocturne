@@ -20,25 +20,23 @@
     margin-top: 3rem;
   }
   
-  .timer-section {
-    padding: 2rem 0 0 0;
+  .combined-section {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+    background: linear-gradient(to bottom, transparent 0%, transparent 30%, #000000 100%);
+  }
+  
+  .timer-overlay {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    overflow: visible;
-    background: linear-gradient(to bottom, transparent, #000000);
-  }
-  
-  .timer-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100vw;
-    right: -100vw;
-    bottom: -5px;
-    background: #000000;
-    z-index: -1;
+    padding: 2rem 0;
   }
   
   .countdown-timer {
@@ -158,61 +156,60 @@
     }
   }
   
-  .hero-section {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    background: #000000;
-    overflow: hidden;
-    position: relative;
-  }
-  
   .hero-background {
-    width: 100%;
-    margin-top: -17%;
-    margin-bottom: -17%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
   }
   
   .hero-bg-image {
     width: 100%;
-    height: auto;
-    display: block;
-    transform: scale(2) translateY(0);
+    height: 100%;
+    object-fit: cover;
+    transform: scale(2);
     transform-origin: center center;
   }
   
-  /* Mobile hero overrides */
+  /* Mobile combined section overrides */
   @media (max-width: 768px) {
-    .timer-section::before {
-      left: 0;
-      right: 0;
+    .combined-section {
+      height: 100vh;
+      margin-top: 4rem;
     }
     
-    .hero-section {
-      width: 100%;
-      margin-left: 0;
-      margin-top: -5rem;
-      overflow: hidden;
-      height: calc(350px + var(--safe-area-inset-bottom)) !important;
-    }
-    
-    .hero-background {
-      margin-top: 0;
-      margin-bottom: 0;
-      height: 350px !important;
-      position: relative;
-      overflow: hidden;
+    .timer-overlay {
+      top: 10%;
     }
     
     .hero-bg-image {
       transform: scale(1.2);
       transform-origin: top center;
-      height: 350px !important;
-      width: 100%;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .combined-section {
+      height: 100vh;
+      margin-top: 5rem;
+    }
+    
+    .timer-overlay {
+      top: 8%;
+    }
+    
+    .countdown-timer {
+      gap: 0.75rem;
+    }
+    
+    .timer-number {
+      font-size: 1.5rem;
+    }
+    
+    .timer-label {
+      font-size: 0.7rem;
     }
   }
 </style>
@@ -242,30 +239,29 @@
   window.addEventListener('scroll', preventResize);
 </script>
 
-<!-- Timer Section -->
-<section class="timer-section">
-  <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
-    <div class="timer-unit">
-      <span class="timer-number" id="days">00</span>
-      <span class="timer-label">Days</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="hours">00</span>
-      <span class="timer-label">Hours</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="minutes">00</span>
-      <span class="timer-label">Minutes</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="seconds">00</span>
-      <span class="timer-label">Seconds</span>
+<!-- Combined Timer + Hero Section -->
+<section class="combined-section">
+  <div class="timer-overlay">
+    <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+      <div class="timer-unit">
+        <span class="timer-number" id="days">00</span>
+        <span class="timer-label">Days</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="hours">00</span>
+        <span class="timer-label">Hours</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="minutes">00</span>
+        <span class="timer-label">Minutes</span>
+      </div>
+      <div class="timer-unit">
+        <span class="timer-number" id="seconds">00</span>
+        <span class="timer-label">Seconds</span>
+      </div>
     </div>
   </div>
-</section>
-
-<!-- Hero Section -->
-<section class="hero-section">
+  
   {% if section.settings.hero_background_image %}
     <div class="hero-background">
       <img 
