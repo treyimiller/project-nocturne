@@ -1,39 +1,27 @@
 <!-- Timer Section -->
-<section class="timer-section full-width">
-  <div class="timer-background">
-    <div class="timer-particles">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
+<section class="timer-section">
+  <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+    <div class="timer-unit">
+      <span class="timer-number" id="days">00</span>
+      <span class="timer-label">Days</span>
     </div>
-    <div class="timer-content">
-      <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
-      <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
-        <div class="timer-unit">
-          <span class="timer-number" id="days">00</span>
-          <span class="timer-label">Days</span>
-        </div>
-        <div class="timer-unit">
-          <span class="timer-number" id="hours">00</span>
-          <span class="timer-label">Hours</span>
-        </div>
-        <div class="timer-unit">
-          <span class="timer-number" id="minutes">00</span>
-          <span class="timer-label">Minutes</span>
-        </div>
-        <div class="timer-unit">
-          <span class="timer-number" id="seconds">00</span>
-          <span class="timer-label">Seconds</span>
-        </div>
-      </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="hours">00</span>
+      <span class="timer-label">Hours</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="minutes">00</span>
+      <span class="timer-label">Minutes</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="seconds">00</span>
+      <span class="timer-label">Seconds</span>
     </div>
   </div>
 </section>
 
 <!-- Hero Section -->
-<section class="hero-section full-width">
+<section class="hero-section">
   {% if section.settings.hero_background_image %}
     <div class="hero-background">
       <img 
@@ -45,30 +33,6 @@
     </div>
   {% endif %}
   
-  <!-- Background Elements -->
-  <div class="hero-texture">
-    <div class="hero-noise"></div>
-    <div class="hero-gradient"></div>
-  </div>
-  
-  <!-- Bottom Blend Overlay -->
-  <div class="hero-blend-overlay"></div>
-  
-  <!-- Floating Particles -->
-  <div class="hero-particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-  
-  <!-- Hero Content -->
   <div class="hero-content">
     <div class="hero-collection-name">
       {% if section.settings.collection_name %}
@@ -91,9 +55,6 @@
     {% endif %}
   </div>
 </section>
-
-<!-- Section Transition -->
-<div class="section-transition full-width"></div>
 
 <!-- Featured Products Section -->
 <section class="featured-products">
