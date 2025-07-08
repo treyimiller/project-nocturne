@@ -1450,11 +1450,22 @@
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
       gap: 2rem !important;
+      align-items: stretch !important;
     }
     
     .featured-products .products-grid.desktop-only .product-card {
       width: 100% !important;
       max-width: none !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    
+    .featured-products .products-grid.desktop-only .product-info {
+      flex: 1 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
     }
     
     /* Ensure mobile swiper is completely hidden on desktop */
@@ -1735,8 +1746,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(215, 38, 56, 0.08) 0%, rgba(139, 30, 43, 0.05) 100%);
-    border-top: 2px solid rgba(215, 38, 56, 0.2);
+    background-color: var(--color-background-ui);
+    border-top: 1px solid rgba(215, 38, 56, 0.1);
     transition: all 0.3s ease;
   }
   
@@ -1744,7 +1755,7 @@
     font-family: 'Oswald', sans-serif;
     font-size: 1.2rem;
     font-weight: 600;
-    color: rgba(215, 38, 56, 0.9);
+    color: var(--color-foreground);
     margin-bottom: 0.75rem;
     line-height: 1.3;
     text-transform: uppercase;
@@ -1753,7 +1764,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    text-shadow: 0 0 5px rgba(215, 38, 56, 0.3);
+    transition: all 0.3s ease;
   }
   
   .product-price {
@@ -1789,19 +1800,14 @@
     font-family: 'Oswald', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    color: rgba(215, 38, 56, 1);
+    color: rgba(215, 38, 56, 0.9);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     transition: all 0.3s ease;
     opacity: 1;
-    padding: 0.75rem 1rem 1.5rem 1rem;
+    padding: 0.75rem 0 1.5rem 0;
     pointer-events: none;
     min-height: 3rem;
-    background: rgba(215, 38, 56, 0.1);
-    border: 1px solid rgba(215, 38, 56, 0.3);
-    border-radius: 4px;
-    margin: 0 1rem;
-    text-shadow: 0 0 3px rgba(215, 38, 56, 0.5);
   }
   
   .cta-text {
