@@ -25,6 +25,8 @@
     height: 80vh;
     overflow: hidden;
     background: linear-gradient(to bottom, transparent 0%, transparent 30%, #000000 100%);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
   
   .timer-overlay {
@@ -177,7 +179,9 @@
   @media (max-width: 768px) {
     .combined-section {
       height: 100vh;
-      margin-top: 4rem;
+      margin-top: 0;
+      width: 100%;
+      margin-left: 0;
     }
     
     .timer-overlay {
@@ -193,7 +197,9 @@
   @media (max-width: 480px) {
     .combined-section {
       height: 100vh;
-      margin-top: 5rem;
+      margin-top: 0;
+      width: 100%;
+      margin-left: 0;
     }
     
     .timer-overlay {
