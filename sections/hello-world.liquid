@@ -2007,6 +2007,18 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
+    
+    .featured-products .desktop-only {
+      display: none !important;
+    }
+    
+    .featured-products .mobile-only {
+      display: block !important;
+    }
+    
+    .featured-swiper-slide {
+      flex: 0 0 50%;
+    }
   }
   
   /* Mobile Responsive Design */
@@ -2038,18 +2050,6 @@
       padding: 0 1rem 2rem 1rem;
     }
     
-    .featured-products .desktop-only {
-      display: none !important;
-    }
-    
-    .featured-products .desktop-only.products-grid {
-      display: none !important;
-    }
-    
-    .featured-products .mobile-only {
-      display: block !important;
-    }
-    
     .featured-swiper-container {
       padding: 0 2.5rem;
     }
@@ -2066,6 +2066,10 @@
     
     .featured-swiper-button-next {
       right: 0.25rem;
+    }
+    
+    .featured-swiper-slide {
+      flex: 0 0 100%;
     }
     
   }
