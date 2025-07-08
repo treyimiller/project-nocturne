@@ -196,41 +196,6 @@
   window.addEventListener('scroll', preventResize);
 </script>
 
-<!-- Timer Section -->
-<section class="timer-section">
-  <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
-    <div class="timer-unit">
-      <span class="timer-number" id="days">00</span>
-      <span class="timer-label">Days</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="hours">00</span>
-      <span class="timer-label">Hours</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="minutes">00</span>
-      <span class="timer-label">Minutes</span>
-    </div>
-    <div class="timer-unit">
-      <span class="timer-number" id="seconds">00</span>
-      <span class="timer-label">Seconds</span>
-    </div>
-  </div>
-</section>
-
-<!-- Hero Section -->
-<section class="hero-section">
-  {% if section.settings.hero_background_image %}
-    <div class="hero-background">
-      <img 
-        src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
-        alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
-        class="hero-bg-image"
-        loading="eager"
-      >
-    </div>
-  {% endif %}
-</section>
 
 <!-- Featured Products Section -->
 <section class="featured-products">
