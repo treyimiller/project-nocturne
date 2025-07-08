@@ -1,101 +1,98 @@
-<!-- New Viewport Layout -->
-<div class="viewport-container">
-  
-  <!-- Timer Section (25% of viewport) -->
-  <section class="timer-section viewport-section">
-    {% if section.settings.show_timer and section.settings.launch_date != blank %}
-      <div class="timer-background">
-        <div class="timer-particles">
-          <div class="particle"></div>
-          <div class="particle"></div>
-          <div class="particle"></div>
-          <div class="particle"></div>
-          <div class="particle"></div>
-        </div>
-        <div class="timer-content">
-          <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
-          <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date }}">
-            <div class="timer-unit">
-              <span class="timer-number" id="days">00</span>
-              <span class="timer-label">Days</span>
-            </div>
-            <div class="timer-unit">
-              <span class="timer-number" id="hours">00</span>
-              <span class="timer-label">Hours</span>
-            </div>
-            <div class="timer-unit">
-              <span class="timer-number" id="minutes">00</span>
-              <span class="timer-label">Minutes</span>
-            </div>
-            <div class="timer-unit">
-              <span class="timer-number" id="seconds">00</span>
-              <span class="timer-label">Seconds</span>
-            </div>
+<!-- Timer Section -->
+<section class="timer-section full-width">
+  {% if section.settings.show_timer and section.settings.launch_date != blank %}
+    <div class="timer-background">
+      <div class="timer-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+      <div class="timer-content">
+        <div class="timer-title">{{ section.settings.timer_title | default: 'NEXT DROP' }}</div>
+        <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date }}">
+          <div class="timer-unit">
+            <span class="timer-number" id="days">00</span>
+            <span class="timer-label">Days</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-number" id="hours">00</span>
+            <span class="timer-label">Hours</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-number" id="minutes">00</span>
+            <span class="timer-label">Minutes</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-number" id="seconds">00</span>
+            <span class="timer-label">Seconds</span>
           </div>
         </div>
       </div>
-    {% endif %}
-  </section>
+    </div>
+  {% endif %}
+</section>
+
+<!-- Hero Section -->
+<section class="hero-section full-width">
+  {% if section.settings.hero_background_image %}
+    <div class="hero-background">
+      <img 
+        src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
+        alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
+        class="hero-bg-image"
+        loading="eager"
+      >
+    </div>
+  {% endif %}
   
-  <!-- Teaser Section (50% of viewport) -->
-  <section class="teaser-section viewport-section">
-    {% if section.settings.hero_background_image %}
-      <div class="teaser-background">
-        <img 
-          src="{{ section.settings.hero_background_image | image_url: width: 1920 }}" 
-          alt="{{ section.settings.hero_background_image.alt | default: 'Hero Background' }}"
-          class="teaser-bg-image"
-          loading="eager"
-        >
+  <!-- Background Elements -->
+  <div class="hero-texture">
+    <div class="hero-noise"></div>
+    <div class="hero-gradient"></div>
+  </div>
+  
+  <!-- Bottom Blend Overlay -->
+  <div class="hero-blend-overlay"></div>
+  
+  <!-- Floating Particles -->
+  <div class="hero-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <div class="hero-collection-name">
+      {% if section.settings.collection_name %}
+        {{ section.settings.collection_name }}
+      {% else %}
+        Saints & Sinners
+      {% endif %}
+    </div>
+    
+    {% if section.settings.teaser_description %}
+      <div class="hero-description">
+        {{ section.settings.teaser_description }}
       </div>
     {% endif %}
     
-    <!-- Background Elements -->
-    <div class="teaser-texture">
-      <div class="teaser-noise"></div>
-      <div class="teaser-gradient"></div>
-    </div>
-    
-    <!-- Floating Particles -->
-    <div class="teaser-particles">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-    </div>
-    
-    <!-- Teaser Content -->
-    <div class="teaser-content">
-      <div class="teaser-collection-name">
-        {% if section.settings.collection_name %}
-          {{ section.settings.collection_name }}
-        {% else %}
-          Saints & Sinners
-        {% endif %}
-      </div>
-      
-      {% if section.settings.teaser_description %}
-        <div class="teaser-description">
-          {{ section.settings.teaser_description }}
-        </div>
-      {% endif %}
-      
-      {% if section.settings.primary_cta_text %}
-        <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="teaser-cta-button">
-          {{ section.settings.primary_cta_text }}
-        </a>
-      {% endif %}
-    </div>
-  </section>
-  
-  
-</div>
+    {% if section.settings.primary_cta_text %}
+      <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="hero-cta-button">
+        {{ section.settings.primary_cta_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
 
 <!-- Section Transition -->
 <div class="section-transition full-width"></div>
