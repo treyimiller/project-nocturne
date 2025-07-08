@@ -8,21 +8,25 @@
   }
   
   .timer-section {
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .timer-wrapper {
     background: linear-gradient(to bottom, transparent, #000000);
     padding: 2rem 0;
     min-height: 25vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    box-shadow: -100vw 0 0 0 #000000, 100vw 0 0 0 #000000;
+  }
+  
+  .timer-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    right: -100vw;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent, #000000);
+    z-index: -1;
   }
   
   .countdown-timer {
@@ -71,24 +75,22 @@
 
 <!-- Timer Section -->
 <section class="timer-section">
-  <div class="timer-wrapper">
-    <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
-      <div class="timer-unit">
-        <span class="timer-number" id="days">00</span>
-        <span class="timer-label">Days</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="hours">00</span>
-        <span class="timer-label">Hours</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="minutes">00</span>
-        <span class="timer-label">Minutes</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="seconds">00</span>
-        <span class="timer-label">Seconds</span>
-      </div>
+  <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+    <div class="timer-unit">
+      <span class="timer-number" id="days">00</span>
+      <span class="timer-label">Days</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="hours">00</span>
+      <span class="timer-label">Hours</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="minutes">00</span>
+      <span class="timer-label">Minutes</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="seconds">00</span>
+      <span class="timer-label">Seconds</span>
     </div>
   </div>
 </section>
