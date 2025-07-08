@@ -62,9 +62,20 @@
     right: 0;
     z-index: 10;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
+  }
+  
+  .timer-subtitle {
+    font-size: 0.9rem;
+    color: rgba(139, 30, 43, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
   }
   
   .cta-overlay {
@@ -79,22 +90,41 @@
   }
   
   .hero-cta {
-    background: rgba(215, 38, 56, 1);
-    color: white;
-    padding: 1rem 2rem;
+    background: transparent;
+    color: rgba(215, 38, 56, 1);
+    padding: 1rem 2.5rem;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    border-radius: 0;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+    letter-spacing: 0.15em;
+    border: 2px solid rgba(215, 38, 56, 1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    font-family: inherit;
+    box-shadow: 0 0 20px rgba(215, 38, 56, 0.3);
+  }
+  
+  .hero-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .hero-cta:hover::before {
+    left: 100%;
   }
   
   .hero-cta:hover {
-    background: transparent;
-    color: rgba(215, 38, 56, 1);
-    border-color: rgba(215, 38, 56, 1);
+    background: rgba(215, 38, 56, 1);
+    color: white;
+    box-shadow: 0 0 30px rgba(215, 38, 56, 0.5);
+    transform: translateY(-2px);
   }
   
   .countdown-timer {
@@ -161,6 +191,11 @@
       padding: 0.8rem 1.5rem;
       font-size: 0.9rem;
     }
+    
+    .timer-subtitle {
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
   }
   
   @media (max-width: 480px) {
@@ -191,6 +226,11 @@
     .hero-cta {
       padding: 0.7rem 1.2rem;
       font-size: 0.8rem;
+    }
+    
+    .timer-subtitle {
+      font-size: 0.7rem;
+      margin-bottom: 0.6rem;
     }
   }
 </style>
@@ -234,6 +274,7 @@
   {% endif %}
   
   <div class="timer-overlay">
+    <div class="timer-subtitle">Saints vs Sinners</div>
     <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
       <div class="timer-unit">
         <span class="timer-number" id="days">00</span>
