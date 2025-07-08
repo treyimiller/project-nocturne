@@ -1,44 +1,14 @@
 <style>
-  /* Lock viewport height on mobile */
-  :root {
-    --vh: 1vh;
-    --safe-area-inset-top: env(safe-area-inset-top);
-    --safe-area-inset-bottom: env(safe-area-inset-bottom);
-  }
-  
-  /* Ensure sections stack properly */
-  .timer-section,
-  .hero-section,
-  .featured-products {
-    position: relative;
-    display: block;
-  }
-  
-  .featured-products {
-    overflow: hidden;
-    z-index: 1;
-    margin-top: 3rem;
-  }
-  
-  .combined-section {
-    position: relative;
-    height: 80vh;
-    overflow: hidden;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-  }
-  
-  .timer-overlay {
-    position: absolute;
-    top: 20%;
-    left: 0;
-    right: 0;
-    z-index: 10;
+  /* Clean layout structure */
+  .timer-section {
+    background: linear-gradient(to bottom, transparent, #000000);
+    padding: 2rem 0;
+    min-height: 25vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
-    background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
   
   .countdown-timer {
@@ -68,11 +38,40 @@
     opacity: 0.8;
   }
   
+  .hero-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: #000000;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .hero-background {
+    width: 100%;
+    margin-top: -17%;
+    margin-bottom: -17%;
+  }
+  
+  .hero-bg-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(2);
+    transform-origin: center center;
+  }
+  
+  .featured-products {
+    position: relative;
+    z-index: 1;
+    margin-top: 3rem;
+  }
+  
   /* Mobile optimizations */
   @media (max-width: 768px) {
     .timer-section {
-      padding: 1.5rem 0 0 0;
+      padding: 1.5rem 0;
       margin-top: 4rem;
+      min-height: 20vh;
     }
     
     .countdown-timer {
@@ -92,18 +91,20 @@
     
     .hero-section {
       margin-top: -2rem;
-      overflow: visible;
+      height: 60vh;
     }
     
     .hero-background {
       margin-top: 0;
       margin-bottom: 0;
+      height: 100%;
     }
     
     .hero-bg-image {
-      transform: none;
-      width: 100%;
-      height: auto;
+      transform: scale(1.2);
+      transform-origin: top center;
+      height: 100%;
+      object-fit: cover;
     }
     
     .featured-products {
@@ -113,8 +114,9 @@
   
   @media (max-width: 480px) {
     .timer-section {
-      padding: 1rem 0 0 0;
+      padding: 1rem 0;
       margin-top: 5rem;
+      min-height: 15vh;
     }
     
     .countdown-timer {
@@ -130,144 +132,36 @@
     }
     
     .hero-section {
-      margin-top: -6rem;
-      overflow: hidden;
-      height: 400px;
-      min-height: 400px;
-      max-height: 400px;
-    }
-    
-    .hero-bg-image {
-      transform: none;
-      height: 400px;
-      min-height: 400px;
-      max-height: 400px;
-      width: 120%;
-      margin-left: -10%;
-      object-position: top center;
-    }
-    
-    .hero-background {
-      height: 400px;
-      min-height: 400px;
-      max-height: 400px;
-    }
-    
-    .featured-products {
-      margin-top: 1.5rem;
-    }
-  }
-  
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-  }
-  
-  .hero-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(2);
-    transform-origin: center center;
-  }
-  
-  /* Mobile combined section overrides */
-  @media (max-width: 768px) {
-    .combined-section {
-      height: 100vh;
-      margin-top: 0;
-      width: 100%;
-      margin-left: 0;
-    }
-    
-    .timer-overlay {
-      top: 10%;
-    }
-    
-    .hero-bg-image {
-      transform: scale(1.2);
-      transform-origin: top center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .combined-section {
-      height: 100vh;
-      margin-top: 0;
-      width: 100%;
-      margin-left: 0;
-    }
-    
-    .timer-overlay {
-      top: 8%;
-    }
-    
-    .countdown-timer {
-      gap: 0.75rem;
-    }
-    
-    .timer-number {
-      font-size: 1.5rem;
-    }
-    
-    .timer-label {
-      font-size: 0.7rem;
+      margin-top: -3rem;
+      height: 65vh;
     }
   }
 </style>
 
-<script>
-  // Lock the viewport height to prevent mobile address bar issues
-  function setVH() {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  
-  setVH();
-  window.addEventListener('resize', setVH);
-  
-  // Prevent any resizing during scroll
-  let ticking = false;
-  function preventResize() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        setVH();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }
-  
-  window.addEventListener('scroll', preventResize);
-</script>
-
-<!-- Combined Timer + Hero Section -->
-<section class="combined-section">
-  <div class="timer-overlay">
-    <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
-      <div class="timer-unit">
-        <span class="timer-number" id="days">00</span>
-        <span class="timer-label">Days</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="hours">00</span>
-        <span class="timer-label">Hours</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="minutes">00</span>
-        <span class="timer-label">Minutes</span>
-      </div>
-      <div class="timer-unit">
-        <span class="timer-number" id="seconds">00</span>
-        <span class="timer-label">Seconds</span>
-      </div>
+<!-- Timer Section -->
+<section class="timer-section">
+  <div id="countdown-timer" class="countdown-timer" data-launch-date="{{ section.settings.launch_date | default: '2025-07-25' }}">
+    <div class="timer-unit">
+      <span class="timer-number" id="days">00</span>
+      <span class="timer-label">Days</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="hours">00</span>
+      <span class="timer-label">Hours</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="minutes">00</span>
+      <span class="timer-label">Minutes</span>
+    </div>
+    <div class="timer-unit">
+      <span class="timer-number" id="seconds">00</span>
+      <span class="timer-label">Seconds</span>
     </div>
   </div>
-  
+</section>
+
+<!-- Hero Section -->
+<section class="hero-section">
   {% if section.settings.hero_background_image %}
     <div class="hero-background">
       <img 
@@ -372,23 +266,23 @@
       <div class="featured-swiper-wrapper">
         {% assign featured_collection = collections[section.settings.featured_collection] | default: collections.all %}
         {% for product in featured_collection.products limit: section.settings.products_count %}
-          {%- comment %}<locksmith:8bb4>{% endcomment -%}
+          {%- comment %}<locksmith:ac04>{% endcomment -%}
             {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: featured_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
-          {%- comment %}</locksmith:8bb4>{% endcomment -%}
+          {%- comment %}</locksmith:ac04>{% endcomment -%}
           <div class="featured-swiper-slide">
-            <a href="{{ product.url }}" class="product-card mobile-product-card">
+            <a href="{{ product.url }}" class="product-card">
               <div class="product-image">
                 {% if product.featured_image %}
                   <img 
-                    src="{{ product.featured_image | image_url: width: 600 }}" 
+                    src="{{ product.featured_image | image_url: width: 300 }}" 
                     alt="{{ product.featured_image.alt | default: product.title }}"
-                    width="600"
-                    height="600"
+                    width="300"
+                    height="300"
                     loading="lazy"
                   >
                 {% else %}
                   <div class="product-image-placeholder">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                       <circle cx="8.5" cy="8.5" r="1.5"/>
                       <polyline points="21,15 16,10 5,21"/>
@@ -420,28 +314,29 @@
         {% endfor %}
       </div>
       
-      <!-- Navigation for mobile swiper -->
-      {% if featured_collection.products.size > 1 %}
-        <div class="featured-swiper-pagination"></div>
-        
-        <div class="featured-swiper-button-prev">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15,18 9,12 15,6"></polyline>
-          </svg>
-        </div>
-        <div class="featured-swiper-button-next">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9,18 15,12 9,6"></polyline>
-          </svg>
-        </div>
-      {% endif %}
+      <!-- Swiper Navigation -->
+      <div class="featured-swiper-button-prev">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </div>
+      <div class="featured-swiper-button-next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </div>
     </div>
   </div>
   
-  {% if section.settings.view_all_url %}
-    <div class="section-cta">
-      <a href="{{ section.settings.view_all_url }}" class="cta-outline">
-        View All Products
+  <!-- View All CTA -->
+  {% if section.settings.view_all_url != blank %}
+    <div class="view-all-cta">
+      <a href="{{ section.settings.view_all_url }}" class="view-all-button">
+        View All
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12,5 19,12 12,19"></polyline>
+        </svg>
       </a>
     </div>
   {% endif %}
@@ -469,2059 +364,45 @@
   </div>
 </section>
 
-<!-- Email Capture Section -->
-<section class="email-capture full-width">
-  <div class="email-capture-content">
-    <div class="email-text">
-      <h2 class="email-title">
-        {% if section.settings.email_title %}
-          {{ section.settings.email_title }}
-        {% else %}
-          Heed the Call
-        {% endif %}
-      </h2>
-      {% if section.settings.email_description %}
-        <p class="email-description">{{ section.settings.email_description }}</p>
-      {% else %}
-        <p class="email-description">A call only the ravens hear. You're one of them.</p>
-      {% endif %}
-    </div>
-    
-    <div class="email-form">
-      <div class="email-form-box">
-        <form action="{{ routes.account_url }}" method="post" class="newsletter-form">
-          <input type="hidden" name="form_type" value="customer">
-          <input type="hidden" name="utf8" value="✓">
-          
-          <div class="form-group">
-            <input 
-              type="email" 
-              name="customer[email]" 
-              placeholder="Enter your email address"
-              class="email-input"
-              required
-            >
-            <button type="submit" class="email-submit">
-              Subscribe
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-          </div>
-          
-          <p class="email-disclaimer">
-            {% if section.settings.email_disclaimer %}
-              {{ section.settings.email_disclaimer }}
-            {% else %}
-              Be the first to know about new releases and exclusive offers.
-            {% endif %}
-          </p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-{% stylesheet %}
-  /* Prevent horizontal scroll on desktop only */
-  @media (min-width: 1025px) {
-    html, body {
-      overflow-x: hidden !important;
-      max-width: 100% !important;
-    }
-  }
-  
-  /* Atmospheric Red Background */
-  html body::before {
-    content: '' !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: 
-      radial-gradient(ellipse at -15% 50%, rgba(215, 38, 56, 0.025) 0%, transparent 35%),
-      radial-gradient(ellipse at 115% 50%, rgba(215, 38, 56, 0.025) 0%, transparent 35%),
-      linear-gradient(90deg, rgba(215, 38, 56, 0.008) 0%, transparent 25%, transparent 75%, rgba(215, 38, 56, 0.008) 100%) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    opacity: 1 !important;
-    mix-blend-mode: multiply !important;
-    animation: atmosphericShift 120s ease-in-out infinite !important;
-  }
-  
-  /* Additional Red Atmospheric Layers */
-  html body::after {
-    content: '' !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: 
-      radial-gradient(ellipse at -8% 30%, rgba(215, 38, 56, 0.012) 0%, transparent 45%),
-      radial-gradient(ellipse at 108% 70%, rgba(215, 38, 56, 0.012) 0%, transparent 45%),
-      linear-gradient(90deg, rgba(215, 38, 56, 0.005) 0%, transparent 18%, transparent 82%, rgba(215, 38, 56, 0.005) 100%) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    opacity: 1 !important;
-    mix-blend-mode: screen !important;
-    animation: atmosphericShift 150s ease-in-out infinite reverse !important;
-  }
-
-  /* New Viewport Layout */
-  .viewport-container {
-    position: relative;
-    width: 100vw;
-    height: 75vh;
-    display: grid;
-    grid-template-rows: 25vh 50vh;
-    background-color: var(--color-background);
-    overflow: hidden;
-    z-index: 10;
-    margin-left: calc(-50vw + 50%);
-  }
-  
-  .viewport-section {
-    position: relative;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  /* Timer Section */
-  .timer-section {
-    min-height: 25vh;
-    background: linear-gradient(180deg, 
-      var(--color-background) 0%,
-      var(--color-background-ui) 60%,
-      rgba(14, 14, 16, 0.98) 90%,
-      rgba(14, 14, 16, 0.95) 100%);
-    z-index: 10;
-    border-bottom: 1px solid rgba(215, 38, 56, 0.1);
-    order: -1 !important;
-  }
-  
-  .timer-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-  
-  .timer-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-  }
-  
-  .timer-particles .particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: rgba(215, 38, 56, 0.8);
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(215, 38, 56, 0.6);
-  }
-  
-  .timer-particles .particle:nth-child(1) {
-    top: 20%;
-    left: 15%;
-    animation: timerFloat 12s ease-in-out infinite;
-  }
-  
-  .timer-particles .particle:nth-child(2) {
-    top: 60%;
-    left: 80%;
-    animation: timerFloat 15s ease-in-out infinite 2s;
-  }
-  
-  .timer-particles .particle:nth-child(3) {
-    top: 40%;
-    left: 25%;
-    animation: timerFloat 18s ease-in-out infinite 4s;
-  }
-  
-  .timer-particles .particle:nth-child(4) {
-    top: 70%;
-    left: 70%;
-    animation: timerFloat 14s ease-in-out infinite 1s;
-  }
-  
-  .timer-particles .particle:nth-child(5) {
-    top: 30%;
-    left: 90%;
-    animation: timerFloat 16s ease-in-out infinite 3s;
-  }
-  
-  .timer-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    width: 100%;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .timer-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgba(215, 38, 56, 0.8);
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .countdown-timer {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .timer-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 60px;
-  }
-  
-  .timer-number {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--color-foreground);
-    line-height: 1;
-    margin-bottom: 0.25rem;
-    font-family: monospace;
-    text-shadow: 0 0 10px rgba(215, 38, 56, 0.4);
-  }
-  
-  .timer-label {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.7rem;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.6;
-    font-weight: 400;
-  }
-  
-  /* Teaser Section (50% of viewport) */
-  .teaser-section {
-    height: 50vh;
-    width: 100vw;
-    background-color: var(--color-background);
-    position: relative;
-    z-index: 5;
-  }
-  
-  /* Teaser Background Image */
-  .teaser-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-  
-  .teaser-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.9;
-    mix-blend-mode: multiply;
-    filter: brightness(0.8) contrast(1.2);
-  }
-  
-  .teaser-texture {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-  
-  .teaser-noise {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.04) 0.5px, transparent 0.5px),
-      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.03) 0.5px, transparent 0.5px),
-      radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 25px 25px, 35px 35px, 50px 50px;
-    animation: heroTextureShift 60s linear infinite;
-    opacity: 0.6;
-  }
-  
-  .teaser-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, 
-      rgba(255, 255, 255, 0.03) 0%, 
-      rgba(255, 255, 255, 0.01) 40%, 
-      transparent 70%);
-    z-index: 2;
-  }
-  
-  /* Teaser Blend Overlay */
-  .teaser-blend-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    background: linear-gradient(180deg, 
-      transparent 0%, 
-      rgba(14, 14, 16, 0.1) 30%,
-      rgba(14, 14, 16, 0.4) 70%,
-      rgba(14, 14, 16, 0.8) 100%);
-    z-index: 2;
-    pointer-events: none;
-  }
-  
-  .teaser-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-  }
-  
-  .teaser-particles .particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-  }
-  
-  .teaser-particles .particle:nth-child(1) {
-    top: 15%;
-    left: 8%;
-    animation: heroFloat 14s ease-in-out infinite;
-  }
-  
-  .teaser-particles .particle:nth-child(2) {
-    top: 65%;
-    left: 85%;
-    animation: heroFloat 18s ease-in-out infinite 2s;
-  }
-  
-  .teaser-particles .particle:nth-child(3) {
-    top: 85%;
-    left: 15%;
-    animation: heroFloat 22s ease-in-out infinite 4s;
-  }
-  
-  .teaser-particles .particle:nth-child(4) {
-    top: 25%;
-    left: 75%;
-    animation: heroFloat 16s ease-in-out infinite 1s;
-  }
-  
-  .teaser-particles .particle:nth-child(5) {
-    top: 75%;
-    left: 45%;
-    animation: heroFloat 20s ease-in-out infinite 3s;
-  }
-  
-  .teaser-particles .particle:nth-child(6) {
-    top: 40%;
-    left: 92%;
-    animation: heroFloat 15s ease-in-out infinite 5s;
-  }
-  
-  .teaser-particles .particle:nth-child(7) {
-    top: 10%;
-    left: 50%;
-    animation: heroFloat 19s ease-in-out infinite 1.5s;
-  }
-  
-  .teaser-particles .particle:nth-child(8) {
-    top: 55%;
-    left: 25%;
-    animation: heroFloat 17s ease-in-out infinite 6s;
-  }
-  
-  .teaser-particles .particle:nth-child(9) {
-    top: 90%;
-    left: 65%;
-    animation: heroFloat 21s ease-in-out infinite 2.5s;
-  }
-  
-  .teaser-particles .particle:nth-child(10) {
-    top: 35%;
-    left: 5%;
-    animation: heroFloat 13s ease-in-out infinite 7s;
-  }
-  
-  .teaser-content {
-    position: relative;
-    z-index: 4;
-    text-align: center;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
-  
-  /* Teaser Collection Name */
-  .teaser-collection-name {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 700;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-    margin-bottom: 1rem;
-    white-space: nowrap;
-    text-align: center;
-  }
-  
-  .teaser-description {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: var(--color-foreground);
-    opacity: 0.8;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    text-align: center;
-    line-height: 1.6;
-  }
-  
-  /* Teaser CTA */
-  .teaser-cta-button {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1.5rem 3.5rem;
-    background-color: transparent;
-    color: var(--color-foreground);
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    transition: all 0.4s ease;
-    border: 3px solid rgba(215, 38, 56, 0.2);
-    box-shadow: 
-      0 0 0 1px rgba(215, 38, 56, 0.02),
-      0 8px 25px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(215, 38, 56, 0.01),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px);
-  }
-  
-  .teaser-cta-button::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(45deg, 
-      rgba(215, 38, 56, 0.04) 0%,
-      rgba(215, 38, 56, 0.008) 25%,
-      rgba(215, 38, 56, 0.03) 50%,
-      rgba(215, 38, 56, 0.008) 75%,
-      rgba(215, 38, 56, 0.04) 100%);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  .teaser-cta-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, 
-      rgba(215, 38, 56, 0.02) 0%, 
-      rgba(215, 38, 56, 0.008) 40%, 
-      transparent 70%);
-    z-index: -2;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  .teaser-cta-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 
-      0 0 0 1px rgba(215, 38, 56, 0.08),
-      0 15px 40px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(215, 38, 56, 0.05),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-    border-color: rgba(215, 38, 56, 0.4);
-    color: rgba(215, 38, 56, 0.5);
-  }
-  
-  .teaser-cta-button:hover::before {
-    opacity: 1;
-  }
-  
-  .teaser-cta-button:hover::after {
-    opacity: 1;
-  }
-  
-  /* Collection Preview Section (25% of viewport) */
-  .collection-preview-section {
-    height: 25vh;
-    background: linear-gradient(135deg, 
-      var(--color-background-ui) 0%, 
-      var(--color-background-muted) 100%);
-    border-top: 1px solid rgba(215, 38, 56, 0.1);
-    padding: 2rem;
-  }
-  
-  .collection-preview-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .collection-preview-header {
-    margin-bottom: 1rem;
-  }
-  
-  .collection-preview-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 600;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .collection-preview-description {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--color-foreground);
-    opacity: 0.7;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  
-  
-  
-  /* Gothic Frame System */
-  .gothic-frame {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    z-index: 3;
-    opacity: 0;
-    animation: frameReveal 2s ease-out 0.8s forwards;
-  }
-  
-  .gothic-frame-top {
-    margin-bottom: 4rem;
-    margin-top: -1rem;
-  }
-  
-  .gothic-frame-bottom {
-    margin-top: 4rem;
-    margin-bottom: -1rem;
-  }
-  
-  .frame-corner {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    z-index: 3;
-  }
-  
-  .corner-ornament {
-    width: 14px;
-    height: 14px;
-    position: relative !important;
-    z-index: 10 !important;
-    transform: rotate(45deg) !important;
-    transform-style: preserve-3d !important;
-  }
-  
-  .corner-ornament::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: linear-gradient(135deg, rgba(215, 38, 56, 0.8) 0%, rgba(160, 27, 42, 0.7) 100%) !important;
-    border-top: 3px solid rgba(215, 38, 56, 0.6) !important;
-    border-left: 3px solid rgba(215, 38, 56, 0.6) !important;
-    border-right: 3px solid rgba(90, 15, 23, 0.8) !important;
-    border-bottom: 3px solid rgba(90, 15, 23, 0.8) !important;
-    z-index: 1 !important;
-  }
-  
-  .corner-ornament::after {
-    content: '' !important;
-    position: absolute !important;
-    top: -2px !important;
-    left: -2px !important;
-    width: calc(100% + 4px) !important;
-    height: calc(100% + 4px) !important;
-    background: transparent !important;
-    border-top: 2px solid rgba(215, 38, 56, 0.4) !important;
-    border-left: 2px solid rgba(215, 38, 56, 0.4) !important;
-    border-right: 2px solid rgba(61, 10, 16, 0.6) !important;
-    border-bottom: 2px solid rgba(61, 10, 16, 0.6) !important;
-    z-index: -1 !important;
-  }
-  
-  .corner-lines {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    z-index: 1;
-    background: transparent;
-    border: none;
-  }
-  
-  .frame-border {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, 
-      rgba(215, 38, 56, 0.1) 0%, 
-      rgba(215, 38, 56, 0.25) 50%, 
-      rgba(215, 38, 56, 0.1) 100%);
-    position: relative;
-    margin: 0 1rem;
-  }
-  
-  .border-center-ornament {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 4;
-  }
-  
-  .ornament-diamond {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    z-index: 5;
-    transform: rotate(45deg);
-  }
-  
-  .ornament-diamond::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(215, 38, 56, 0.8) 0%, rgba(160, 27, 42, 0.7) 100%);
-    border-top: 2px solid rgba(215, 38, 56, 0.6);
-    border-left: 2px solid rgba(215, 38, 56, 0.6);
-    border-right: 2px solid rgba(90, 15, 23, 0.8);
-    border-bottom: 2px solid rgba(90, 15, 23, 0.8);
-  }
-  
-  .ornament-diamond::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    background: transparent;
-    border-top: 1px solid rgba(215, 38, 56, 0.4);
-    border-left: 1px solid rgba(215, 38, 56, 0.4);
-    border-right: 1px solid rgba(61, 10, 16, 0.6);
-    border-bottom: 1px solid rgba(61, 10, 16, 0.6);
-    z-index: -1;
-  }
-  
-  
-  .ornament-lines {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    z-index: 1;
-  }
-  
-  .ornament-lines span {
-    width: 24px;
-    height: 1px;
-    background: rgba(215, 38, 56, 0.15);
-    display: block;
-  }
-  
-  .ornament-lines span:nth-child(2) {
-    width: 16px;
-    margin: 0 auto;
-  }
-  
-  /* Gothic Frame Animation */
-  .gothic-frame {
-    animation: frameGlow 10s ease-in-out infinite;
-  }
-  
-  @keyframes frameGlow {
-    0%, 100% {
-      opacity: 0.8;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes frameReveal {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  
-  /* Featured Products */
-  /* Section Transition */
-  .section-transition {
-    position: relative;
-    width: 100%;
-    height: 60px;
-    background: linear-gradient(180deg,
-      rgba(14, 14, 16, 1) 0%,
-      rgba(14, 14, 16, 0.95) 20%,
-      rgba(14, 14, 16, 0.85) 40%,
-      rgba(14, 14, 16, 0.7) 60%,
-      rgba(14, 14, 16, 0.5) 80%,
-      rgba(14, 14, 16, 0.3) 100%);
-    z-index: 1;
-  }
-  
-  .featured-products {
-    position: relative;
-    padding: 0 2rem 3rem 2rem;
-    background: transparent;
-    margin-top: -20px;
-    margin-bottom: 2rem;
-    touch-action: pan-y;
-    overflow: visible;
-    z-index: 10;
-  }
-  
-  
-  .section-header {
-    position: relative;
-    text-align: center;
-    margin-bottom: 3rem;
-    z-index: 2;
-  }
-  
-  .section-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 600;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    position: relative;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(215, 38, 56, 0.35) 50%,
-      transparent 100%);
-  }
-  
-  .section-description {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--color-foreground);
-    opacity: 0.7;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  /* Mobile/Desktop Display Control - Scoped to featured products */
-  .featured-products .mobile-only {
-    display: none !important;
-  }
-  
-  .featured-products .desktop-only.products-grid {
-    display: grid !important;
-  }
-  
-  .featured-products .desktop-only {
-    display: block !important;
-  }
-
-  .products-grid {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    z-index: 2;
-  }
-  
-  /* Ensure 4 columns even with fewer products */
-  .products-grid .product-card {
-    width: 100%;
-    max-width: none;
-  }
-  
-  /* Desktop 4-column layout - force override */
-  @media (min-width: 1025px) {
-    .featured-products .products-grid.desktop-only {
-      display: grid !important;
-      grid-template-columns: repeat(4, 1fr) !important;
-      gap: 2rem !important;
-    }
-    
-    .featured-products .products-grid.desktop-only .product-card {
-      width: 100% !important;
-      max-width: none !important;
-    }
-    
-    /* Ensure mobile swiper is completely hidden on desktop */
-    .featured-products .mobile-only {
-      display: none !important;
-    }
-    
-    /* Prevent any horizontal overflow */
-    .featured-products {
-      overflow-x: hidden;
-    }
-  }
-  
-  /* Featured Products Mobile Swiper */
-  .featured-products-swiper {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto 3rem;
-    z-index: 2;
-  }
-  
-  .featured-swiper-container {
-    position: relative;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    padding: 0 3rem;
-    touch-action: pan-y;
-  }
-  
-  .featured-swiper-wrapper {
-    display: flex;
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease;
-  }
-  
-  .featured-swiper-slide {
-    flex: 0 0 100%;
-    width: 100%;
-    height: auto;
-    padding: 0 1rem;
-    box-sizing: border-box;
-  }
-  
-  .mobile-product-card {
-    max-width: 350px;
-    margin: 0 auto;
-    min-height: auto;
-    touch-action: pan-y;
-  }
-  
-  /* Mobile product card specific styling */
-  .mobile-product-card .product-image {
-    aspect-ratio: 3/4;
-    max-height: 420px;
-  }
-  
-  .mobile-product-card .product-info {
-    padding: 1.25rem;
-    min-height: auto;
-  }
-  
-  .mobile-product-card .product-title {
-    font-size: 1.1rem;
-    min-height: auto;
-    margin-bottom: 0.75rem;
-  }
-  
-  .mobile-product-card .product-price {
-    margin-bottom: 0.75rem;
-    min-height: auto;
-  }
-  
-  .mobile-product-card .product-cta {
-    min-height: auto;
-    padding: 0.25rem 0;
-  }
-  
-  /* Featured Swiper Navigation */
-  .featured-swiper-button-prev,
-  .featured-swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--color-foreground);
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(215, 38, 56, 0.1);
-  }
-  
-  .featured-swiper-button-prev {
-    left: 0.5rem;
-  }
-  
-  .featured-swiper-button-next {
-    right: 0.5rem;
-  }
-  
-  .featured-swiper-button-prev:hover,
-  .featured-swiper-button-next:hover {
-    background: rgba(215, 38, 56, 0.8);
-    border-color: rgba(215, 38, 56, 0.3);
-    transform: translateY(-50%) scale(1.1);
-  }
-  
-  /* Featured Swiper Pagination */
-  .featured-swiper-pagination {
-    position: absolute;
-    bottom: -3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.75rem;
-    z-index: 10;
-  }
-  
-  .featured-pagination-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(215, 38, 56, 0.1);
-  }
-  
-  .featured-pagination-dot.active {
-    background: rgba(215, 38, 56, 0.9);
-    border-color: rgba(215, 38, 56, 0.3);
-    transform: scale(1.2);
-  }
-  
-  .featured-pagination-dot:hover {
-    background: rgba(215, 38, 56, 0.7);
-    border-color: rgba(215, 38, 56, 0.2);
-  }
-  
-  .product-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-background-ui);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    box-shadow: 
-      0 8px 25px rgba(0, 0, 0, 0.3),
-      0 4px 10px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(215, 38, 56, 0.02);
-    border: 2px solid rgba(215, 38, 56, 0.05);
-    text-decoration: none;
-    color: inherit;
-    min-height: 520px;
-    touch-action: pan-y;
-  }
-  
-  .product-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, 
-      rgba(215, 38, 56, 0.05) 0%,
-      rgba(215, 38, 56, 0.02) 25%,
-      rgba(215, 38, 56, 0.05) 50%,
-      rgba(215, 38, 56, 0.02) 75%,
-      rgba(215, 38, 56, 0.05) 100%);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .product-card::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, 
-      rgba(0, 0, 0, 0.2) 0%, 
-      rgba(0, 0, 0, 0.1) 40%, 
-      transparent 70%);
-    z-index: -2;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  .product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 
-      0 15px 40px rgba(0, 0, 0, 0.4),
-      0 8px 20px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .product-card:hover::before {
-    opacity: 1;
-  }
-  
-  .product-card:hover::after {
-    opacity: 1;
-  }
-  
-  .product-image {
-    position: relative;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    flex-shrink: 0;
-    max-height: 280px;
-  }
-  
-  .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .product-card:hover .product-image img {
-    transform: scale(1.05);
-  }
-  
-  .product-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, 
-      rgba(215, 38, 56, 0.03) 0%, 
-      rgba(215, 38, 56, 0.01) 100%);
-    color: rgba(215, 38, 56, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .product-card:hover .product-image-placeholder {
-    background: linear-gradient(135deg, 
-      rgba(215, 38, 56, 0.05) 0%, 
-      rgba(215, 38, 56, 0.02) 100%);
-    color: rgba(215, 38, 56, 0.4);
-  }
-  
-  .product-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: var(--color-foreground);
-    color: var(--color-background);
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-  }
-  
-  .product-info {
-    padding: 1.5rem;
-    text-align: center;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: var(--color-background-ui);
-    border-top: 1px solid rgba(215, 38, 56, 0.1);
-  }
-  
-  .product-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--color-foreground);
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    min-height: 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .product-price {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    min-height: 1.8rem;
-  }
-  
-  .current-price {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: rgba(215, 38, 56, 0.9);
-  }
-  
-  .original-price {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--color-foreground);
-    opacity: 0.5;
-    text-decoration: line-through;
-  }
-  
-  .product-cta {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgba(215, 38, 56, 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    transition: all 0.3s ease;
-    opacity: 1;
-    padding: 0.75rem 0 1.5rem 0;
-    pointer-events: none;
-    min-height: 3rem;
-  }
-  
-  .cta-text {
-    position: relative;
-    z-index: 1;
-  }
-  
-  .cta-underline {
-    position: absolute;
-    bottom: 0.3rem;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, 
-      rgba(215, 38, 56, 0.8) 0%, 
-      rgba(215, 38, 56, 0.4) 100%);
-    transition: width 0.4s ease;
-  }
-  
-  .product-card:hover .product-cta {
-    opacity: 1;
-  }
-  
-  .product-card:hover .cta-underline {
-    width: 100%;
-  }
-  
-  .section-cta {
-    text-align: center;
-  }
-  
-  .cta-outline {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: transparent;
-    color: var(--color-foreground);
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  
-  .cta-outline:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-  
-  /* Email Capture */
-  .email-capture {
-    position: relative;
-    padding: 5rem 2rem;
-    background: transparent;
-    z-index: 10;
-  }
-  
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 50%);
-    z-index: 1;
-    pointer-events: none;
-  }
-  
-  
-  .email-capture-content {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    z-index: 2;
-  }
-  
-  .email-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(2rem, 4vw, 2.5rem);
-    font-weight: 600;
-    color: var(--color-foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
-  }
-  
-  .email-description {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--color-foreground);
-    opacity: 0.7;
-    margin-bottom: 2.5rem;
-    margin-top: 0;
-    line-height: 1.6;
-  }
-  
-  .email-form-box {
-    position: relative;
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: var(--color-background-ui);
-    border: 2px solid rgba(215, 38, 56, 0.08);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 4px 16px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(215, 38, 56, 0.03),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-  }
-  
-  .email-form-box::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, 
-      rgba(215, 38, 56, 0.06) 0%,
-      rgba(215, 38, 56, 0.02) 25%,
-      rgba(215, 38, 56, 0.04) 50%,
-      rgba(215, 38, 56, 0.02) 75%,
-      rgba(215, 38, 56, 0.06) 100%);
-    border-radius: 14px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  .email-form-box:hover::before {
-    opacity: 1;
-  }
-  
-  .newsletter-form {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .form-group {
-    display: flex;
-    gap: 0;
-    margin-bottom: 1rem;
-    border-radius: 50px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .email-input {
-    flex: 1;
-    padding: 1rem 1.5rem;
-    background-color: var(--color-background);
-    border: 2px solid rgba(215, 38, 56, 0.06);
-    border-right: none;
-    color: var(--color-foreground);
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    outline: none;
-    border-radius: 50px 0 0 50px;
-  }
-  
-  .email-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .email-input:focus {
-    border-color: rgba(215, 38, 56, 0.15);
-    box-shadow: 0 0 0 2px rgba(215, 38, 56, 0.05);
-  }
-  
-  .email-submit {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    background-color: rgba(215, 38, 56, 0.8);
-    color: var(--color-foreground);
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    border: none;
-    border-radius: 0 50px 50px 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .email-submit:hover {
-    background-color: rgba(215, 38, 56, 1);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(215, 38, 56, 0.3);
-  }
-  
-  .email-disclaimer {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--color-foreground);
-    opacity: 0.5;
-    line-height: 1.4;
-  }
-  
-  /* Tablet and Mobile Responsive Design */
-  @media (max-width: 1024px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-  }
-  
-  /* Mobile Responsive Design */
-  @media (max-width: 768px) {
-    .gothic-frame {
-      padding: 0 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .gothic-frame-top {
-      margin-bottom: 2rem;
-    }
-    
-    .gothic-frame-bottom {
-      margin-top: 2rem;
-    }
-    
-    .frame-corner {
-      width: 30px;
-      height: 30px;
-    }
-    
-    .corner-lines {
-      width: 20px;
-      height: 20px;
-    }
-    
-    .featured-products {
-      padding: 0 1rem 2rem 1rem;
-    }
-    
-    .featured-products .desktop-only {
-      display: none !important;
-    }
-    
-    .featured-products .desktop-only.products-grid {
-      display: none !important;
-    }
-    
-    .featured-products .mobile-only {
-      display: block !important;
-    }
-    
-    .featured-swiper-container {
-      padding: 0 2.5rem;
-    }
-    
-    .featured-swiper-button-prev,
-    .featured-swiper-button-next {
-      width: 40px;
-      height: 40px;
-    }
-    
-    .featured-swiper-button-prev {
-      left: 0.25rem;
-    }
-    
-    .featured-swiper-button-next {
-      right: 0.25rem;
-    }
-    
-  }
-  
-  /* Atmospheric Animation */
-  @keyframes atmosphericShift {
-    0%, 100% {
-      transform: translateX(0) translateY(0) scale(1);
-      opacity: 1;
-    }
-    25% {
-      transform: translateX(10px) translateY(-5px) scale(1.02);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateX(-5px) translateY(10px) scale(0.98);
-      opacity: 1.1;
-    }
-    75% {
-      transform: translateX(-8px) translateY(-3px) scale(1.01);
-      opacity: 0.9;
-    }
-  }
-  
-  /* Animations */
-  @keyframes heroTextureShift {
-    0% {
-      background-position: 0px 0px, 0px 0px, 0px 0px;
-    }
-    100% {
-      background-position: 25px 25px, -35px 35px, 50px -50px;
-    }
-  }
-  
-  @keyframes heroFloat {
-    0%, 100% {
-      transform: translateY(0px) translateX(0px);
-      opacity: 0.4;
-    }
-    25% {
-      transform: translateY(-15px) translateX(8px);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(-30px) translateX(-8px);
-      opacity: 0.6;
-    }
-    75% {
-      transform: translateY(-15px) translateX(12px);
-      opacity: 0.9;
-    }
-  }
-  
-  @keyframes timerFloat {
-    0%, 100% {
-      transform: translateY(0px) translateX(0px);
-      opacity: 0.6;
-    }
-    25% {
-      transform: translateY(-8px) translateX(4px);
-      opacity: 1;
-    }
-    50% {
-      transform: translateY(-16px) translateX(-4px);
-      opacity: 0.8;
-    }
-    75% {
-      transform: translateY(-8px) translateX(6px);
-      opacity: 0.9;
-    }
-  }
-  
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .viewport-container {
-      height: 100vh;
-    }
-    
-    .timer-section {
-      height: 25vh;
-      padding: 1rem;
-    }
-    
-    .timer-title {
-      font-size: 0.8rem;
-      margin-bottom: 0.75rem;
-    }
-    
-    .countdown-timer {
-      gap: 1rem;
-    }
-    
-    .timer-number {
-      font-size: 1.5rem;
-    }
-    
-    .timer-unit {
-      min-width: 50px;
-    }
-    
-    .timer-label {
-      font-size: 0.65rem;
-    }
-    
-    .teaser-section {
-      height: 50vh;
-    }
-    
-    .teaser-collection-name {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      margin-bottom: 0.75rem;
-    }
-    
-    .teaser-description {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    
-    .teaser-cta-button {
-      padding: 1.2rem 2.5rem;
-      font-size: 0.95rem;
-      border-width: 2px;
-    }
-    
-    .collection-preview-section {
-      height: 25vh;
-      padding: 1rem;
-    }
-    
-    .collection-preview-title {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-    }
-    
-    .collection-preview-description {
-      font-size: 0.9rem;
-    }
-    
-    .gothic-frame {
-      padding: 0 1rem;
-    }
-    
-    .frame-corner {
-      width: 30px;
-      height: 30px;
-    }
-    
-    .corner-lines {
-      width: 20px;
-      height: 20px;
-    }
-    
-    .corner-ornament {
-      width: 6px;
-      height: 6px;
-    }
-    
-    .ornament-lines span {
-      width: 18px;
-    }
-    
-    .ornament-lines span:nth-child(2) {
-      width: 12px;
-    }
-  }
-    
-    .products-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    
-    .form-group {
-      flex-direction: column;
-      border-radius: 8px;
-    }
-    
-    .email-input {
-      border-radius: 8px 8px 0 0;
-      border-right: 2px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .email-submit {
-      border-radius: 0 0 8px 8px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .timer-section {
-      padding: 0.75rem;
-    }
-    
-    .timer-title {
-      font-size: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .countdown-timer {
-      gap: 0.75rem;
-    }
-    
-    .timer-number {
-      font-size: 1.25rem;
-    }
-    
-    .timer-unit {
-      min-width: 45px;
-    }
-    
-    .timer-label {
-      font-size: 0.6rem;
-    }
-    
-    .teaser-content {
-      padding: 1rem;
-    }
-    
-    .teaser-collection-name {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 0.5rem;
-    }
-    
-    .teaser-description {
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    
-    .teaser-cta-button {
-      padding: 1rem 2rem;
-      font-size: 0.9rem;
-      gap: 0.5rem;
-      border-width: 2px;
-      letter-spacing: 0.15em;
-    }
-    
-    .collection-preview-section {
-      padding: 0.75rem;
-    }
-    
-    .collection-preview-title {
-      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-    }
-    
-    .collection-preview-description {
-      font-size: 0.8rem;
-    }
-    
-    .featured-products {
-      padding: 4rem 1rem;
-    }
-    
-    .featured-swiper-container {
-      padding: 0 2rem;
-    }
-    
-    .featured-swiper-button-prev,
-    .featured-swiper-button-next {
-      width: 36px;
-      height: 36px;
-    }
-    
-    .featured-swiper-button-prev {
-      left: 0;
-    }
-    
-    .featured-swiper-button-next {
-      right: 0;
-    }
-    
-    .featured-pagination-dot {
-      width: 8px;
-      height: 8px;
-    }
-    
-    /* Ensure mobile swiper shows on small screens */
-    .featured-products .mobile-only {
-      display: block !important;
-    }
-    
-    /* Mobile product card improvements */
-    .mobile-product-card {
-      max-width: 320px;
-    }
-    
-    .mobile-product-card .product-image {
-      aspect-ratio: 3/5;
-      max-height: 350px;
-    }
-    
-    .mobile-product-card .product-info {
-      padding: 1rem;
-    }
-    
-    .mobile-product-card .product-title {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .mobile-product-card .product-price {
-      margin-bottom: 0.5rem;
-    }
-    
-    .mobile-product-card .current-price {
-      font-size: 1.1rem;
-    }
-    
-    .email-capture {
-      padding: 4rem 1rem;
-    }
-    
-    .products-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-{% endstylesheet %}
-
-<!-- JavaScript for Featured Products Swiper -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Featured Products Mobile Swiper Functionality
-  const featuredSwiperContainer = document.querySelector('.featured-swiper-container');
-  if (featuredSwiperContainer) {
-    let currentFeaturedSlide = 0;
-    const featuredSlides = document.querySelectorAll('.featured-swiper-slide');
-    const totalFeaturedSlides = featuredSlides.length;
-    const featuredSwiperWrapper = document.querySelector('.featured-swiper-wrapper');
-    const featuredPagination = document.querySelector('.featured-swiper-pagination');
-    const featuredPrevBtn = document.querySelector('.featured-swiper-button-prev');
-    const featuredNextBtn = document.querySelector('.featured-swiper-button-next');
-    
-    // Create pagination dots for featured products
-    if (featuredPagination && totalFeaturedSlides > 1) {
-      for (let i = 0; i < totalFeaturedSlides; i++) {
-        const dot = document.createElement('span');
-        dot.classList.add('featured-pagination-dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToFeaturedSlide(i));
-        featuredPagination.appendChild(dot);
-      }
-    }
-    
-    // Update featured slide position
-    function updateFeaturedSlide() {
-      if (featuredSwiperWrapper) {
-        featuredSwiperWrapper.style.transform = `translateX(-${currentFeaturedSlide * 100}%)`;
-        
-        // Update pagination dots
-        document.querySelectorAll('.featured-pagination-dot').forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentFeaturedSlide);
-        });
-      }
-    }
-    
-    // Go to specific featured slide
-    function goToFeaturedSlide(index) {
-      currentFeaturedSlide = Math.max(0, Math.min(index, totalFeaturedSlides - 1));
-      updateFeaturedSlide();
-    }
-    
-    // Previous featured slide
-    function prevFeaturedSlide() {
-      if (currentFeaturedSlide > 0) {
-        currentFeaturedSlide = currentFeaturedSlide - 1;
-      } else {
-        currentFeaturedSlide = totalFeaturedSlides - 1;
-      }
-      updateFeaturedSlide();
-    }
-    
-    // Next featured slide
-    function nextFeaturedSlide() {
-      if (currentFeaturedSlide < totalFeaturedSlides - 1) {
-        currentFeaturedSlide = currentFeaturedSlide + 1;
-      } else {
-        currentFeaturedSlide = 0;
-      }
-      updateFeaturedSlide();
-    }
-    
-    // Button event listeners
-    if (featuredPrevBtn) featuredPrevBtn.addEventListener('click', prevFeaturedSlide);
-    if (featuredNextBtn) featuredNextBtn.addEventListener('click', nextFeaturedSlide);
-    
-    // Touch/swipe functionality for featured products
-    let featuredStartX = 0;
-    let featuredCurrentX = 0;
-    let featuredIsDragging = false;
-    let featuredHasSwiped = false;
-    
-    featuredSwiperContainer.addEventListener('touchstart', (e) => {
-      featuredStartX = e.touches[0].clientX;
-      featuredCurrentX = featuredStartX;
-      featuredIsDragging = true;
-      featuredHasSwiped = false;
-    });
-    
-    featuredSwiperContainer.addEventListener('touchmove', (e) => {
-      if (!featuredIsDragging) return;
-      e.preventDefault();
-      featuredCurrentX = e.touches[0].clientX;
-    });
-    
-    featuredSwiperContainer.addEventListener('touchend', (e) => {
-      if (!featuredIsDragging || featuredHasSwiped) {
-        featuredIsDragging = false;
-        return;
-      }
-      
-      const diff = featuredStartX - featuredCurrentX;
-      const threshold = 50; // Minimum swipe distance
-      
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0) {
-          // Swiped left - go to next slide
-          nextFeaturedSlide();
-        } else {
-          // Swiped right - go to previous slide
-          prevFeaturedSlide();
-        }
-        featuredHasSwiped = true;
-      }
-      
-      featuredIsDragging = false;
-    });
-    
-    // Mouse drag functionality for desktop testing
-    featuredSwiperContainer.addEventListener('mousedown', (e) => {
-      featuredStartX = e.clientX;
-      featuredCurrentX = featuredStartX;
-      featuredIsDragging = true;
-      featuredHasSwiped = false;
-      e.preventDefault();
-    });
-    
-    featuredSwiperContainer.addEventListener('mousemove', (e) => {
-      if (!featuredIsDragging) return;
-      e.preventDefault();
-      featuredCurrentX = e.clientX;
-    });
-    
-    featuredSwiperContainer.addEventListener('mouseup', () => {
-      if (!featuredIsDragging || featuredHasSwiped) {
-        featuredIsDragging = false;
-        return;
-      }
-      
-      const diff = featuredStartX - featuredCurrentX;
-      const threshold = 50;
-      
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0) {
-          // Dragged left - go to next slide
-          nextFeaturedSlide();
-        } else {
-          // Dragged right - go to previous slide
-          prevFeaturedSlide();
-        }
-        featuredHasSwiped = true;
-      }
-      
-      featuredIsDragging = false;
-    });
-  }
-  
-  // Countdown Timer Functionality
-  const countdownTimer = document.getElementById('countdown-timer');
-  
-  if (countdownTimer) {
-    const launchDateStr = countdownTimer.getAttribute('data-launch-date');
-    const launchDate = new Date(launchDateStr + 'T23:59:59').getTime();
-    
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-      
-      if (distance < 0) {
-        // Timer expired
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
-        return;
-      }
-      
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      document.getElementById('days').textContent = days.toString().padStart(2, '0');
-      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    }
-    
-    // Initial update
-    updateCountdown();
-    
-    // Update every second
-    setInterval(updateCountdown, 1000);
-  }
-});
-</script>
-
 {% schema %}
 {
   "name": "Hello World",
   "settings": [
     {
-      "type": "header",
-      "content": "Hero Section"
-    },
-    {
       "type": "text",
       "id": "collection_name",
       "label": "Collection Name",
-      "default": "Saints & Sinners",
-      "info": "Collection name displayed in teaser section"
-    },
-    {
-      "type": "header",
-      "content": "Timer Section"
+      "default": "Saints & Sinners"
     },
     {
       "type": "text",
       "id": "timer_title",
       "label": "Timer Title",
-      "default": "NEXT DROP",
-      "info": "Title displayed above countdown timer"
+      "default": "NEXT DROP"
     },
     {
       "type": "text",
       "id": "launch_date",
-      "label": "Launch Date (YYYY-MM-DD)",
+      "label": "Launch Date",
       "default": "2025-07-25",
-      "info": "Format: YYYY-MM-DD (e.g., 2025-07-25)"
+      "info": "Format: YYYY-MM-DD"
     },
     {
       "type": "checkbox",
       "id": "show_timer",
-      "label": "Show Countdown Timer",
+      "label": "Show Timer",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "Teaser Section"
     },
     {
       "type": "textarea",
       "id": "teaser_description",
       "label": "Teaser Description",
-      "default": "Embrace the darkness. Join the legacy.",
-      "info": "Description text displayed in teaser section"
+      "default": "Embrace the darkness. Join the legacy."
     },
     {
       "type": "image_picker",
       "id": "hero_background_image",
-      "label": "Hero Background Image",
-      "info": "Background image for the teaser section (50% of viewport)"
+      "label": "Hero Background Image"
     },
     {
       "type": "text",
@@ -2537,17 +418,12 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       "type": "text",
       "id": "secondary_cta_text",
-      "label": "Secondary CTA Text",
-      "default": "Learn More"
+      "label": "Secondary CTA Text"
     },
     {
       "type": "url",
       "id": "secondary_cta_url",
       "label": "Secondary CTA URL"
-    },
-    {
-      "type": "header",
-      "content": "Featured Products"
     },
     {
       "type": "text",
@@ -2558,8 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       "type": "textarea",
       "id": "featured_description",
-      "label": "Featured Section Description",
-      "default": "Discover our most coveted pieces, carefully curated for the discerning gothic aesthetic."
+      "label": "Featured Section Description"
     },
     {
       "type": "collection",
@@ -2569,44 +444,34 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       "type": "range",
       "id": "products_count",
-      "min": 2,
-      "max": 8,
-      "step": 1,
       "label": "Number of Products",
+      "min": 1,
+      "max": 12,
+      "step": 1,
       "default": 4
     },
     {
       "type": "url",
       "id": "view_all_url",
-      "label": "View All Products URL"
-    },
-    {
-      "type": "header",
-      "content": "Email Capture"
+      "label": "View All URL"
     },
     {
       "type": "text",
       "id": "email_title",
       "label": "Email Section Title",
-      "default": "Join the Inner Circle"
+      "default": "Heed the Call"
     },
     {
       "type": "textarea",
       "id": "email_description",
       "label": "Email Section Description",
-      "default": "Be the first to know about new releases, exclusive offers, and behind-the-scenes content."
+      "default": "A call only the ravens hear. You're one of them."
     },
     {
       "type": "text",
       "id": "email_disclaimer",
       "label": "Email Disclaimer",
       "default": "Be the first to know about new releases and exclusive offers."
-    }
-  ],
-  "presets": [
-    {
-      "name": "Homepage",
-      "category": "Main"
     }
   ]
 }
