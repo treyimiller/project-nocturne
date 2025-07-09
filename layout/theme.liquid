@@ -22,6 +22,61 @@
 
     {{ content_for_header }}
     
+    {% comment %} Critical preloader styles to prevent flash {% endcomment %}
+    <style>
+      body { background: #0E0E10; }
+      #preloader, #mobile-preloader {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        z-index: 9999 !important;
+        background: #0E0E10 !important;
+      }
+      .preloader-image {
+        width: 100vw !important;
+        height: 100vh !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+      }
+      .preloader-text {
+        position: absolute !important;
+        bottom: 10% !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        font-family: 'Oswald', sans-serif !important;
+        font-size: clamp(2rem, 5vw, 4rem) !important;
+        font-weight: 700 !important;
+        color: rgba(139, 30, 43, 1) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.2em !important;
+        text-shadow: 0 0 10px rgba(139, 30, 43, 0.8) !important;
+        z-index: 4 !important;
+      }
+      .mobile-stacked {
+        left: 32% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+      }
+      .preloader-text-line {
+        line-height: 0.8 !important;
+        margin: 0 !important;
+      }
+      @media (max-width: 768px) {
+        #preloader { display: none !important; }
+        #mobile-preloader { display: flex !important; }
+      }
+      @media (min-width: 769px) {
+        #mobile-preloader { display: none !important; }
+        #preloader { display: flex !important; }
+      }
+    </style>
   </head>
 
   <body>
