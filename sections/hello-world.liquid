@@ -1,4 +1,75 @@
+{% if section.settings.enable_preloader and section.settings.preloader_image %}
+  <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
+    <div class="preloader-content">
+      <img 
+        src="{{ section.settings.preloader_image | image_url: width: section.settings.preloader_size }}" 
+        alt="Loading..." 
+        class="preloader-image"
+        width="{{ section.settings.preloader_size }}"
+        height="{{ section.settings.preloader_size }}"
+      >
+    </div>
+  </div>
+{% endif %}
+
+{% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
+  <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
+    <div class="preloader-content">
+      <img 
+        src="{{ section.settings.mobile_preloader_image | image_url: width: section.settings.mobile_preloader_size }}" 
+        alt="Loading..." 
+        class="preloader-image"
+        width="{{ section.settings.mobile_preloader_size }}"
+        height="{{ section.settings.mobile_preloader_size }}"
+      >
+    </div>
+  </div>
+{% endif %}
+
 <style>
+  /* Preloader styles */
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+  }
+
+  .preloader-content {
+    text-align: center;
+  }
+
+  .preloader-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Desktop preloader - hidden on mobile */
+  .desktop-preloader {
+    display: flex;
+  }
+
+  /* Mobile preloader - hidden on desktop */
+  .mobile-preloader {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-preloader {
+      display: none;
+    }
+    
+    .mobile-preloader {
+      display: flex;
+    }
+  }
+
   /* Lock viewport height on mobile */
   :root {
     --vh: 1vh;
@@ -372,7 +443,36 @@
   }
   
   window.addEventListener('scroll', preventResize);
+  
+  // Preloader function
+  document.addEventListener('DOMContentLoaded', function() {
+    const desktopPreloader = document.getElementById('preloader');
+    const mobilePreloader = document.getElementById('mobile-preloader');
+    const content = document.querySelector('.home-content');
+    
+    // Determine which preloader to use based on screen size
+    const isMobile = window.innerWidth <= 768;
+    const activePreloader = isMobile ? mobilePreloader : desktopPreloader;
+    
+    if (activePreloader && content) {
+      // Hide preloader and show content after a delay
+      setTimeout(function() {
+        activePreloader.style.opacity = '0';
+        setTimeout(function() {
+          activePreloader.style.display = 'none';
+          content.style.display = 'block';
+          content.style.opacity = '0';
+          setTimeout(function() {
+            content.style.opacity = '1';
+          }, 50);
+        }, 500);
+      }, 1500);
+    }
+  });
 </script>
+
+<!-- Main Content Wrapper -->
+<div class="home-content" {% if (section.settings.enable_preloader and section.settings.preloader_image) or (section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image) %}style="display: none;"{% endif %}>
 
 <!-- Hero Timer Section -->
 <section class="hero-timer-section">
@@ -2675,6 +2775,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+</div> <!-- End home-content wrapper -->
+
 {% schema %}
 {
   "name": "Hello World",
@@ -2809,6 +2911,60 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "email_disclaimer",
       "label": "Email Disclaimer",
       "default": "Be the first to know about new releases and exclusive offers."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_preloader",
+      "label": "Enable Preloader",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "preloader_image",
+      "label": "Preloader Image"
+    },
+    {
+      "type": "range",
+      "id": "preloader_size",
+      "label": "Preloader Image Size",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "color",
+      "id": "preloader_background",
+      "label": "Preloader Background Color",
+      "default": "#0E0E10"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_preloader",
+      "label": "Enable Mobile Preloader",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_preloader_image",
+      "label": "Mobile Preloader Image"
+    },
+    {
+      "type": "range",
+      "id": "mobile_preloader_size",
+      "label": "Mobile Preloader Image Size",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "color",
+      "id": "mobile_preloader_background",
+      "label": "Mobile Preloader Background Color",
+      "default": "#0E0E10"
     }
   ],
   "presets": [
