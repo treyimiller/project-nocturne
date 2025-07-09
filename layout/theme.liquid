@@ -16,40 +16,6 @@
     <meta name="msapplication-navbutton-color" content="#0E0E10">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    {% # Prevent default loading flashes %}
-    <style>
-      /* Ensure preloader appears immediately */
-      .preloader {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        z-index: 9999 !important;
-        background-color: #0E0E10 !important;
-      }
-      
-      /* Hide any potential default loaders */
-      .shopify-loader,
-      .loading-spinner,
-      .default-loader {
-        display: none !important;
-      }
-      
-      /* Hide main content during preloader */
-      body.preloader-loading .main-content,
-      body.preloader-loading main,
-      body.preloader-loading .home-content {
-        visibility: hidden !important;
-      }
-      
-      /* Show preloader above everything */
-      body.preloader-loading .preloader {
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-    </style>
-    
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
@@ -62,7 +28,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="preloader-loading">
+  <body>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
