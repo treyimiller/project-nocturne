@@ -547,35 +547,28 @@
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
-    const content = document.querySelector('.home-content');
+    
+    // Show all content when preloader loads
+    const allContent = document.querySelectorAll('body > *:not(#preloader):not(#mobile-preloader)');
+    allContent.forEach(el => el.style.display = 'block');
     
     // Determine which preloader to use based on screen size
     const isMobile = window.innerWidth <= 768;
     const activePreloader = isMobile ? mobilePreloader : desktopPreloader;
     
-    if (activePreloader && content) {
-      // Ensure content is ready to be shown
-      content.style.transition = 'opacity 0.5s ease-in';
-      
-      // Hide preloader and show content after a delay
+    if (activePreloader) {
+      // Hide preloader after delay
       setTimeout(function() {
-        // Start showing content while preloader fades
-        content.style.display = 'block';
-        content.style.opacity = '0';
-        
-        // Fade out preloader
         activePreloader.style.opacity = '0';
+        activePreloader.style.transition = 'opacity 0.5s ease-out';
         
-        // After preloader fade completes, remove it and fade in content
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          content.style.opacity = '1';
         }, 500);
       }, 1750);
-    } else if (content) {
-      // If no preloader is active, just show content immediately
-      content.style.display = 'block';
-      content.style.opacity = '1';
+    } else {
+      // If no preloader, just show content immediately
+      allContent.forEach(el => el.style.display = 'block');
     }
   });
 </script>
