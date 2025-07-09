@@ -8,10 +8,10 @@
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1';"
+        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1';"
       >
     </div>
-    <div class="preloader-text">STAY BOLD</div>
+    <div class="preloader-text" style="opacity: 0; transition: opacity 0.3s ease-in;" id="desktop-preloader-text">STAY BOLD</div>
   </div>
 {% endif %}
 
@@ -25,10 +25,10 @@
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1';"
+        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1';"
       >
     </div>
-    <div class="preloader-text mobile-stacked">
+    <div class="preloader-text mobile-stacked" style="opacity: 0; transition: opacity 0.3s ease-in;" id="mobile-preloader-text">
       <div class="preloader-text-line">STAY</div>
       <div class="preloader-text-line">BOLD</div>
     </div>
