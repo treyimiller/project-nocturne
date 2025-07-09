@@ -551,8 +551,13 @@
   
   window.addEventListener('scroll', preventResize);
   
-  // Show body immediately when script loads (for home page with preloader)
-  document.body.style.visibility = 'visible';
+  // Hide content behind preloader
+  document.body.style.visibility = 'hidden';
+  
+  // Show body immediately when preloader is ready
+  setTimeout(function() {
+    document.body.style.visibility = 'visible';
+  }, 0);
   
   // Preloader function
   window.addEventListener('load', function() {

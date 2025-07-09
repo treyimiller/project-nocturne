@@ -23,7 +23,7 @@
     {{ content_for_header }}
   </head>
 
-  <body style="visibility: hidden;">
+  <body>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
@@ -31,12 +31,5 @@
     {% sections 'footer-group' %}
     
     {% section 'cart-drawer' %}
-    
-    <script>
-      // Show body immediately, but only if not on home page with preloader
-      if (!document.getElementById('preloader') && !document.getElementById('mobile-preloader')) {
-        document.body.style.visibility = 'visible';
-      }
-    </script>
   </body>
 </html>
