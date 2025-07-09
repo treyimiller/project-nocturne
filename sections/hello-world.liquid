@@ -9,6 +9,7 @@
         height="{{ section.settings.preloader_size }}"
       >
     </div>
+    <div class="preloader-text">STAY BOLD</div>
   </div>
 {% endif %}
 
@@ -23,6 +24,7 @@
         height="{{ section.settings.mobile_preloader_size }}"
       >
     </div>
+    <div class="preloader-text">STAY BOLD</div>
   </div>
 {% endif %}
 
@@ -69,6 +71,43 @@
     height: 100vh;
     object-fit: cover;
     object-position: center center;
+  }
+
+  .preloader-text {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: rgba(215, 38, 56, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-shadow: 
+      0 0 10px rgba(215, 38, 56, 0.8),
+      0 0 20px rgba(215, 38, 56, 0.6),
+      0 0 30px rgba(215, 38, 56, 0.4),
+      0 0 40px rgba(215, 38, 56, 0.2);
+    z-index: 4;
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      text-shadow: 
+        0 0 10px rgba(215, 38, 56, 0.8),
+        0 0 20px rgba(215, 38, 56, 0.6),
+        0 0 30px rgba(215, 38, 56, 0.4),
+        0 0 40px rgba(215, 38, 56, 0.2);
+    }
+    100% {
+      text-shadow: 
+        0 0 15px rgba(215, 38, 56, 1),
+        0 0 25px rgba(215, 38, 56, 0.8),
+        0 0 35px rgba(215, 38, 56, 0.6),
+        0 0 45px rgba(215, 38, 56, 0.4);
+    }
   }
 
   /* Desktop preloader - hidden on mobile */
