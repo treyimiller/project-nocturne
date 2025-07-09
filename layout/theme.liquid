@@ -105,6 +105,18 @@
         #preloader { display: flex !important; }
       }
     </style>
+    
+    <script>
+      // Show body immediately if on home page
+      if (window.location.pathname === '/') {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.classList.add('preloader-ready');
+        });
+      } else {
+        // Show body immediately for other pages
+        document.body.style.visibility = 'visible';
+      }
+    </script>
   </head>
 
   <body>
