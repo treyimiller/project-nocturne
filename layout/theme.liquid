@@ -30,7 +30,17 @@
         padding: 0 !important;
       }
       
-      /* Hide specific content sections, not preloader */
+      /* Hide all content except preloader on home page */
+      body > *:not(script) {
+        visibility: hidden !important;
+      }
+      
+      /* Show only the section containing preloader */
+      [data-section-type="hello-world"] {
+        visibility: visible !important;
+      }
+      
+      /* Hide main content within hello-world section */
       .home-content {
         display: none !important;
       }
