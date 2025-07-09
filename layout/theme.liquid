@@ -52,7 +52,19 @@
         visibility: hidden !important;
       }
       
-      /* Don't hide content - let preloader overlay it */
+      /* Hide only footer during preloader - not main content */
+      .site-footer,
+      footer,
+      [class*="footer"] {
+        display: none;
+      }
+      
+      /* Show footer after preloader completes */
+      body.preloader-finished .site-footer,
+      body.preloader-finished footer,
+      body.preloader-finished [class*="footer"] {
+        display: block;
+      }
       
       /* Prevent body from showing loading states */
       body {

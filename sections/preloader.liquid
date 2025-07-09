@@ -168,7 +168,10 @@
 </style>
 
 <script>
-  // Content is always visible - no need for show/hide logic
+  // Fallback to show footer if preloader fails
+  setTimeout(function() {
+    document.body.classList.add('preloader-finished');
+  }, 3000);
   
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
@@ -186,11 +189,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          // Content is always visible - no need to show it
+          // Show footer after preloader completes
+          document.body.classList.add('preloader-finished');
         }, 500);
       }, 1750);
     } else {
-      // No preloader found, content is already visible
+      // No preloader found, show footer immediately
+      document.body.classList.add('preloader-finished');
     }
   });
 </script>
