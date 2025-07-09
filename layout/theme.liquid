@@ -45,6 +45,15 @@
         visibility: visible !important;
       }
       
+      /* Remove all visibility restrictions when preloader is finished */
+      body.preloader-finished {
+        visibility: visible !important;
+      }
+      
+      body.preloader-finished * {
+        visibility: visible !important;
+      }
+      
       /* Show only preloader elements */
       #preloader, #mobile-preloader {
         position: fixed !important;

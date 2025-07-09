@@ -576,8 +576,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
+          // Ensure everything is fully interactive
+          document.body.classList.add('preloader-finished');
         }, 500);
       }, 1750);
+    } else {
+      // If no preloader, ensure everything is interactive
+      document.body.classList.add('preloader-finished');
     }
   });
 </script>
