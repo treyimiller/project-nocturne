@@ -1,5 +1,5 @@
 {% if section.settings.enable_preloader and section.settings.preloader_image %}
-  <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
+  <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }}; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 9999;">
     <div class="preloader-content">
       <img 
         src="{{ section.settings.preloader_image | image_url: width: section.settings.preloader_size }}" 
@@ -7,14 +7,15 @@
         class="preloader-image"
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
+        style="width: 100vw; height: 100vh; object-fit: cover; object-position: center center;"
       >
     </div>
-    <div class="preloader-text">STAY BOLD</div>
+    <div class="preloader-text" style="position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(139, 30, 43, 0.8), 0 0 20px rgba(139, 30, 43, 0.6), 0 0 30px rgba(139, 30, 43, 0.4), 0 0 40px rgba(139, 30, 43, 0.2); z-index: 4; animation: pulse-glow 2s ease-in-out infinite alternate;">STAY BOLD</div>
   </div>
 {% endif %}
 
 {% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
-  <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
+  <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }}; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 9999;">
     <div class="preloader-content">
       <img 
         src="{{ section.settings.mobile_preloader_image | image_url: width: section.settings.mobile_preloader_size }}" 
@@ -22,11 +23,12 @@
         class="preloader-image"
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
+        style="width: 100vw; height: 100vh; object-fit: cover; object-position: center center;"
       >
     </div>
-    <div class="preloader-text mobile-stacked">
-      <div class="preloader-text-line">STAY</div>
-      <div class="preloader-text-line">BOLD</div>
+    <div class="preloader-text mobile-stacked" style="position: absolute; bottom: 10%; left: 32%; transform: translateX(-50%); font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 0; animation: mobile-pulse-glow 2s ease-in-out infinite alternate;">
+      <div class="preloader-text-line" style="line-height: 0.8; margin: 0; text-shadow: 0 0 5px rgba(139, 30, 43, 0.4), 0 0 10px rgba(139, 30, 43, 0.3), 0 0 15px rgba(139, 30, 43, 0.2);">STAY</div>
+      <div class="preloader-text-line" style="line-height: 0.8; margin: 0; text-shadow: 0 0 5px rgba(139, 30, 43, 0.4), 0 0 10px rgba(139, 30, 43, 0.3), 0 0 15px rgba(139, 30, 43, 0.2);">BOLD</div>
     </div>
   </div>
 {% endif %}

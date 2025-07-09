@@ -5,7 +5,8 @@
       "Bash(rg:*)",
       "Bash(git checkout:*)",
       "Bash(git restore:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
