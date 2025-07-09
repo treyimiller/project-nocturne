@@ -541,6 +541,9 @@
   window.addEventListener('scroll', preventResize);
   
   // Preloader function
+  // Show body immediately after preloader setup
+  document.body.style.opacity = '1';
+  
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
