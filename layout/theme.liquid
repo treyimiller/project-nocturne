@@ -40,14 +40,9 @@
         visibility: hidden !important;
       }
       
-      /* Show body when preloader is ready */
-      body.preloader-ready {
+      /* Show body only when preloader is done */
+      body.preloader-complete {
         visibility: visible !important;
-      }
-      
-      /* Hide page content behind preloader */
-      body.preloader-active > *:not(#preloader):not(#mobile-preloader) {
-        visibility: hidden !important;
       }
       
       /* Show only preloader elements */

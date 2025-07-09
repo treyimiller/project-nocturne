@@ -545,9 +545,6 @@
   
   // Preloader function
   
-  // Show body and mark preloader as active
-  document.body.classList.add('preloader-ready', 'preloader-active');
-  
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
@@ -570,13 +567,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          // Show all page content by removing preloader-active class
-          document.body.classList.remove('preloader-active');
+          // Show all page content by adding preloader-complete class
+          document.body.classList.add('preloader-complete');
         }, 500);
       }, 1750);
     } else {
       // If no preloader, show content immediately
-      document.body.classList.remove('preloader-active');
+      document.body.classList.add('preloader-complete');
     }
   });
 </script>
