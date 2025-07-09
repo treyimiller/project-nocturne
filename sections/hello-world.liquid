@@ -44,8 +44,22 @@
     box-sizing: border-box;
   }
 
+  .preloader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(215, 38, 56, 0.05) 0%, rgba(139, 30, 43, 0.04) 20%, transparent 40%, transparent 60%, rgba(139, 30, 43, 0.04) 80%, rgba(215, 38, 56, 0.05) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .preloader-content {
     text-align: center;
+    position: relative;
+    z-index: 2;
   }
 
   .preloader-image {
@@ -2940,7 +2954,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "preloader_size",
       "label": "Preloader Image Size",
       "min": 50,
-      "max": 400,
+      "max": 800,
       "step": 10,
       "unit": "px",
       "default": 200
@@ -2967,7 +2981,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "mobile_preloader_size",
       "label": "Mobile Preloader Image Size",
       "min": 50,
-      "max": 400,
+      "max": 600,
       "step": 10,
       "unit": "px",
       "default": 150
