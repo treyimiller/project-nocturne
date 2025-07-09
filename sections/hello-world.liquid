@@ -543,6 +543,9 @@
   
   window.addEventListener('scroll', preventResize);
   
+  // Show body immediately when script loads
+  document.body.style.visibility = 'visible';
+  
   // Preloader function
   window.addEventListener('load', function() {
     
