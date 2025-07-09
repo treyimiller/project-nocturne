@@ -472,7 +472,16 @@
 </script>
 
 <!-- Main Content Wrapper -->
-<div class="home-content" {% if (section.settings.enable_preloader and section.settings.preloader_image) or (section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image) %}style="display: none;"{% endif %}>
+{% assign show_desktop_preloader = false %}
+{% assign show_mobile_preloader = false %}
+{% if section.settings.enable_preloader and section.settings.preloader_image %}
+  {% assign show_desktop_preloader = true %}
+{% endif %}
+{% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
+  {% assign show_mobile_preloader = true %}
+{% endif %}
+
+<div class="home-content" {% if show_desktop_preloader or show_mobile_preloader %}style="display: none;"{% endif %}>
 
 <!-- Hero Timer Section -->
 <section class="hero-timer-section">
