@@ -1,4 +1,7 @@
 {% if section.settings.enable_preloader and section.settings.preloader_image %}
+  <style>
+    body { visibility: hidden !important; }
+  </style>
   <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }}; opacity: 1;">
     <div class="preloader-content" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
       <img 
@@ -8,7 +11,7 @@
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
+        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1'); document.body.style.visibility='visible';"
       >
     </div>
     <div class="preloader-text" style="opacity: 0; transition: opacity 0.3s ease-in;" id="desktop-preloader-text">STAY BOLD</div>
@@ -16,6 +19,9 @@
 {% endif %}
 
 {% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
+  <style>
+    body { visibility: hidden !important; }
+  </style>
   <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }}; opacity: 1;">
     <div class="preloader-content" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
       <img 
@@ -25,7 +31,7 @@
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
+        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1'); document.body.style.visibility='visible';"
       >
     </div>
     <div class="preloader-text mobile-stacked" style="opacity: 0; transition: opacity 0.3s ease-in;" id="mobile-preloader-text">
@@ -551,13 +557,6 @@
   
   window.addEventListener('scroll', preventResize);
   
-  // Hide content behind preloader
-  document.body.style.visibility = 'hidden';
-  
-  // Show body immediately when preloader is ready
-  setTimeout(function() {
-    document.body.style.visibility = 'visible';
-  }, 0);
   
   // Preloader function
   window.addEventListener('load', function() {
