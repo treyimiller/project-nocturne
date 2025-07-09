@@ -168,6 +168,13 @@
 </style>
 
 <script>
+  // Fallback for no JavaScript
+  setTimeout(function() {
+    if (document.body.classList.contains('preloader-loading')) {
+      document.body.classList.remove('preloader-loading');
+    }
+  }, 3000);
+  
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
@@ -184,6 +191,7 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
+          document.body.classList.remove('preloader-loading');
         }, 500);
       }, 1750);
     }
