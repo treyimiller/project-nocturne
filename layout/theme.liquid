@@ -22,39 +22,65 @@
 
     {{ content_for_header }}
     
-    {% comment %} Preloader styles in head to prevent flash {% endcomment %}
+    {% comment %} Immediate preloader injection {% endcomment %}
     <style>
-      body { visibility: hidden; }
-      .preloader {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        z-index: 9999 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-sizing: border-box !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+      #immediate-preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #0E0E10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        opacity: 1;
       }
       
-      .preloader-image {
-        width: 100vw !important;
-        height: 100vh !important;
-        object-fit: cover !important;
-        object-position: center center !important;
+      #immediate-preloader img {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center center;
       }
       
-      .preloader-content {
-        text-align: center !important;
-        position: relative !important;
-        z-index: 2 !important;
+      #immediate-preloader .text {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Oswald', sans-serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 700;
+        color: rgba(139, 30, 43, 1);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        text-shadow: 0 0 20px rgba(139, 30, 43, 0.8);
       }
     </style>
+    
+    <script>
+      // Inject preloader immediately
+      // Only inject on home page
+      if (window.location.pathname === '/') {
+        document.write('<div id="immediate-preloader"><img src="{{ "Preloader.png" | asset_url }}" alt="Loading..."><div class="text">STAY BOLD</div></div>');
+      }
+      
+      // Remove after page loads
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const preloader = document.getElementById('immediate-preloader');
+          if (preloader) {
+            preloader.style.transition = 'opacity 0.5s ease-out';
+            preloader.style.opacity = '0';
+            setTimeout(function() {
+              preloader.remove();
+            }, 500);
+          }
+        }, 1750);
+      });
+    </script>
   </head>
 
   <body>
