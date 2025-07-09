@@ -1,34 +1,30 @@
 {% if section.settings.enable_preloader and section.settings.preloader_image %}
-  <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }}; opacity: 1;">
-    <div class="preloader-content" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
+  <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
+    <div class="preloader-content">
       <img 
         src="{{ section.settings.preloader_image | image_url: width: section.settings.preloader_size }}" 
         alt="Loading..." 
         class="preloader-image"
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
-        style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
       >
     </div>
-    <div class="preloader-text" style="opacity: 0; transition: opacity 0.3s ease-in;" id="desktop-preloader-text">STAY BOLD</div>
+    <div class="preloader-text">STAY BOLD</div>
   </div>
 {% endif %}
 
 {% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
-  <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }}; opacity: 1;">
-    <div class="preloader-content" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
+  <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
+    <div class="preloader-content">
       <img 
         src="{{ section.settings.mobile_preloader_image | image_url: width: section.settings.mobile_preloader_size }}" 
         alt="Loading..." 
         class="preloader-image"
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
-        style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
       >
     </div>
-    <div class="preloader-text mobile-stacked" style="opacity: 0; transition: opacity 0.3s ease-in;" id="mobile-preloader-text">
+    <div class="preloader-text mobile-stacked">
       <div class="preloader-text-line">STAY</div>
       <div class="preloader-text-line">BOLD</div>
     </div>
@@ -47,16 +43,12 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    transition: opacity 0.5s ease-out;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    opacity: 1;
   }
 
-  .preloader {
-    --atmosphere-opacity: 0;
-  }
-  
   .preloader::before {
     content: '';
     position: absolute;
@@ -69,8 +61,6 @@
       linear-gradient(to right, rgba(215, 38, 56, 0.08) 0%, rgba(139, 30, 43, 0.04) 25%, rgba(139, 30, 43, 0.02) 50%, rgba(139, 30, 43, 0.04) 75%, rgba(215, 38, 56, 0.08) 100%);
     pointer-events: none;
     z-index: 3;
-    opacity: var(--atmosphere-opacity);
-    transition: opacity 0.3s ease-in;
   }
 
   .preloader-content {
@@ -84,7 +74,6 @@
     height: 100vh;
     object-fit: cover;
     object-position: center center;
-    opacity: 1;
   }
 
   .preloader-text {
@@ -553,25 +542,38 @@
   
   
   // Preloader function
-  window.addEventListener('load', function() {
-    
+  document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
+    const content = document.querySelector('.home-content');
     
     // Determine which preloader to use based on screen size
     const isMobile = window.innerWidth <= 768;
     const activePreloader = isMobile ? mobilePreloader : desktopPreloader;
     
-    if (activePreloader) {
-      // Hide preloader after delay
+    if (activePreloader && content) {
+      // Ensure content is ready to be shown
+      content.style.transition = 'opacity 0.5s ease-in';
+      
+      // Hide preloader and show content after a delay
       setTimeout(function() {
-        activePreloader.style.transition = 'opacity 0.5s ease-out';
+        // Start showing content while preloader fades
+        content.style.display = 'block';
+        content.style.opacity = '0';
+        
+        // Fade out preloader
         activePreloader.style.opacity = '0';
         
+        // After preloader fade completes, remove it and fade in content
         setTimeout(function() {
           activePreloader.style.display = 'none';
+          content.style.opacity = '1';
         }, 500);
       }, 1750);
+    } else if (content) {
+      // If no preloader is active, just show content immediately
+      content.style.display = 'block';
+      content.style.opacity = '1';
     }
   });
 </script>
