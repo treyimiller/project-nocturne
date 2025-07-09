@@ -1,13 +1,14 @@
 {% if section.settings.enable_preloader and section.settings.preloader_image %}
   <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }}; opacity: 1;">
-    <div class="preloader-content">
+    <div class="preloader-content" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
       <img 
         src="{{ section.settings.preloader_image | image_url: width: section.settings.preloader_size }}" 
         alt="Loading..." 
         class="preloader-image"
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
-        style="opacity: 1;"
+        style="opacity: 0; transition: opacity 0.3s ease-in;"
+        onload="this.style.opacity='1';"
       >
     </div>
     <div class="preloader-text">STAY BOLD</div>
@@ -16,14 +17,15 @@
 
 {% if section.settings.enable_mobile_preloader and section.settings.mobile_preloader_image %}
   <div id="mobile-preloader" class="preloader mobile-preloader" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }}; opacity: 1;">
-    <div class="preloader-content">
+    <div class="preloader-content" style="background-color: {{ section.settings.mobile_preloader_background | default: '#0E0E10' }};">
       <img 
         src="{{ section.settings.mobile_preloader_image | image_url: width: section.settings.mobile_preloader_size }}" 
         alt="Loading..." 
         class="preloader-image"
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
-        style="opacity: 1;"
+        style="opacity: 0; transition: opacity 0.3s ease-in;"
+        onload="this.style.opacity='1';"
       >
     </div>
     <div class="preloader-text mobile-stacked">
