@@ -52,28 +52,16 @@
         visibility: hidden !important;
       }
       
-      /* Hide footer during preloader */
-      .site-footer,
-      footer,
-      [class*="footer"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      
-      /* Hide header during preloader */
-      header,
-      .header,
-      [class*="header"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
-      
-      /* Hide main content during preloader */
-      .home-content,
-      .main-content,
-      main {
+      /* Hide content during preloader - use body class for easier override */
+      body.preloader-active .site-footer,
+      body.preloader-active footer,
+      body.preloader-active [class*="footer"],
+      body.preloader-active header,
+      body.preloader-active .header,
+      body.preloader-active [class*="header"],
+      body.preloader-active .home-content,
+      body.preloader-active .main-content,
+      body.preloader-active main {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
@@ -108,12 +96,8 @@
           locksmithSpinner.style.opacity = '0';
         }
         
-        // Hide all content during preloader
-        document.querySelectorAll('.site-footer, footer, [class*="footer"], header, .header, [class*="header"], .home-content, .main-content, main').forEach(function(element) {
-          element.style.display = 'none';
-          element.style.visibility = 'hidden';
-          element.style.opacity = '0';
-        });
+        // Ensure body has preloader-active class
+        document.body.classList.add('preloader-active');
       };
       
       // Run immediately
@@ -128,7 +112,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="preloader-active">
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
