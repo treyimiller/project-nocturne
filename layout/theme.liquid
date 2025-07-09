@@ -24,6 +24,7 @@
     
     {% comment %} Preloader styles in head to prevent flash {% endcomment %}
     <style>
+      body { visibility: hidden; }
       .preloader {
         position: fixed !important;
         top: 0 !important;
@@ -38,6 +39,7 @@
         padding: 0 !important;
         box-sizing: border-box !important;
         opacity: 1 !important;
+        visibility: visible !important;
       }
       
       .preloader-image {
@@ -63,5 +65,14 @@
     {% sections 'footer-group' %}
     
     {% section 'cart-drawer' %}
+    
+    <script>
+      // Fallback to show body if no preloader exists
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!document.getElementById('preloader') && !document.getElementById('mobile-preloader')) {
+          document.body.style.visibility = 'visible';
+        }
+      });
+    </script>
   </body>
 </html>
