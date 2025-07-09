@@ -27,7 +27,7 @@
 
     {{ content_for_header }}
     
-    {% comment %} Disable default loading and set immediate background {% endcomment %}
+    {% comment %} Hide all content immediately until preloader loads {% endcomment %}
     <style>
       html, body { 
         background: #0E0E10 !important; 
@@ -35,12 +35,12 @@
         padding: 0 !important;
       }
       
-      /* Only hide main content, let preloader show naturally */
-      .home-content {
-        display: none !important;
+      /* Hide ALL content on home page */
+      body {
+        visibility: hidden !important;
       }
       
-      /* Ensure preloader elements are visible and cover everything */
+      /* Show only preloader elements */
       #preloader, #mobile-preloader {
         position: fixed !important;
         top: 0 !important;
@@ -52,6 +52,7 @@
         align-items: center !important;
         z-index: 9999 !important;
         background: #0E0E10 !important;
+        visibility: visible !important;
       }
       
       .preloader-image {
