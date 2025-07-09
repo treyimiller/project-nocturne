@@ -8,7 +8,7 @@
         width="{{ section.settings.preloader_size }}"
         height="{{ section.settings.preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1';"
+        onload="this.style.opacity='1'; document.getElementById('desktop-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
       >
     </div>
     <div class="preloader-text" style="opacity: 0; transition: opacity 0.3s ease-in;" id="desktop-preloader-text">STAY BOLD</div>
@@ -25,7 +25,7 @@
         width="{{ section.settings.mobile_preloader_size }}"
         height="{{ section.settings.mobile_preloader_size }}"
         style="opacity: 0; transition: opacity 0.3s ease-in;"
-        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1';"
+        onload="this.style.opacity='1'; document.getElementById('mobile-preloader-text').style.opacity='1'; this.parentElement.parentElement.style.setProperty('--atmosphere-opacity', '1');"
       >
     </div>
     <div class="preloader-text mobile-stacked" style="opacity: 0; transition: opacity 0.3s ease-in;" id="mobile-preloader-text">
@@ -53,6 +53,10 @@
     opacity: 1;
   }
 
+  .preloader {
+    --atmosphere-opacity: 0;
+  }
+  
   .preloader::before {
     content: '';
     position: absolute;
@@ -65,6 +69,8 @@
       linear-gradient(to right, rgba(215, 38, 56, 0.08) 0%, rgba(139, 30, 43, 0.04) 25%, rgba(139, 30, 43, 0.02) 50%, rgba(139, 30, 43, 0.04) 75%, rgba(215, 38, 56, 0.08) 100%);
     pointer-events: none;
     z-index: 3;
+    opacity: var(--atmosphere-opacity);
+    transition: opacity 0.3s ease-in;
   }
 
   .preloader-content {
@@ -567,7 +573,7 @@
         setTimeout(function() {
           activePreloader.style.display = 'none';
         }, 500);
-      }, 2250);
+      }, 1750);
     }
   });
 </script>
