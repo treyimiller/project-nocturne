@@ -544,6 +544,9 @@
   
   
   // Preloader function
+  // Show body immediately when this script loads
+  document.body.classList.add('preloader-ready');
+  
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');

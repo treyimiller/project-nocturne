@@ -30,13 +30,13 @@
         padding: 0 !important;
       }
       
-      /* Hide all content except preloader on home page */
-      body > *:not(script) {
+      /* Hide all content on home page initially */
+      body {
         visibility: hidden !important;
       }
       
-      /* Show only the section containing preloader */
-      [data-section-type="hello-world"] {
+      /* Show body when preloader appears */
+      body.preloader-ready {
         visibility: visible !important;
       }
       
@@ -57,6 +57,7 @@
         align-items: center !important;
         z-index: 9999 !important;
         background: #0E0E10 !important;
+        visibility: visible !important;
       }
       
       .preloader-image {
