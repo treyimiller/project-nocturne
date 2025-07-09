@@ -570,8 +570,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
+          // Show all page content after preloader is completely hidden
+          document.body.style.visibility = 'visible';
         }, 500);
       }, 1750);
+    } else {
+      // If no preloader, show content immediately
+      document.body.style.visibility = 'visible';
     }
   });
 </script>
