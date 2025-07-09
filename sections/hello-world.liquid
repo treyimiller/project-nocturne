@@ -548,6 +548,12 @@
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
+    const immediateOverlay = document.getElementById('immediate-overlay');
+    
+    // Hide the immediate overlay and show our preloader
+    if (immediateOverlay) {
+      immediateOverlay.style.display = 'none';
+    }
     
     // Show home content when preloader loads
     const homeContent = document.querySelector('.home-content');
