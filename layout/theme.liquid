@@ -52,6 +52,33 @@
         visibility: hidden !important;
       }
       
+      /* Hide footer during preloader */
+      .site-footer,
+      footer,
+      [class*="footer"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      
+      /* Hide header during preloader */
+      header,
+      .header,
+      [class*="header"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      
+      /* Hide main content during preloader */
+      .home-content,
+      .main-content,
+      main {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      
       /* Prevent body from showing loading states */
       body {
         visibility: visible !important;
@@ -72,7 +99,7 @@
         });
       });
       
-      // Hide loading elements as soon as possible
+      // Hide loading elements and content as soon as possible
       const hideLoaders = function() {
         const locksmithSpinner = document.getElementById('locksmith-spinner-wrapper');
         if (locksmithSpinner) {
@@ -80,6 +107,13 @@
           locksmithSpinner.style.visibility = 'hidden';
           locksmithSpinner.style.opacity = '0';
         }
+        
+        // Hide all content during preloader
+        document.querySelectorAll('.site-footer, footer, [class*="footer"], header, .header, [class*="header"], .home-content, .main-content, main').forEach(function(element) {
+          element.style.display = 'none';
+          element.style.visibility = 'hidden';
+          element.style.opacity = '0';
+        });
       };
       
       // Run immediately

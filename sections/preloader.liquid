@@ -168,6 +168,15 @@
 </style>
 
 <script>
+  // Fallback to show content if preloader fails
+  setTimeout(function() {
+    document.querySelectorAll('.site-footer, footer, [class*="footer"], header, .header, [class*="header"], .home-content, .main-content, main').forEach(function(element) {
+      element.style.display = '';
+      element.style.visibility = 'visible';
+      element.style.opacity = '1';
+    });
+  }, 4000);
+  
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
@@ -184,6 +193,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
+          
+          // Show hidden content after preloader completes
+          document.querySelectorAll('.site-footer, footer, [class*="footer"], header, .header, [class*="header"], .home-content, .main-content, main').forEach(function(element) {
+            element.style.display = '';
+            element.style.visibility = 'visible';
+            element.style.opacity = '1';
+          });
         }, 500);
       }, 1750);
     }
