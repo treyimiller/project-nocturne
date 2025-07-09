@@ -34,8 +34,9 @@
         "preloader_image": "shopify://shop_images/Preloader.png",
         "preloader_size": 2000,
         "preloader_background": "#000000",
-        "enable_mobile_preloader": false,
-        "mobile_preloader_size": 150,
+        "enable_mobile_preloader": true,
+        "mobile_preloader_image": "shopify://shop_images/lowkeychriscansmd.png",
+        "mobile_preloader_size": 1500,
         "mobile_preloader_background": "#0e0e10"
       }
     }
