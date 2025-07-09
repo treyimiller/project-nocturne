@@ -26,100 +26,9 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
-    
-    {% comment %} Hide all content immediately until preloader loads {% endcomment %}
-    <style>
-      html, body { 
-        background: #0E0E10 !important; 
-        margin: 0 !important; 
-        padding: 0 !important;
-      }
-      
-      /* Remove all visibility restrictions when preloader is finished */
-      body.preloader-finished {
-        visibility: visible !important;
-      }
-      
-      body.preloader-finished * {
-        visibility: visible !important;
-      }
-      
-      /* Show only preloader elements */
-      #preloader, #mobile-preloader {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        z-index: 9999 !important;
-        background: #0E0E10 !important;
-        visibility: visible !important;
-      }
-      
-      .preloader-image {
-        width: 100vw !important;
-        height: 100vh !important;
-        object-fit: cover !important;
-        object-position: center center !important;
-      }
-      
-      .preloader-text {
-        position: absolute !important;
-        bottom: 10% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        font-family: 'Oswald', sans-serif !important;
-        font-size: clamp(2rem, 5vw, 4rem) !important;
-        font-weight: 700 !important;
-        color: rgba(139, 30, 43, 1) !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.2em !important;
-        text-shadow: 0 0 10px rgba(139, 30, 43, 0.8) !important;
-        z-index: 4 !important;
-      }
-      
-      .mobile-stacked {
-        left: 32% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 0 !important;
-      }
-      
-      .preloader-text-line {
-        line-height: 0.8 !important;
-        margin: 0 !important;
-      }
-      
-      @media (max-width: 768px) {
-        #preloader { display: none !important; }
-        #mobile-preloader { display: flex !important; }
-      }
-      
-      @media (min-width: 769px) {
-        #mobile-preloader { display: none !important; }
-        #preloader { display: flex !important; }
-      }
-    </style>
-    
-    <script>
-      // Only inject overlay on home page
-      if (window.location.pathname === '/') {
-        document.write('<div id="immediate-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0E0E10; z-index: 10000; display: flex; justify-content: center; align-items: center;"><div style="font-family: \'Oswald\', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(139, 30, 43, 0.8);">LOADING...</div></div>');
-      }
-    </script>
-    
   </head>
 
   <body>
-    <!-- Preloader HTML directly in body to avoid hiding -->
-    <div id="body-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0E0E10; display: flex; justify-content: center; align-items: center; z-index: 10000; visibility: visible;">
-      <div style="font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(139, 30, 43, 0.8); animation: pulse 2s ease-in-out infinite alternate;">LOADING...</div>
-    </div>
-    
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
@@ -127,6 +36,5 @@
     {% sections 'footer-group' %}
     
     {% section 'cart-drawer' %}
-    
   </body>
 </html>
