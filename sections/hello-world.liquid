@@ -478,9 +478,6 @@
   <div class="products-grid desktop-only">
     {% assign featured_collection = collections[section.settings.featured_collection] | default: collections.all %}
     {% for product in featured_collection.products limit: section.settings.products_count %}
-      {%- comment %}<locksmith:ac03>{% endcomment -%}
-        {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: featured_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
-      {%- comment %}</locksmith:ac03>{% endcomment -%}
       <a href="{{ product.url }}" class="product-card">
         <div class="product-image">
           {% if product.featured_image %}
@@ -530,9 +527,6 @@
       <div class="featured-swiper-wrapper">
         {% assign featured_collection = collections[section.settings.featured_collection] | default: collections.all %}
         {% for product in featured_collection.products limit: section.settings.products_count %}
-          {%- comment %}<locksmith:8bb4>{% endcomment -%}
-            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: featured_collection, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
-          {%- comment %}</locksmith:8bb4>{% endcomment -%}
           <div class="featured-swiper-slide">
             <a href="{{ product.url }}" class="product-card mobile-product-card">
               <div class="product-image">
