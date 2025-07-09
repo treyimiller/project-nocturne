@@ -22,65 +22,6 @@
 
     {{ content_for_header }}
     
-    {% comment %} Immediate preloader injection {% endcomment %}
-    <style>
-      #immediate-preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #0E0E10;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        opacity: 1;
-      }
-      
-      #immediate-preloader img {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        object-position: center center;
-      }
-      
-      #immediate-preloader .text {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: 'Oswald', sans-serif;
-        font-size: clamp(2rem, 5vw, 4rem);
-        font-weight: 700;
-        color: rgba(139, 30, 43, 1);
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        text-shadow: 0 0 20px rgba(139, 30, 43, 0.8);
-      }
-    </style>
-    
-    <script>
-      // Inject preloader immediately
-      // Only inject on home page
-      if (window.location.pathname === '/') {
-        document.write('<div id="immediate-preloader"><img src="{{ "Preloader.png" | asset_url }}" alt="Loading..."><div class="text">STAY BOLD</div></div>');
-      }
-      
-      // Remove after page loads
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          const preloader = document.getElementById('immediate-preloader');
-          if (preloader) {
-            preloader.style.transition = 'opacity 0.5s ease-out';
-            preloader.style.opacity = '0';
-            setTimeout(function() {
-              preloader.remove();
-            }, 500);
-          }
-        }, 1750);
-      });
-    </script>
   </head>
 
   <body>
@@ -92,13 +33,5 @@
     
     {% section 'cart-drawer' %}
     
-    <script>
-      // Fallback to show body if no preloader exists
-      document.addEventListener('DOMContentLoaded', function() {
-        if (!document.getElementById('preloader') && !document.getElementById('mobile-preloader')) {
-          document.body.style.visibility = 'visible';
-        }
-      });
-    </script>
   </body>
 </html>
