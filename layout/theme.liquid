@@ -95,14 +95,14 @@
       }
     </style>
     
+    <script>
+      // Inject overlay immediately to cover default loader
+      document.write('<div id="immediate-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0E0E10; z-index: 10000; display: flex; justify-content: center; align-items: center;"><div style="font-family: \'Oswald\', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(139, 30, 43, 0.8);">LOADING...</div></div>');
+    </script>
+    
   </head>
 
   <body>
-    <!-- Immediate overlay to cover default loader -->
-    <div id="immediate-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0E0E10; z-index: 10000; display: flex; justify-content: center; align-items: center;">
-      <div style="font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: rgba(139, 30, 43, 1); text-transform: uppercase; letter-spacing: 0.2em; text-shadow: 0 0 10px rgba(139, 30, 43, 0.8);">LOADING...</div>
-    </div>
-    
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
