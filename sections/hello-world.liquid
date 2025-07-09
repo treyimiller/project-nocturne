@@ -548,6 +548,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
+    const bodyPreloader = document.getElementById('body-preloader');
     const immediateOverlay = document.getElementById('immediate-overlay');
     
     // Hide the immediate overlay if it exists
@@ -555,25 +556,28 @@
       immediateOverlay.style.display = 'none';
     }
     
+    // Hide the body preloader and show our custom preloader
+    if (bodyPreloader) {
+      bodyPreloader.style.display = 'none';
+    }
+    
+    // Show body content
+    document.body.classList.add('preloader-complete');
+    
     // Determine which preloader to use based on screen size
     const isMobile = window.innerWidth <= 768;
     const activePreloader = isMobile ? mobilePreloader : desktopPreloader;
     
     if (activePreloader) {
-      // Hide preloader after delay and show all content
+      // Hide preloader after delay
       setTimeout(function() {
         activePreloader.style.opacity = '0';
         activePreloader.style.transition = 'opacity 0.5s ease-out';
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          // Show all page content by adding preloader-complete class
-          document.body.classList.add('preloader-complete');
         }, 500);
       }, 1750);
-    } else {
-      // If no preloader, show content immediately
-      document.body.classList.add('preloader-complete');
     }
   });
 </script>
