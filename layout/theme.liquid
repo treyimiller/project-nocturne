@@ -31,10 +31,11 @@
       }
       
       /* Hide any default content until preloader shows */
-      body > *:not(#preloader):not(#mobile-preloader) {
+      body > *:not([id*="preloader"]) {
         display: none !important;
       }
       
+      /* Ensure preloader elements are visible */
       #preloader, #mobile-preloader {
         position: fixed !important;
         top: 0 !important;
