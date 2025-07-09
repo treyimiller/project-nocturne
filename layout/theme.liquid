@@ -33,8 +33,10 @@
     {% section 'cart-drawer' %}
     
     <script>
-      // Show body on all pages
-      document.body.style.visibility = 'visible';
+      // Show body immediately, but only if not on home page with preloader
+      if (!document.getElementById('preloader') && !document.getElementById('mobile-preloader')) {
+        document.body.style.visibility = 'visible';
+      }
     </script>
   </body>
 </html>
