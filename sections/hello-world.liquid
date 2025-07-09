@@ -51,7 +51,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right, rgba(215, 38, 56, 0.15) 0%, rgba(139, 30, 43, 0.12) 20%, transparent 40%, transparent 60%, rgba(139, 30, 43, 0.12) 80%, rgba(215, 38, 56, 0.15) 100%);
+    background: 
+      radial-gradient(ellipse at center, transparent 30%, rgba(215, 38, 56, 0.03) 70%, rgba(215, 38, 56, 0.06) 100%),
+      linear-gradient(to right, rgba(215, 38, 56, 0.08) 0%, rgba(139, 30, 43, 0.04) 25%, rgba(139, 30, 43, 0.02) 50%, rgba(139, 30, 43, 0.04) 75%, rgba(215, 38, 56, 0.08) 100%);
     pointer-events: none;
     z-index: 3;
   }
@@ -474,18 +476,28 @@
     const activePreloader = isMobile ? mobilePreloader : desktopPreloader;
     
     if (activePreloader && content) {
+      // Ensure content is ready to be shown
+      content.style.transition = 'opacity 0.5s ease-in';
+      
       // Hide preloader and show content after a delay
       setTimeout(function() {
+        // Start showing content while preloader fades
+        content.style.display = 'block';
+        content.style.opacity = '0';
+        
+        // Fade out preloader
         activePreloader.style.opacity = '0';
+        
+        // After preloader fade completes, remove it and fade in content
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          content.style.display = 'block';
-          content.style.opacity = '0';
-          setTimeout(function() {
-            content.style.opacity = '1';
-          }, 50);
+          content.style.opacity = '1';
         }, 500);
       }, 1500);
+    } else if (content) {
+      // If no preloader is active, just show content immediately
+      content.style.display = 'block';
+      content.style.opacity = '1';
     }
   });
 </script>
