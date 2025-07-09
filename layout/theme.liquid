@@ -35,8 +35,18 @@
         padding: 0 !important;
       }
       
-      /* Hide ALL content on home page */
+      /* Hide ALL content on home page initially */
       body {
+        visibility: hidden !important;
+      }
+      
+      /* Show body when preloader is ready */
+      body.preloader-loaded {
+        visibility: visible !important;
+      }
+      
+      /* Hide page content behind preloader */
+      body.preloader-loaded > *:not(#preloader):not(#mobile-preloader) {
         visibility: hidden !important;
       }
       

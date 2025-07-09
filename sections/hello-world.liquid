@@ -545,8 +545,8 @@
   
   // Preloader function
   
-  // Show body immediately when preloader script loads
-  document.body.style.visibility = 'visible';
+  // Show body with preloader-loaded class when script loads
+  document.body.classList.add('preloader-loaded');
   
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
@@ -570,13 +570,13 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          // Show all page content after preloader is completely hidden
-          document.body.style.visibility = 'visible';
+          // Show all page content by removing the preloader-loaded class
+          document.body.classList.remove('preloader-loaded');
         }, 500);
       }, 1750);
     } else {
       // If no preloader, show content immediately
-      document.body.style.visibility = 'visible';
+      document.body.classList.remove('preloader-loaded');
     }
   });
 </script>
