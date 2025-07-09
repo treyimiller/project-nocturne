@@ -133,7 +133,7 @@
     }
     
     .mobile-preloader .preloader-text {
-      left: 45%;
+      left: 35%;
     }
     
     .mobile-stacked {
@@ -141,11 +141,29 @@
       flex-direction: column;
       align-items: center;
       gap: 0;
+      animation: mobile-pulse-glow 2s ease-in-out infinite alternate;
     }
     
     .preloader-text-line {
       line-height: 0.8;
       margin: 0;
+      color: rgba(215, 38, 56, 1);
+      text-shadow: 
+        0 0 10px rgba(215, 38, 56, 0.8),
+        0 0 20px rgba(215, 38, 56, 0.6),
+        0 0 30px rgba(215, 38, 56, 0.4),
+        0 0 40px rgba(215, 38, 56, 0.2);
+    }
+    
+    @keyframes mobile-pulse-glow {
+      0% {
+        filter: drop-shadow(0 0 10px rgba(215, 38, 56, 0.8)) 
+                drop-shadow(0 0 20px rgba(215, 38, 56, 0.6));
+      }
+      100% {
+        filter: drop-shadow(0 0 15px rgba(215, 38, 56, 1)) 
+                drop-shadow(0 0 25px rgba(215, 38, 56, 0.8));
+      }
     }
   }
 
