@@ -122,7 +122,7 @@
   .hero-cta {
     background: rgba(120, 25, 35, 1);
     color: #ffffff;
-    padding: 0.5rem 1.25rem;
+    padding: 0.75rem 1.875rem;
     text-decoration: none;
     font-weight: 600;
     text-transform: uppercase;
@@ -133,7 +133,7 @@
     transition: all 0.4s ease;
     font-family: inherit;
     box-shadow: 0 0 20px rgba(120, 25, 35, 0.6);
-    font-size: 0.5rem;
+    font-size: 0.75rem;
   }
   
   .hero-cta::before {
@@ -177,6 +177,16 @@
     border-radius: 50%;
     animation: floatUp 8s infinite linear;
     box-shadow: 0 0 2px rgba(215, 38, 56, 0.3);
+  }
+  
+  /* Desktop particle enhancement */
+  @media (min-width: 769px) {
+    .particle {
+      width: 3px !important;
+      height: 3px !important;
+      background: rgba(215, 38, 56, 0.7) !important;
+      box-shadow: 0 0 4px rgba(215, 38, 56, 0.5) !important;
+    }
   }
   
   .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 8s; }
@@ -272,8 +282,8 @@
     }
     
     .hero-cta {
-      padding: 0.4rem 0.75rem;
-      font-size: 0.45rem;
+      padding: 0.6rem 1.125rem;
+      font-size: 0.675rem;
     }
     
     .timer-subtitle {
@@ -318,8 +328,8 @@
     }
     
     .hero-cta {
-      padding: 0.35rem 0.6rem;
-      font-size: 0.4rem;
+      padding: 0.525rem 0.9rem;
+      font-size: 0.6rem;
     }
     
     .timer-subtitle {
