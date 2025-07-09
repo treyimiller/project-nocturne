@@ -109,6 +109,12 @@
       } else {
         hideLoaders();
       }
+      
+      // Absolute fallback - show content after 2 seconds no matter what
+      setTimeout(function() {
+        document.body.classList.remove('preloader-active');
+        document.body.style.visibility = 'visible';
+      }, 2000);
     </script>
   </head>
 
