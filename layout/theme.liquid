@@ -26,6 +26,72 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
+    
+    <!-- Override Locksmith spinner -->
+    <style>
+      #locksmith-spinner-wrapper {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        z-index: -1 !important;
+      }
+      
+      /* Ensure our preloader has highest priority */
+      .preloader {
+        z-index: 9999999 !important;
+      }
+      
+      /* Hide any other potential loaders */
+      .shopify-loader,
+      .loading-spinner,
+      .loader,
+      .spinner,
+      [class*="loading"],
+      [class*="spinner"] {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      
+      /* Prevent body from showing loading states */
+      body {
+        visibility: visible !important;
+      }
+    </style>
+    
+    <!-- Early JavaScript to hide any loading states -->
+    <script>
+      // Hide any existing loading elements immediately
+      document.addEventListener('DOMContentLoaded', function() {
+        const loadingElements = document.querySelectorAll('#locksmith-spinner-wrapper, .shopify-loader, .loading-spinner, .loader, .spinner, [class*="loading"], [class*="spinner"]');
+        loadingElements.forEach(element => {
+          if (element && element.id !== 'preloader' && element.id !== 'mobile-preloader') {
+            element.style.display = 'none';
+            element.style.visibility = 'hidden';
+            element.style.opacity = '0';
+          }
+        });
+      });
+      
+      // Hide loading elements as soon as possible
+      const hideLoaders = function() {
+        const locksmithSpinner = document.getElementById('locksmith-spinner-wrapper');
+        if (locksmithSpinner) {
+          locksmithSpinner.style.display = 'none';
+          locksmithSpinner.style.visibility = 'hidden';
+          locksmithSpinner.style.opacity = '0';
+        }
+      };
+      
+      // Run immediately
+      hideLoaders();
+      
+      // Run when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideLoaders);
+      } else {
+        hideLoaders();
+      }
+    </script>
   </head>
 
   <body>

@@ -42,7 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 9999999;
     transition: opacity 0.5s ease-out;
     margin: 0;
     padding: 0;
@@ -199,12 +199,13 @@
       "type": "checkbox",
       "id": "enable_preloader",
       "label": "Enable Preloader",
-      "default": false
+      "default": true
     },
     {
       "type": "image_picker",
       "id": "preloader_image",
-      "label": "Preloader Image"
+      "label": "Preloader Image",
+      "default": "shopify://shop_images/Preloader.png"
     },
     {
       "type": "range",
@@ -214,7 +215,7 @@
       "max": 2000,
       "step": 50,
       "unit": "px",
-      "default": 400
+      "default": 2000
     },
     {
       "type": "color",
@@ -226,12 +227,13 @@
       "type": "checkbox",
       "id": "enable_mobile_preloader",
       "label": "Enable Mobile Preloader",
-      "default": false
+      "default": true
     },
     {
       "type": "image_picker",
       "id": "mobile_preloader_image",
-      "label": "Mobile Preloader Image"
+      "label": "Mobile Preloader Image",
+      "default": "shopify://shop_images/lowkeychriscansmd.png"
     },
     {
       "type": "range",
@@ -241,7 +243,7 @@
       "max": 1500,
       "step": 50,
       "unit": "px",
-      "default": 300
+      "default": 1500
     },
     {
       "type": "color",
