@@ -30,22 +30,12 @@
         padding: 0 !important;
       }
       
-      /* Hide all content on home page initially */
-      body {
-        visibility: hidden !important;
-      }
-      
-      /* Show body when preloader appears */
-      body.preloader-ready {
-        visibility: visible !important;
-      }
-      
-      /* Hide main content within hello-world section */
+      /* Only hide main content, let preloader show naturally */
       .home-content {
         display: none !important;
       }
       
-      /* Ensure preloader elements are visible */
+      /* Ensure preloader elements are visible and cover everything */
       #preloader, #mobile-preloader {
         position: fixed !important;
         top: 0 !important;
@@ -57,7 +47,6 @@
         align-items: center !important;
         z-index: 9999 !important;
         background: #0E0E10 !important;
-        visibility: visible !important;
       }
       
       .preloader-image {
@@ -106,17 +95,6 @@
       }
     </style>
     
-    <script>
-      // Show body immediately if on home page
-      if (window.location.pathname === '/') {
-        document.addEventListener('DOMContentLoaded', function() {
-          document.body.classList.add('preloader-ready');
-        });
-      } else {
-        // Show body immediately for other pages
-        document.body.style.visibility = 'visible';
-      }
-    </script>
   </head>
 
   <body>
