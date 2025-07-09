@@ -32,7 +32,7 @@
         "email_disclaimer": "Be the first to know about new releases and exclusive offers.",
         "enable_preloader": true,
         "preloader_image": "shopify://shop_images/Preloader.png",
-        "preloader_size": 400,
+        "preloader_size": 2000,
         "preloader_background": "#000000",
         "enable_mobile_preloader": false,
         "mobile_preloader_size": 150,
