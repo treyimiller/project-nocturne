@@ -548,9 +548,11 @@
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
     
-    // Show all content when preloader loads
-    const allContent = document.querySelectorAll('body > *:not(#preloader):not(#mobile-preloader)');
-    allContent.forEach(el => el.style.display = 'block');
+    // Show home content when preloader loads
+    const homeContent = document.querySelector('.home-content');
+    if (homeContent) {
+      homeContent.style.display = 'block';
+    }
     
     // Determine which preloader to use based on screen size
     const isMobile = window.innerWidth <= 768;
@@ -568,7 +570,9 @@
       }, 1750);
     } else {
       // If no preloader, just show content immediately
-      allContent.forEach(el => el.style.display = 'block');
+      if (homeContent) {
+        homeContent.style.display = 'block';
+      }
     }
   });
 </script>
