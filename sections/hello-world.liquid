@@ -51,9 +51,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right, rgba(215, 38, 56, 0.05) 0%, rgba(139, 30, 43, 0.04) 20%, transparent 40%, transparent 60%, rgba(139, 30, 43, 0.04) 80%, rgba(215, 38, 56, 0.05) 100%);
+    background: linear-gradient(to right, rgba(215, 38, 56, 0.15) 0%, rgba(139, 30, 43, 0.12) 20%, transparent 40%, transparent 60%, rgba(139, 30, 43, 0.12) 80%, rgba(215, 38, 56, 0.15) 100%);
     pointer-events: none;
-    z-index: 1;
+    z-index: 3;
   }
 
   .preloader-content {
@@ -63,11 +63,10 @@
   }
 
   .preloader-image {
-    max-width: 100vw;
-    max-height: 100vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center center;
   }
 
   /* Desktop preloader - hidden on mobile */
