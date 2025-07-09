@@ -41,12 +41,12 @@
       }
       
       /* Show body when preloader is ready */
-      body.preloader-loaded {
+      body.preloader-ready {
         visibility: visible !important;
       }
       
       /* Hide page content behind preloader */
-      body.preloader-loaded > *:not(#preloader):not(#mobile-preloader) {
+      body.preloader-active > *:not(#preloader):not(#mobile-preloader) {
         visibility: hidden !important;
       }
       
