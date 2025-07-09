@@ -29,7 +29,14 @@
         "view_all_url": "",
         "email_title": "Heed the Call",
         "email_description": "A call only the ravens hear. You're one of them.",
-        "email_disclaimer": "Be the first to know about new releases and exclusive offers."
+        "email_disclaimer": "Be the first to know about new releases and exclusive offers.",
+        "enable_preloader": true,
+        "preloader_image": "shopify://shop_images/Preloader.png",
+        "preloader_size": 400,
+        "preloader_background": "#000000",
+        "enable_mobile_preloader": false,
+        "mobile_preloader_size": 150,
+        "mobile_preloader_background": "#0e0e10"
       }
     }
   },
