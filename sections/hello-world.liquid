@@ -541,10 +541,13 @@
   window.addEventListener('scroll', preventResize);
   
   // Preloader function
-  // Show body immediately after preloader setup
-  document.body.style.opacity = '1';
+  // Hide page content until preloader takes over
+  document.body.style.visibility = 'hidden';
   
   document.addEventListener('DOMContentLoaded', function() {
+    // Show body as soon as DOM is loaded and preloader takes over
+    document.body.style.visibility = 'visible';
+    
     const desktopPreloader = document.getElementById('preloader');
     const mobilePreloader = document.getElementById('mobile-preloader');
     const content = document.querySelector('.home-content');
