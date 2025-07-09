@@ -52,20 +52,7 @@
         visibility: hidden !important;
       }
       
-      /* Hide content during preloader - use body class for easier override */
-      body.preloader-active .site-footer,
-      body.preloader-active footer,
-      body.preloader-active [class*="footer"],
-      body.preloader-active header,
-      body.preloader-active .header,
-      body.preloader-active [class*="header"],
-      body.preloader-active .home-content,
-      body.preloader-active .main-content,
-      body.preloader-active main {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-      }
+      /* Don't hide content - let preloader overlay it */
       
       /* Prevent body from showing loading states */
       body {
@@ -96,8 +83,7 @@
           locksmithSpinner.style.opacity = '0';
         }
         
-        // Ensure body has preloader-active class
-        document.body.classList.add('preloader-active');
+        // No need to hide content - preloader will overlay it
       };
       
       // Run immediately
@@ -110,15 +96,11 @@
         hideLoaders();
       }
       
-      // Absolute fallback - show content after 2 seconds no matter what
-      setTimeout(function() {
-        document.body.classList.remove('preloader-active');
-        document.body.style.visibility = 'visible';
-      }, 2000);
+      // Content is always visible - no need for fallbacks
     </script>
   </head>
 
-  <body class="preloader-active">
+  <body>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}

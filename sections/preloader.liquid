@@ -168,24 +168,7 @@
 </style>
 
 <script>
-  // Immediate fallback to show content if preloader fails
-  setTimeout(function() {
-    document.body.classList.remove('preloader-active');
-  }, 3000);
-  
-  // Emergency fallback - show content no matter what
-  setTimeout(function() {
-    document.body.classList.remove('preloader-active');
-    document.body.style.visibility = 'visible';
-    // Force show all content
-    document.querySelectorAll('.site-footer, footer, header, .home-content, main').forEach(function(element) {
-      if (element) {
-        element.style.display = 'block';
-        element.style.visibility = 'visible';
-        element.style.opacity = '1';
-      }
-    });
-  }, 5000);
+  // Content is always visible - no need for show/hide logic
   
   document.addEventListener('DOMContentLoaded', function() {
     const desktopPreloader = document.getElementById('preloader');
@@ -203,14 +186,11 @@
         
         setTimeout(function() {
           activePreloader.style.display = 'none';
-          
-          // Show hidden content by removing body class
-          document.body.classList.remove('preloader-active');
+          // Content is always visible - no need to show it
         }, 500);
       }, 1750);
     } else {
-      // No preloader found, show content immediately
-      document.body.classList.remove('preloader-active');
+      // No preloader found, content is already visible
     }
   });
 </script>
