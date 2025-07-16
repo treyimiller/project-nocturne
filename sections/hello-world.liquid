@@ -2648,12 +2648,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const launchDateStr = countdownTimer.getAttribute('data-launch-date');
     const launchTimeStr = countdownTimer.getAttribute('data-launch-time') || '23:59';
     
-    // Create launch date in EST timezone
-    const launchDate = new Date(`${launchDateStr}T${launchTimeStr}:00-05:00`).getTime();
+    // Create launch date in Eastern timezone (handles EST/EDT automatically)
+    // Simple approach: check if the target date falls during DST
+    const targetDate = new Date(launchDateStr + 'T12:00:00'); // Use noon to avoid edge cases
+    const year = targetDate.getFullYear();
+    
+    // DST in US typically runs from 2nd Sunday in March to 1st Sunday in November
+    const dstStart = new Date(year, 2, 14 - new Date(year, 2, 1).getDay()); // 2nd Sunday in March
+    const dstEnd = new Date(year, 10, 7 - new Date(year, 10, 1).getDay()); // 1st Sunday in November
+    
+    const isDST = targetDate >= dstStart && targetDate < dstEnd;
+    const timezone = isDST ? '-04:00' : '-05:00'; // EDT or EST
+    
+    const finalLaunchDate = new Date(`${launchDateStr}T${launchTimeStr}:00${timezone}`).getTime();
     
     function updateCountdown() {
       const now = new Date().getTime();
-      const distance = launchDate - now;
+      const distance = finalLaunchDate - now;
       
       if (distance < 0) {
         // Timer expired
