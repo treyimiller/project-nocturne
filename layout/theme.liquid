@@ -53,16 +53,19 @@
       }
       
       /* Hide only footer during preloader - not main content */
-      .site-footer,
-      footer,
-      [class*="footer"] {
+      body.has-preloader .site-footer,
+      body.has-preloader footer,
+      body.has-preloader [class*="footer"] {
         display: none;
       }
       
-      /* Show footer after preloader completes */
+      /* Show footer after preloader completes or if no preloader */
       body.preloader-finished .site-footer,
       body.preloader-finished footer,
-      body.preloader-finished [class*="footer"] {
+      body.preloader-finished [class*="footer"],
+      .site-footer,
+      footer,
+      [class*="footer"] {
         display: block;
       }
       

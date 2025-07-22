@@ -8,6 +8,11 @@
 {% endif %}
 
 {% if show_desktop_preloader or show_mobile_preloader %}
+<!-- Add has-preloader class to body -->
+<script>
+  document.body.classList.add('has-preloader');
+</script>
+
 <!-- Desktop Preloader -->
 {% if show_desktop_preloader %}
 <div id="preloader" class="preloader desktop-preloader" style="background-color: {{ section.settings.preloader_background | default: '#0E0E10' }};">
